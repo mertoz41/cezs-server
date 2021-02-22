@@ -11,8 +11,8 @@ class AuthController < ApplicationController
     end
 
     def check
-        byebug
-
+        @user = User.find(decode(params[:token])["user_id"])
+        render json: {user: UserSerializer.new(@user)}
     end
 
 end

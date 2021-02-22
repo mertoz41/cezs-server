@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-    # has_one_attached :clip
+    has_one_attached :clip
     has_many :comments, dependent: :destroy
     has_many :shares, dependent: :destroy 
     belongs_to :user

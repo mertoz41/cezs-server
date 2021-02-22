@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Genre.destroy_all
+
+Genre.create(name: "Rock")
+Genre.create(name: "Pop")
+Genre.create(name: "Jazz")
+Genre.create(name: "Hip hop")
+Genre.create(name: "Singing")
+
+Instrument.create(name: "Guitar")
+Instrument.create(name: "Keyboard")
+Instrument.create(name: "Piano")
+Instrument.create(name: "Saxophone")
+Instrument.create(name: "Violin")
