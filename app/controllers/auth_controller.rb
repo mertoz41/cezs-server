@@ -9,4 +9,10 @@ class AuthController < ApplicationController
             render json: {message: 'Invalid username or password.'}
         end
     end
+
+    def check
+        byebug
+
+    end
+
 end

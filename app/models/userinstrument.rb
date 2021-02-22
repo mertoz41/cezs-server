@@ -1,0 +1,2 @@
+class Userinstrument < ApplicationRecord
+end
