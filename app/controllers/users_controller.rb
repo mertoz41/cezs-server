@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
 
-    def experiment
-        byebug
-    end 
+    def create
+        user = User.create(username: params[:username], password: params[:password])
+        render json: {message: "Success!"}
+    end
+
+    # def experiment
+    #     byebug
+    # end 
 end
