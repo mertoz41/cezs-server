@@ -46,6 +46,10 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  config.action_mailer.default_url_options = { :host => "localhost:3000" }
+
+  Rails.application.routes.default_url_options[:host] = "localhost:3000"
+
   # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise
 
