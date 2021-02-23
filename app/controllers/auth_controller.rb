@@ -4,7 +4,11 @@ class AuthController < ApplicationController
         if @user && @user.authenticate(params[:password])
             payload = {user_id: @user.id}
             token = encode(payload)
-            render json: {user: UserSerializer.new(@user), token: token}
+            @timeline = []
+            @user.posts.each do |post|
+                @timeline.push(post)
+            end 
+            render json: {user: UserSerializer.new(@user), token: token, timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer)}
         else 
             render json: {message: 'Invalid username or password.'}
         end
@@ -12,7 +16,11 @@ class AuthController < ApplicationController
 
     def check
         @user = User.find(decode(params[:token])["user_id"])
-        render json: {user: UserSerializer.new(@user)}
+        @timeline = []
+            @user.posts.each do |post|
+                @timeline.push(post)
+            end 
+        render json: {user: UserSerializer.new(@user), timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer)}
     end
 
 end
