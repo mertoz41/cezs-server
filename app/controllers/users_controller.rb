@@ -5,6 +5,12 @@ class UsersController < ApplicationController
         render json: {message: "Success!"}
     end
 
+    def avatar
+        @user = User.find(params[:user_id])
+        @user.avatar.attach(params[:avatar])
+        render json: @user, serializer: UserSerializer
+    end
+
     # def experiment
     #     byebug
     # end 

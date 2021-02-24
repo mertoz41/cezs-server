@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   get '/experiment', to: 'users#experiment'
   post '/login', to: 'auth#create'
   post '/check', to: 'auth#check'
+  post '/avatar', to: 'users#avatar'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

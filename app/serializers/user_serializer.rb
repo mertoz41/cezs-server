@@ -1,3 +1,12 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :password_digest
+  include Rails.application.routes.url_helpers
+  attributes :id, :username, :created_at, :avatar
+
+  def created_at
+    object.created_at.to_date
+  end
+
+  def avatar
+    return url_for(object.avatar)
+  end 
 end
