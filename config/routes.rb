@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   post '/login', to: 'auth#create'
   post '/check', to: 'auth#check'
   post '/avatar', to: 'users#avatar'
+  post '/searching', to: 'users#searching'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

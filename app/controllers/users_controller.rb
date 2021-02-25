@@ -11,7 +11,12 @@ class UsersController < ApplicationController
         render json: @user, serializer: UserSerializer
     end
 
-    # def experiment
-    #     byebug
-    # end 
+    def searching
+        @users = User.where("username like?", "%#{params[:searching]}%")
+        # partial string matching on a database object. not a very good solution
+        render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: UserSerializer)}
+        # serializer isnt very smart for this situation
+
+    end
+
 end
