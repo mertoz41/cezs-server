@@ -5,6 +5,12 @@ class UsersController < ApplicationController
         render json: {message: "Success!"}
     end
 
+    def show
+        @user = User.find(params[:id])
+        @posts = @user.posts
+        render json: {user: UserSerializer.new(@user), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+    end 
+
     def avatar
         @user = User.find(params[:user_id])
         @user.avatar.attach(params[:avatar])
