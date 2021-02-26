@@ -13,4 +13,22 @@ class PostsController < ApplicationController
         @post.clip.attach(params[:clip])
         render json: @post, serializer: PostSerializer
     end 
+
+    def filter
+        list = params[:selectedItems]
+        @filtered_timeline = []
+        
+        list.each do |item|
+            if item[:type] == 'instrument'
+                posts = Post.where(instrument_id: item[:value])
+                @filtered_timeline = @filtered_timeline + posts
+            else 
+                posts = Post.where(genre_id: item[:value])
+                @filtered_timeline = @filtered_timeline + posts
+            end 
+        end 
+        
+        render json: {timeline: ActiveModel::Serializer::CollectionSerializer.new(@filtered_timeline, each_serializer: PostSerializer)}
+
+    end
 end

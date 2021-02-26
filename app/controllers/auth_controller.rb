@@ -17,7 +17,9 @@ class AuthController < ApplicationController
     def check
         @user = User.find(decode(params[:token])["user_id"])
         @timeline = []
+        @posts = []
             @user.posts.each do |post|
+                @posts.push(post)
                 @timeline.push(post)
             end 
             @user.followeds.each do |user|
@@ -25,7 +27,7 @@ class AuthController < ApplicationController
                 @timeline.push(post)
                 end 
             end 
-        render json: {user: UserSerializer.new(@user), timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer)}
+        render json: {user: UserSerializer.new(@user), timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
     end
 
 end
