@@ -14,7 +14,8 @@ class UsersController < ApplicationController
     def avatar
         @user = User.find(params[:user_id])
         @user.avatar.attach(params[:avatar])
-        render json: @user, serializer: UserSerializer
+        @posts = @user.posts
+        render json: {user: UserSerializer.new(@user), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
     end
 
     def searching
