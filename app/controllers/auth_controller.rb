@@ -5,10 +5,19 @@ class AuthController < ApplicationController
             payload = {user_id: @user.id}
             token = encode(payload)
             @timeline = []
+            @posts = []
+
             @user.posts.each do |post|
+                @posts.push(post)
                 @timeline.push(post)
             end 
-            render json: {user: UserSerializer.new(@user), token: token, timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer)}
+            @user.followeds.each do |user|
+                user.posts.each do |post|
+                @timeline.push(post)
+                end 
+            end 
+
+            render json: {user: UserSerializer.new(@user), token: token, timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
         else 
             render json: {message: 'Invalid username or password.'}
         end
