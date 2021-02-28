@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   post '/login', to: 'auth#create'
   post '/check', to: 'auth#check'
   post '/avatar', to: 'users#avatar'
-  post '/searching', to: 'users#searching'
+  post '/usersearch', to: 'users#searching'
+  post '/songsearch', to: 'songs#searching'
+  post '/artistsearch', to: 'artists#searching'
   post '/filter', to: 'posts#filter'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
