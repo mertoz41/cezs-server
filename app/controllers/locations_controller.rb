@@ -1,4 +1,8 @@
 class LocationsController < ApplicationController
+    def index
+        locations = Location.all
+        render json: {locations: locations}
+    end 
     def create
         @user = User.find(params[:user_id])
         latitude = params[:latitude]
