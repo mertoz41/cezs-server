@@ -25,4 +25,5 @@ class RequestSerializer < ActiveModel::Serializer
   end
   def response_count
     object.responses.length
-  endend
+  end
+end
