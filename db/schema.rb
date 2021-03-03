@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_02_150819) do
+ActiveRecord::Schema.define(version: 2021_03_03_131625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,10 +80,9 @@ ActiveRecord::Schema.define(version: 2021_03_02_150819) do
   create_table "locations", force: :cascade do |t|
     t.float "latitude"
     t.float "longitude"
-    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "district"
+    t.string "city"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -131,6 +130,13 @@ ActiveRecord::Schema.define(version: 2021_03_02_150819) do
   create_table "userinstruments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "instrument_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "userlocations", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

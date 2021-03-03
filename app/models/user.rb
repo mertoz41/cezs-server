@@ -3,7 +3,9 @@ class User < ApplicationRecord
     has_one_attached :avatar
     
     validates :username, uniqueness: { case_sensitive: false }
-    has_one :location
+    # has_one :location
+    has_one :userlocation
+    has_one :location, through: :userlocation
 
     has_many :posts, dependent: :destroy
     has_many :genres, through: :posts
