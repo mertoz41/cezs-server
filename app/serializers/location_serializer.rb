@@ -1,13 +1,10 @@
 class LocationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :latitude, :longitude, :user_id, :avatar, :username
-  def avatar
-    user = User.find(object.user_id)
-    return url_for(user.avatar)
+  attributes :id, :latitude, :longitude, :user_count, :city
+
+  def user_count
+    return object.users.length
   end
-  def username
-    user = User.find(object.user_id)
-    return user.username
-  end 
+  
 end
