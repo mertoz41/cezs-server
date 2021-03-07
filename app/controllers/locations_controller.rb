@@ -19,4 +19,15 @@ class LocationsController < ApplicationController
         @locations = Location.all
         render json: {locations: ActiveModel::Serializer::CollectionSerializer.new(@locations, each_serializer: LocationSerializer), user: UserSerializer.new(@user)}
     end 
+
+    def update
+        # need to find or create location by city and latitude and longitude.
+        # need to update Userlocation model. 
+        # find userlocation by user_id
+        @user = User.find(params[:user_id])
+        location = Location.find_or_create_by(city: params[:regionName], latitude: params[:latitude], longitude: params[:longitude])
+        user_location = Userlocation.find_by(user_id: @user.id)
+        user_location.update(location_id: location.id)
+        render json: {user: UserSerializer.new(@user)}
+    end 
 end
