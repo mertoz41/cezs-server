@@ -4,6 +4,7 @@ class User < ApplicationRecord
     
     validates :username, uniqueness: { case_sensitive: false }
     # has_one :location
+    has_one :bio
     has_one :userlocation
     has_one :location, through: :userlocation
 

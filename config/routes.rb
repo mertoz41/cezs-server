@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :bios
   resources :locations
   resources :userinstruments
   resources :songs
