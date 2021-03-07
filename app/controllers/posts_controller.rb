@@ -4,9 +4,10 @@ class PostsController < ApplicationController
         user_id = params[:user_id].to_i
         instrument_id = params[:instrument_id].to_i
         genre_id = params[:genre_id].to_i
-        artist_name = params[:song_artist]
+        artist_name = params[:artist_name]
+        artist_id = params[:artist_id]
         song_name = params[:song_name]
-        artist = Artist.find_or_create_by(name: artist_name)
+        artist = Artist.find_or_create_by(name: artist_name, spotify_id: artist_id)
         song = Song.find_or_create_by(name: song_name, artist_id: artist.id)
 
         @post = Post.create(user_id: user_id, instrument_id: instrument_id, genre_id: genre_id, artist_id: artist.id, song_id: song.id)
