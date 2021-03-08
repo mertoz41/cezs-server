@@ -4,7 +4,7 @@ class UserinfluencesController < ApplicationController
         artist_id = params[:artist_id]
         artist_name = params[:artist_name]
         
-        artist = Artist.find_or_create_by(name: artist_name, spotify_id: artist_id, uri: params[:artist_pic])
+        artist = Artist.find_or_create_by(name: artist_name, spotify_id: artist_id, avatar: params[:artist_pic])
         user_influence = Userinfluence.create(user_id: @user.id, artist_id: artist.id)
         render json: {user: UserSerializer.new(@user)}
     end
