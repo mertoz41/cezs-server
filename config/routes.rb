@@ -25,5 +25,6 @@ Rails.application.routes.draw do
   post '/filter', to: 'posts#filter'
   post '/deleteinfluence', to: 'userinfluences#delete'
   post '/instrumentsearch', to: 'instruments#searching'
+  post '/deleteuserinstrument', to: 'userinstruments#delete'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
