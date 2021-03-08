@@ -24,5 +24,6 @@ Rails.application.routes.draw do
   post '/artistsearch', to: 'artists#searching'
   post '/filter', to: 'posts#filter'
   post '/deleteinfluence', to: 'userinfluences#delete'
+  post '/instrumentsearch', to: 'instruments#searching'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
