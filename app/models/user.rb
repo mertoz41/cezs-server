@@ -1,6 +1,9 @@
 class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
+
+    has_many :userinfluences
+    has_many :artists, through: :userinfluences
     
     validates :username, uniqueness: { case_sensitive: false }
     # has_one :location

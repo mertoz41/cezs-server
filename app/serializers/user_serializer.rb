@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :follows, :followed_by, :location
+  attributes :id, :username, :created_at, :avatar, :follows, :followed_by, :location, :artists
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
 
