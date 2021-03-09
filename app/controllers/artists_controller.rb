@@ -7,10 +7,10 @@ class ArtistsController < ApplicationController
     end
 
     def check
-        artist = Artist.find_by(spotify_id: params[:spotify_id])
-        if artist
-            @posts = artist.posts
-            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+        @artist = Artist.find_by(spotify_id: params[:spotify_id])
+        if @artist
+            @posts = @artist.posts
+            render json: {artist: ArtistSerializer.new(@artist), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
         else
             render json: {message: 'Artist not found'}
         end
