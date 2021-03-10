@@ -27,5 +27,6 @@ Rails.application.routes.draw do
   post '/instrumentsearch', to: 'instruments#searching'
   post '/deleteuserinstrument', to: 'userinstruments#delete'
   post '/artistcheck', to: 'artists#check'
+  get '/getfollows/:id', to: 'follows#follows'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
