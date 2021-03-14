@@ -32,4 +32,9 @@ class PostsController < ApplicationController
         render json: {timeline: ActiveModel::Serializer::CollectionSerializer.new(@filtered_timeline, each_serializer: PostSerializer)}
 
     end
+    def destroy
+        post = Post.find(params[:id])
+        post.destroy
+        render json: {message: 'post deleted.'}
+    end
 end
