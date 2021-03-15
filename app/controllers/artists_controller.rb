@@ -5,6 +5,11 @@ class ArtistsController < ApplicationController
         render json: {artists: artists}
         # serializer isnt very smart for this situation
     end
+    def show
+        @artist = Artist.find(params[:id])
+        @posts = @artist.posts
+        render json: {artist: ArtistSerializer.new(@artist), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+    end 
 
     def check
         @artist = Artist.find_by(spotify_id: params[:spotify_id])
