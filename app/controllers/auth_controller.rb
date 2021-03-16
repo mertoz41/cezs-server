@@ -6,6 +6,7 @@ class AuthController < ApplicationController
             token = encode(payload)
             @timeline = []
             @posts = []
+            @shares = @user.shares
 
             @user.posts.each do |post|
                 @posts.push(post)
@@ -17,7 +18,7 @@ class AuthController < ApplicationController
                 end 
             end 
 
-            render json: {user: UserSerializer.new(@user), token: token, timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+            render json: {user: UserSerializer.new(@user), token: token, shares: ActiveModel::Serializer::CollectionSerializer.new(@shares, each_serializer: ShareSerializer),timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
         else 
             render json: {message: 'Invalid username or password.'}
         end
@@ -27,6 +28,7 @@ class AuthController < ApplicationController
         @user = User.find(decode(params[:token])["user_id"])
         @timeline = []
         @posts = []
+        @shares = @user.shares
             @user.posts.each do |post|
                 @posts.push(post)
                 @timeline.push(post)
@@ -36,7 +38,7 @@ class AuthController < ApplicationController
                 @timeline.push(post)
                 end 
             end 
-        render json: {user: UserSerializer.new(@user), timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+        render json: {user: UserSerializer.new(@user), shares: ActiveModel::Serializer::CollectionSerializer.new(@shares, each_serializer: ShareSerializer) ,timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
     end
 
 end
