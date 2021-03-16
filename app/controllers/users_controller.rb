@@ -8,7 +8,8 @@ class UsersController < ApplicationController
     def show
         @user = User.find(params[:id])
         @posts = @user.posts
-        render json: {user: UserSerializer.new(@user), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+        @shares = @user.shares
+        render json: {user: UserSerializer.new(@user), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), shares: ActiveModel::Serializer::CollectionSerializer.new(@shares, each_serializer: ShareSerializer)}
     end 
 
     def avatar
