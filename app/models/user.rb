@@ -5,6 +5,9 @@ class User < ApplicationRecord
     has_many :userinfluences
     has_many :artists, through: :userinfluences
     
+    has_and_belongs_to_many :chatrooms, dependent: :destroy
+
+
     validates :username, uniqueness: { case_sensitive: false }
     # has_one :location
     has_one :bio

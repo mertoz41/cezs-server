@@ -21,6 +21,14 @@ class PostsController < ApplicationController
         genres = params[:genres]
         by_instrument = Post.where(instrument_id: instruments)
         by_genre = Post.where(genre_id: genres)
+        # if instruments.length < 1 || genres.length < 1
+   
+        #     @filtered_timeline = @filtered_timeline + by_instrument + by_genre
+        # else
+        #     all = Post.where(instrument_id: instruments, genre_id: genres)
+        #     @filtered_timeline = @filtered_timeline + all
+
+        # end
         @filtered_timeline = by_instrument + by_genre 
     
         

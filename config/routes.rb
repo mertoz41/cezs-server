@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   resources :comments
   resources :artists
   resources :users
+
+  mount ActionCable.server => '/cable'
+
   # post '/experiment', to: 'users#experiment'
   get '/experiment', to: 'users#experiment'
   post '/login', to: 'auth#create'
