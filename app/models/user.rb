@@ -7,7 +7,8 @@ class User < ApplicationRecord
     
     # has_and_belongs_to_many :chatrooms, dependent: :destroy
     has_many :messages, dependent: :destroy
-    has_many :chatrooms, through: :messages
+    has_many :userchatrooms
+    has_many :chatrooms, through: :userchatrooms
 
 
     validates :username, uniqueness: { case_sensitive: false }
