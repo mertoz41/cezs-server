@@ -2,7 +2,8 @@ class ChatroomsController < ApplicationController
 
   def show
     chatroom = Chatroom.find(params[:id])
-    render json: {messages: chatroom.messages}
+    ordered = chatroom.messages.order(created_at: :asc)
+    render json: {messages: ordered}
   end
   def create
       chatroom = Chatroom.create
