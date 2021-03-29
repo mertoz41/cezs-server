@@ -11,6 +11,11 @@ class ArtistsController < ApplicationController
         render json: {artist: ArtistSerializer.new(@artist), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
     end 
 
+    def influences
+        @influences = Artist.find(params[:id]).users
+        render json: {influences: ActiveModel::Serializer::CollectionSerializer.new(@influences, each_serializer: UserSerializer)}
+    end 
+
     def check
         @artist = Artist.find_by(spotify_id: params[:spotify_id])
         if @artist

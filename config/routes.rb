@@ -34,5 +34,6 @@ Rails.application.routes.draw do
   post '/artistcheck', to: 'artists#check'
   get '/getfollows/:id', to: 'follows#follows'
   get '/getfollowers/:id', to: 'follows#followers'
+  get '/influences/:id', to: 'artists#influences'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
