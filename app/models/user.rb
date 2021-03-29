@@ -18,7 +18,6 @@ class User < ApplicationRecord
     has_one :location, through: :userlocation
 
     has_many :posts, dependent: :destroy
-    has_many :genres, through: :posts
 
     has_many :comments, dependent: :destroy
     has_many :shares, dependent: :destroy
