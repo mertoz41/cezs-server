@@ -17,6 +17,9 @@ class User < ApplicationRecord
     has_one :userlocation
     has_one :location, through: :userlocation
 
+    has_many :bandmembers, dependent: :destroy
+    has_many :bands, through: :bandmembers
+
     has_many :posts, dependent: :destroy
 
     has_many :comments, dependent: :destroy
