@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   post '/usersearch', to: 'users#searching'
   post '/songsearch', to: 'songs#searching'
   post '/artistsearch', to: 'artists#searching'
+  post '/bandsearch', to: 'bands#searching'
   post '/filter', to: 'posts#filter'
   post '/deleteinfluence', to: 'userinfluences#delete'
   post '/instrumentsearch', to: 'instruments#searching'
