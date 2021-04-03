@@ -7,7 +7,7 @@ class BandsController < ApplicationController
 
     def show
         @band = Band.find(params[:id])
-        render json: @band, serializer: BandSerializer
+        render json: {band: BandSerializer.new(@band), members: ActiveModel::Serializer::CollectionSerializer.new(@band.users, each_serializer: UserSerializer)}
 
     end
     def create
