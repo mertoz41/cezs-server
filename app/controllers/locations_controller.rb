@@ -6,6 +6,12 @@ class LocationsController < ApplicationController
     end
     def show
         @users = Location.find(params[:id]).users
+        # @users_with_bands = @users.map do |user|
+        #     nu_user = user.attributes
+        #     nu_user["bands"] = user.bands
+        #     return nu_user
+        # end 
+        # byebug
         render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: UserSerializer)}
     end
     def create

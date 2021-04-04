@@ -3,7 +3,7 @@ class UserSerializer < ActiveModel::Serializer
   attributes :id, :username, :created_at, :avatar, :follows, :followed_by, :location, :artists, :instruments, :post_count
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
-
+  has_many :bands
   def created_at
     object.created_at.to_date
   end
