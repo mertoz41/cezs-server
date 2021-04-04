@@ -7,4 +7,6 @@ class Band < ApplicationRecord
     has_one :bandlocation
     has_one :location, through: :bandlocation
 
+    has_many :bandposts
+
 end
