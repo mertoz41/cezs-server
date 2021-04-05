@@ -9,4 +9,7 @@ class Band < ApplicationRecord
 
     has_many :bandposts
 
+    has_many :bandfollows
+    has_many :users, through: :bandfollows
+
 end

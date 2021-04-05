@@ -11,6 +11,10 @@ class User < ApplicationRecord
     has_many :chatrooms, through: :userchatrooms
 
 
+    has_many :bandfollows
+    has_many :bands, through: :bandfollows
+
+
     validates :username, uniqueness: { case_sensitive: false }
     # has_one :location
     has_one :bio
