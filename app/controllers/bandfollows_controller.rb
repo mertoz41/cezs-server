@@ -8,4 +8,9 @@ class BandfollowsController < ApplicationController
 
 
     end 
+    def destroy
+        bandfollow = Bandfollow.find(params[:id])
+        bandfollow.destroy
+        render json: {message: 'success'}
+    end
 end
