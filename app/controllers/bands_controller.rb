@@ -4,6 +4,11 @@ class BandsController < ApplicationController
         @bands = Band.where("name like?", "%#{params[:searching]}%")
         render json: {bands: ActiveModel::Serializer::CollectionSerializer.new(@bands, each_serializer: BandSerializer)}
     end
+    def picture
+        @band = Band.find(params[:band_id])
+        @band.picture.attach(params[:picture])
+        render json: {band: BandSerializer.new(@band)}
+    end
 
     def show
         @band = Band.find(params[:id])

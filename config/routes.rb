@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   post '/login', to: 'auth#create'
   post '/check', to: 'auth#check'
   post '/avatar', to: 'users#avatar'
+  post '/picture', to: 'bands#picture'
   post '/usersearch', to: 'users#searching'
   post '/songsearch', to: 'songs#searching'
   post '/artistsearch', to: 'artists#searching'
