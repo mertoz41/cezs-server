@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :bands
   resources :bandposts
   resources :bandfollows
+  resources :bandbios
 
   mount ActionCable.server => '/cable'
 
