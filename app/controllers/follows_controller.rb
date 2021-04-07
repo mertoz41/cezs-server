@@ -6,7 +6,7 @@ class FollowsController < ApplicationController
     def destroy
         follow = Follow.find(params[:id])
         follow.destroy
-        render json: {message: "success"}
+        render json: {message: "succezs"}
     end 
 
     def follows
