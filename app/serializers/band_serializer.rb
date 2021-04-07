@@ -1,7 +1,7 @@
 class BandSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :name, :description, :picture, :created_at, :location
+  attributes :id, :name, :picture, :created_at, :location
   attribute :bandbio, if: -> {object.bandbio}
 
   has_many :bandfollows

@@ -17,7 +17,8 @@ class BandsController < ApplicationController
     def create
         # create the band first with name description and picture
 
-        @band = Band.create(name: params[:name], description: params[:description])
+        @band = Band.create(name: params[:name])
+        bio = Bandbio.create(description: params[:description], band_id: @band.id)
         @band.picture.attach(params[:picture])
         
         # create bandmember instance for each user
