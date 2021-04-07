@@ -12,4 +12,7 @@ class Band < ApplicationRecord
     has_many :bandfollows, dependent: :destroy
     has_many :users, through: :bandfollows
 
+    has_one :bandbio, dependent: :destroy
+
+
 end
