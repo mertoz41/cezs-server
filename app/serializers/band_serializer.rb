@@ -6,6 +6,7 @@ class BandSerializer < ActiveModel::Serializer
 
   has_many :bandfollows
   has_many :bandposts
+  has_many :members
 
   
   def picture
