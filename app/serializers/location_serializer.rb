@@ -1,10 +1,9 @@
 class LocationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :latitude, :longitude, :user_count, :city
+  attributes :id, :latitude, :longitude, :city, :musician_count
 
-  def user_count
-    return object.users.length
+  def musician_count
+    return object.users.length + object.bands.length
   end
-  
 end
