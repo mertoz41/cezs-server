@@ -12,7 +12,8 @@ class FollowsController < ApplicationController
     def follows
         user = User.find(params[:id])
         @followed_users = user.followeds
-        render json: {follows: ActiveModel::Serializer::CollectionSerializer.new(@followed_users, each_serializer: UserSerializer)}
+        @followed_bands = user.followedbands
+        render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@followed_users, each_serializer: UserSerializer), bands: ActiveModel::Serializer::CollectionSerializer.new(@followed_bands, each_serializer: BandSerializer)}
 
         # render json: {follows: ActiveModel::Serializer::CollectionSerializer.new(@follows, each_serializer: FollowSerializer)}
     end 

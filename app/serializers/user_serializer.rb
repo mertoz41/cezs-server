@@ -4,7 +4,7 @@ class UserSerializer < ActiveModel::Serializer
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   has_many :bands
-  has_many :bandfollows
+  has_many :followedbands
   def created_at
     object.created_at.to_date
   end
@@ -18,5 +18,4 @@ class UserSerializer < ActiveModel::Serializer
   def post_count
     return object.posts.length
   end
-
 end

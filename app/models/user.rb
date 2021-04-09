@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
 
     has_many :bandfollows, dependent: :destroy
-    has_many :bands, through: :bandfollows
+    has_many :followedbands, through: :bandfollows
 
 
     validates :username, uniqueness: { case_sensitive: false }
