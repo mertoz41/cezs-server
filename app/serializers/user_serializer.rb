@@ -5,6 +5,7 @@ class UserSerializer < ActiveModel::Serializer
   attribute :bio, if: -> {object.bio}
   has_many :bands
   has_many :followedbands
+  has_many :followedartists
   def created_at
     object.created_at.to_date
   end
