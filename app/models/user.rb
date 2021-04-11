@@ -14,6 +14,9 @@ class User < ApplicationRecord
     has_many :bandfollows, dependent: :destroy
     has_many :followedbands, through: :bandfollows
 
+    has_many :artistfollows, dependent: :destroy
+    has_many :followedartists, through: :artistfollows
+
 
     validates :username, uniqueness: { case_sensitive: false }
     # has_one :location
