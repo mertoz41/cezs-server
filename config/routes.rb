@@ -45,5 +45,6 @@ Rails.application.routes.draw do
   get '/getfollowers/:id', to: 'follows#followers'
   get '/influences/:id', to: 'artists#influences'
   post '/removemember', to: 'bandmembers#removemember'
+  post '/artistunfollow', to: 'artistfollows#destroy'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
