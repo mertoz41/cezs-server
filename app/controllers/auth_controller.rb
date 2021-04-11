@@ -37,6 +37,11 @@ class AuthController < ApplicationController
             obj['users'] = ActiveModel::Serializer::CollectionSerializer.new(@room_users, each_serializer: UserSerializer)
             chatrooms.push(obj)
         end 
+        @user.followedbands.each do |band|
+            band.bandposts.each do |bandpost|
+                @timeline.push(bandpost)
+            end
+        end 
         @shares = @user.shares
             @user.posts.each do |post|
                 @posts.push(post)
@@ -47,7 +52,7 @@ class AuthController < ApplicationController
                 @timeline.push(post)
                 end 
             end 
-            
+        
         render json: {user: UserSerializer.new(@user), shares: ActiveModel::Serializer::CollectionSerializer.new(@shares, each_serializer: ShareSerializer) ,timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), chatrooms: chatrooms}
     end
 
