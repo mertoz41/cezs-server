@@ -7,8 +7,7 @@ class ArtistsController < ApplicationController
     end
     def show
         @artist = Artist.find(params[:id])
-        @posts = @artist.posts
-        render json: {artist: ArtistSerializer.new(@artist), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+        render json: {artist: ArtistSerializer.new(@artist)}
     end 
 
     def influences
@@ -19,8 +18,7 @@ class ArtistsController < ApplicationController
     def check
         @artist = Artist.find_by(spotify_id: params[:spotify_id])
         if @artist
-            @posts = @artist.posts
-            render json: {artist: ArtistSerializer.new(@artist), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+            render json: {artist: ArtistSerializer.new(@artist)}
         else
             render json: {message: 'Artist not found'}
         end
