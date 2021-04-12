@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  address: MyString
+  description: MyString
+  band_id: 1
+  latitude: 1.5
+  longitude: 1.5
+  event_date: 2021-04-12 10:45:28
+
+two:
+  address: MyString
+  description: MyString
+  band_id: 1
+  latitude: 1.5
+  longitude: 1.5
+  event_date: 2021-04-12 10:45:28

@@ -1,7 +1,8 @@
 class UsereventsController < ApplicationController
     def index
-        @events = Userevent.all
-        render json: {events: ActiveModel::Serializer::CollectionSerializer.new(@events, each_serializer: UsereventSerializer)}
+        @user_events = Userevent.all
+        @band_events = Bandevent.all
+        render json: {user_events: ActiveModel::Serializer::CollectionSerializer.new(@user_events, each_serializer: UsereventSerializer), band_events: ActiveModel::Serializer::CollectionSerializer.new(@band_events, each_serializer: BandeventSerializer)}
     end
     
     def create
