@@ -6,6 +6,8 @@ class UserSerializer < ActiveModel::Serializer
   has_many :bands
   has_many :followedbands
   has_many :followedartists
+  has_many :userevents
+  
   def created_at
     object.created_at.to_date
   end

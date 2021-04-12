@@ -10,6 +10,8 @@ class User < ApplicationRecord
     has_many :userchatrooms, dependent: :destroy
     has_many :chatrooms, through: :userchatrooms
 
+    has_many :userevents, dependent: :destroy
+
 
     has_many :bandfollows, dependent: :destroy
     has_many :followedbands, through: :bandfollows
