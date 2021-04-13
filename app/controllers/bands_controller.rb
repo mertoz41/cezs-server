@@ -14,6 +14,7 @@ class BandsController < ApplicationController
         @band = Band.find(params[:id])
         render json: {band: BandSerializer.new(@band), members: ActiveModel::Serializer::CollectionSerializer.new(@band.members, each_serializer: UserSerializer)}
     end
+    
     def create
         # create the band first with name description and picture
 

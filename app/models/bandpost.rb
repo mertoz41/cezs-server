@@ -4,5 +4,7 @@ class Bandpost < ApplicationRecord
     belongs_to :band
     belongs_to :song
     belongs_to :artist
+    has_many :bandpostinstruments, dependent: :destroy
+    has_many :instruments, through: :bandpostinstruments
 
 end
