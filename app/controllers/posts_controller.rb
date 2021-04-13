@@ -16,8 +16,17 @@ class PostsController < ApplicationController
 
     def filter
         instruments = params[:selected_instruments]
-        @filtered_timeline  = Post.where(instrument_id: instruments)
-        render json: {timeline: ActiveModel::Serializer::CollectionSerializer.new(@filtered_timeline, each_serializer: PostSerializer)}
+        @posts = Post.where(instrument_id: instruments)
+        @bandposts = []
+        instruments.each do |inst|
+            instrument = Instrument.find(inst)
+            instrument.bandposts.each do |post|
+                @bandposts.push(post)
+            end
+        end
+            
+        # @bandposts = Bandpost.where()
+        render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
 
     end
     def destroy
