@@ -63,6 +63,12 @@ class AuthController < ApplicationController
                 @timeline.push(bandpost)
             end
         end 
+        @user.bands.each do |band|
+            band.bandposts.each do |bandpost|
+                @timeline.push(bandpost)
+            end
+        end
+        
         @user.followedartists.each do |artist|
             artist.posts.each do |post|
                 @timeline.push(post)
