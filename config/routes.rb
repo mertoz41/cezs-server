@@ -48,5 +48,6 @@ Rails.application.routes.draw do
   get '/influences/:id', to: 'artists#influences'
   post '/removemember', to: 'bandmembers#removemember'
   post '/artistunfollow', to: 'artistfollows#destroy'
+  post '/eventbydate', to: 'userevents#bydate'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

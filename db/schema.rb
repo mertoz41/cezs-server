@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_12_144528) do
+ActiveRecord::Schema.define(version: 2021_04_13_134605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,9 +71,9 @@ ActiveRecord::Schema.define(version: 2021_04_12_144528) do
     t.integer "band_id"
     t.float "latitude"
     t.float "longitude"
-    t.datetime "event_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "event_date"
   end
 
   create_table "bandfollows", force: :cascade do |t|
@@ -220,9 +220,9 @@ ActiveRecord::Schema.define(version: 2021_04_12_144528) do
     t.integer "user_id"
     t.float "latitude"
     t.float "longitude"
-    t.datetime "event_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "event_date"
   end
 
   create_table "userinfluences", force: :cascade do |t|
