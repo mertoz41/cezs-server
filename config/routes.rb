@@ -49,5 +49,6 @@ Rails.application.routes.draw do
   post '/removemember', to: 'bandmembers#removemember'
   post '/artistunfollow', to: 'artistfollows#destroy'
   post '/eventbydate', to: 'userevents#bydate'
+  post '/newartistfollow', to: 'artistfollows#newartist'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
