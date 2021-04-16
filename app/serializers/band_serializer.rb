@@ -4,7 +4,7 @@ class BandSerializer < ActiveModel::Serializer
   attributes :id, :name, :picture, :created_at, :location
   attribute :bandbio, if: -> {object.bandbio}
 
-  has_many :bandfollows
+  has_many :users
   has_many :bandposts
   has_many :members
   has_many :bandevents

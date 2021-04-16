@@ -31,7 +31,12 @@ class PostsController < ApplicationController
     end
     def destroy
         post = Post.find(params[:id])
+        song = Song.find(post.song_id)
+
         post.destroy
+        if song.bandposts.length == 0 && song.posts.length == 0
+            song.destroy
+        end
         render json: {message: 'post deleted.'}
     end
 end

@@ -1,8 +1,12 @@
 class SongsController < ApplicationController
     def show
         @song = Song.find(params[:id])
-        @posts = @song.posts
-        render json: {song: SongSerializer.new(@song), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+        @user_posts = @song.posts
+        @band_posts = @song.bandposts
+        
+        render json: {song: SongSerializer.new(@song), 
+        posts: ActiveModel::Serializer::CollectionSerializer.new(@user_posts, each_serializer: PostSerializer),
+        bandposts: ActiveModel::Serializer::CollectionSerializer.new(@band_posts, each_serializer: PostSerializer)}
     end
     
     def searching
