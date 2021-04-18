@@ -1,7 +1,9 @@
 class UsereventsController < ApplicationController
     def index
-        @user_events = Userevent.all
-        @band_events = Bandevent.all
+        today_date = Time.now
+        @user_events = Userevent.where("event_date >= :date", date: today_date.tomorrow.beginning_of_day)
+        @band_events = Bandevent.where("event_date >= :date", date: today_date.tomorrow.beginning_of_day)
+        byebug
         render json: {user_events: ActiveModel::Serializer::CollectionSerializer.new(@user_events, each_serializer: UsereventSerializer), band_events: ActiveModel::Serializer::CollectionSerializer.new(@band_events, each_serializer: BandeventSerializer)}
     end
     
