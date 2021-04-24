@@ -30,6 +30,7 @@ class User < ApplicationRecord
     has_many :bands, through: :bandmembers
 
     has_many :posts, dependent: :destroy
+    has_many :songs, through: :posts
 
     has_many :comments, dependent: :destroy
     has_many :shares, dependent: :destroy
