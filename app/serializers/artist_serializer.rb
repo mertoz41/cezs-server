@@ -3,11 +3,13 @@ class ArtistSerializer < ActiveModel::Serializer
   has_many :bandposts
   has_many :posts
   has_many :followingusers
+  has_many :songs
   
   def influence_count
-    return object.users.length
+    return object.users.size
   end
   def song_count
-    return object.songs.length
+    return object.songs.size
   end
+  
 end
