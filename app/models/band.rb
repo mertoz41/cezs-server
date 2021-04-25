@@ -16,6 +16,7 @@ class Band < ApplicationRecord
     has_one :bandbio, dependent: :destroy
 
     has_many :bandevents, dependent: :destroy
+    has_many :banddescposts, dependent: :destroy
 
 
 end

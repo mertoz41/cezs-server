@@ -37,6 +37,7 @@ class User < ApplicationRecord
 
     # has_many :requests, dependent: :destroy
     # has_many :responses, dependent: :destroy
+    has_many :userdescposts, dependent: :destroy
 
     has_many :userinstruments, dependent: :destroy
     has_many :instruments, through: :userinstruments

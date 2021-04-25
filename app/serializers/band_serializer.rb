@@ -9,6 +9,7 @@ class BandSerializer < ActiveModel::Serializer
   has_many :members
   has_many :bandevents
   has_many :songs
+  has_many :banddescposts
   
   def picture
     url_for(object.picture)
