@@ -19,19 +19,19 @@ class PostsController < ApplicationController
         @posts = Post.where(instrument_id: instruments)
         @userdescposts = Userdescpost.where(instrument_id: instruments)
         @bandposts = []
-        # @banddescposts = []
+        @banddescposts = []
         instruments.each do |inst|
             instrument = Instrument.find(inst)
             instrument.bandposts.each do |post|
                 @bandposts.push(post)
             end
-            # instrument.banddescposts.each do |post|
-            #     @banddescpost.push(post)
-            # end
+            instrument.banddescposts.each do |post|
+                @banddescposts.push(post)
+            end
         end
             
         # @bandposts = Bandpost.where()
-        render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer)}
+        render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
 
     end
     def destroy
