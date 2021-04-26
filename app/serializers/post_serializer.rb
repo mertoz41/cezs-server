@@ -1,10 +1,15 @@
 class PostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :user_id, :instrument_id, :song_id, :artist_id, :clip, :created_at, :username, :artist_name, :song_name, :instrument_name, :useravatar
-
+  attributes :id, :user_id, :instrument_id, :song_id, :artist_id, :clip, :created_at, :username, :artist_name, :song_name, :instrument_name, :useravatar, :comment_count, :share_count
   def clip
     url_for(object.clip)
+  end
+  def comment_count
+    return object.comments.size
+  end
+  def share_count
+    return object.shares.size
   end
 
   # def created_at
