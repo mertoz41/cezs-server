@@ -9,6 +9,8 @@ class UserSerializer < ActiveModel::Serializer
   has_many :userevents
   has_many :songs
   has_many :userdescposts
+  has_many :posts
+  has_many :shares
   
   def created_at
     object.created_at.to_date

@@ -5,8 +5,8 @@ class AuthController < ApplicationController
             payload = {user_id: @user.id}
             token = encode(payload)
             @timeline = []
-            @posts = []
-            @shares = @user.shares
+            # @posts = []
+            # @shares = @user.shares
             chatrooms = []
             @user.chatrooms.each do |room|
                 obj = {}
@@ -17,7 +17,7 @@ class AuthController < ApplicationController
             end 
 
             @user.posts.each do |post|
-                @posts.push(post)
+                # @posts.push(post)
                 @timeline.push(post)
             end 
             @user.bands.each do |band|
@@ -43,8 +43,11 @@ class AuthController < ApplicationController
                     @timeline.push(post)
                 end
             end 
+            @user.userdescposts.each do |post|
+                @timeline.push(post)
+            end
 
-            render json: {user: UserSerializer.new(@user), token: token, shares: ActiveModel::Serializer::CollectionSerializer.new(@shares, each_serializer: ShareSerializer),timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), chatrooms: chatrooms}
+            render json: {user: UserSerializer.new(@user), token: token, timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), chatrooms: chatrooms}
         else 
             render json: {message: 'Invalid username or password.'}
         end
@@ -53,7 +56,7 @@ class AuthController < ApplicationController
     def check
         @user = User.find(decode(params[:token])["user_id"])
         @timeline = []
-        @posts = []
+        # @posts = []
             
         chatrooms = []
         @user.chatrooms.each do |room|
@@ -82,18 +85,22 @@ class AuthController < ApplicationController
                 @timeline.push(post)
             end
         end 
-        @shares = @user.shares
+        
+        # @shares = @user.shares
             @user.posts.each do |post|
-                @posts.push(post)
+                # @posts.push(post)
                 @timeline.push(post)
-            end 
+            end
+            @user.userdescposts.each do |post|
+                @timeline.push(post)
+            end
             @user.followeds.each do |user|
                 user.posts.each do |post|
                 @timeline.push(post)
                 end 
             end 
         
-        render json: {user: UserSerializer.new(@user), shares: ActiveModel::Serializer::CollectionSerializer.new(@shares, each_serializer: ShareSerializer) ,timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), chatrooms: chatrooms}
+        render json: {user: UserSerializer.new(@user), timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), chatrooms: chatrooms}
     end
 
 end

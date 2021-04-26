@@ -7,9 +7,9 @@ class PostSerializer < ActiveModel::Serializer
     url_for(object.clip)
   end
 
-  def created_at
-    object.created_at.to_date
-  end
+  # def created_at
+  #   object.created_at.to_date
+  # end
 
   def username
     user = User.find(object.user_id)
