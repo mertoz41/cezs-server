@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   resources :bandevents
   resources :banddescposts
   resources :userdescposts
+  resources :bandpostcomments 
+  resources :banddescpostcomments
 
   mount ActionCable.server => '/cable'
 

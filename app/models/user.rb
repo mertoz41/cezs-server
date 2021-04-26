@@ -33,6 +33,14 @@ class User < ApplicationRecord
     has_many :songs, through: :posts
 
     has_many :comments, dependent: :destroy
+
+    has_many :bandpostcomments, dependent: :destroy
+    has_many :userdescpostcomments, dependent: :destroy
+    has_many :banddescpostcomments, dependent: :destroy
+
+
+
+
     has_many :shares, dependent: :destroy
 
     # has_many :requests, dependent: :destroy

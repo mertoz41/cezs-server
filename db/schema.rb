@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_26_153410) do
+ActiveRecord::Schema.define(version: 2021_04_26_191315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,14 @@ ActiveRecord::Schema.define(version: 2021_04_26_153410) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "banddescpostcomments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "banddescpost_id"
+    t.string "comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "banddescpostinstruments", force: :cascade do |t|
     t.integer "banddescpost_id"
     t.integer "instrument_id"
@@ -110,6 +118,14 @@ ActiveRecord::Schema.define(version: 2021_04_26_153410) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+  end
+
+  create_table "bandpostcomments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "bandpost_id"
+    t.string "comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "bandpostinstruments", force: :cascade do |t|
@@ -232,6 +248,14 @@ ActiveRecord::Schema.define(version: 2021_04_26_153410) do
   create_table "userchatrooms", force: :cascade do |t|
     t.integer "user_id"
     t.integer "chatroom_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "userdescpostcomments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "userdescpost_id"
+    t.string "comment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
