@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   post '/bandpostshares', to: 'bandposts#share'
   post '/banddescpostshares', to: 'banddescposts#share'
   post '/userdescpostshares', to: 'userdescposts#share'
+  delete '/unsharebandpost/:id', to: 'bandposts#unshare'
 
 
   

@@ -16,9 +16,17 @@ class BandpostsController < ApplicationController
     end
 
     def share
+        # byebug
+        nu_share = Bandpostshare.create(user_id: params[:user_id].to_i, bandpost_id: params[:bandpost_id].to_i)
+        render json: {nu_share: nu_share}
         # findbandpost and user
         # create instance
 
+    end
+    def unshare
+        share = Bandpostshare.find(params[:id])
+        share.destroy
+        render json: {message: 'post unshared.'}
     end
     def destroy
         post = Bandpost.find(params[:id])
