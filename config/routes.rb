@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   post '/banddescpostshares', to: 'banddescposts#share'
   post '/userdescpostshares', to: 'userdescposts#share'
   delete '/unsharebandpost/:id', to: 'bandposts#unshare'
-
+  delete '/unsharebanddescpost/:id', to: 'banddescposts#unshare'
 
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
