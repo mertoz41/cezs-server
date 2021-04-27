@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_26_191315) do
+ActiveRecord::Schema.define(version: 2021_04_27_155523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,13 @@ ActiveRecord::Schema.define(version: 2021_04_26_191315) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "banddescpostshares", force: :cascade do |t|
+    t.integer "banddescpost_id"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "bandevents", force: :cascade do |t|
     t.string "address"
     t.string "description"
@@ -139,6 +146,13 @@ ActiveRecord::Schema.define(version: 2021_04_26_191315) do
     t.integer "band_id"
     t.integer "song_id"
     t.integer "artist_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "bandpostshares", force: :cascade do |t|
+    t.integer "bandpost_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -233,7 +247,6 @@ ActiveRecord::Schema.define(version: 2021_04_26_191315) do
   create_table "shares", force: :cascade do |t|
     t.integer "post_id"
     t.string "user_id"
-    t.string "integer"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -264,6 +277,13 @@ ActiveRecord::Schema.define(version: 2021_04_26_191315) do
     t.integer "user_id"
     t.string "description"
     t.integer "instrument_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "userdescpostshares", force: :cascade do |t|
+    t.integer "userdescpost_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

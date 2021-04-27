@@ -3,4 +3,5 @@ class Userdescpost < ApplicationRecord
     belongs_to :user
     belongs_to :instrument
     has_many :userdescpostcomments, dependent: :destroy
+    has_many :userdescpostshares, dependent: :destroy
 end

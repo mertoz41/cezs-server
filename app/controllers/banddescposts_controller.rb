@@ -10,4 +10,9 @@ class BanddescpostsController < ApplicationController
         @new_post.clip.attach(params[:clip])
         render json: @new_post, serializer: BanddescpostSerializer
     end 
+
+    def share
+        # findbanddescpost and user
+        # create instance
+    end
 end

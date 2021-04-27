@@ -8,5 +8,6 @@ class Bandpost < ApplicationRecord
     has_many :instruments, through: :bandpostinstruments
 
     has_many :bandpostcomments, dependent: :destroy
+    has_many :bandpostshares, dependen: :destroy
 
 end

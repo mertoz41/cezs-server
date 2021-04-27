@@ -4,4 +4,5 @@ class Banddescpost < ApplicationRecord
     has_many :banddescpostinstruments, dependent: :destroy
     has_many :instruments, through: :banddescpostinstruments
     has_many :banddescpostcomments, dependent: :destroy
+    has_many :banddescpostshares, dependent: :destroy
 end

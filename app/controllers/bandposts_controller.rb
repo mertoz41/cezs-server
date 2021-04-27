@@ -14,6 +14,12 @@ class BandpostsController < ApplicationController
         @bandpost.clip.attach(params[:clip])
         render json: @bandpost, serializer: BandpostSerializer
     end
+
+    def share
+        # findbandpost and user
+        # create instance
+
+    end
     def destroy
         post = Bandpost.find(params[:id])
         # when bandpost is deleted, songs bandpost will be deleted, but song instance will still exist.

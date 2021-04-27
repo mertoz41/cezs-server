@@ -7,4 +7,10 @@ class UserdescpostsController < ApplicationController
         @new_post.clip.attach(params[:clip])
         render json: @new_post, serializer: UserdescpostSerializer
     end 
+
+    def share
+        # find userdescpost and user 
+        # create instance
+
+    end
 end

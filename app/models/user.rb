@@ -42,6 +42,9 @@ class User < ApplicationRecord
 
 
     has_many :shares, dependent: :destroy
+    has_many :bandpostshares, dependent: :destroy
+    has_many :banddescpostshares, dependent: :destroy
+    has_many :userdescpostshares, dependent: :destroy
 
     # has_many :requests, dependent: :destroy
     # has_many :responses, dependent: :destroy
