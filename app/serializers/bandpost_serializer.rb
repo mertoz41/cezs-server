@@ -1,10 +1,13 @@
 class BandpostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :band_id, :song_id, :artist_id, :clip, :created_at, :bandname, :artist_name, :song_name, :bandpicture
+  attributes :id, :band_id, :song_id, :artist_id, :clip, :created_at, :bandname, :artist_name, :song_name, :bandpicture, :spotify_id, :comment_count
   has_many :instruments 
   def clip
     url_for(object.clip)
+  end
+  def comment_count
+    return object.bandpostcomments.size
   end
   def bandpicture
     band = Band.find(object.band_id)
@@ -26,4 +29,8 @@ class BandpostSerializer < ActiveModel::Serializer
     song = Song.find(object.song_id)
     return song.name
   end 
+  def spotify_id
+    artist = Artist.find(object.artist_id)
+    return artist.spotify_id
+  end
 end
