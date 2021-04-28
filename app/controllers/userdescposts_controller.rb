@@ -9,8 +9,14 @@ class UserdescpostsController < ApplicationController
     end 
 
     def share
-        # find userdescpost and user 
-        # create instance
-
+        userdescpost = Userdescpost.find(params[:userdescpost_id])
+        user = User.find(params[:user_id])
+        nu_share = Userdescpostshare.create(user_id: user.id, userdescpost_id: userdescpost.id)
+        render json: {nu_share: nu_share}
+    end
+    def unshare
+        share = Userdescpostshare.find(params[:id])
+        share.destroy
+        render json: {message: 'post unshared.'}
     end
 end

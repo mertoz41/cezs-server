@@ -100,7 +100,10 @@ class AuthController < ApplicationController
             @user.followeds.each do |user|
                 user.posts.each do |post|
                 @timeline.push(post)
-                end 
+                end
+                user.userdescposts.each do |post|
+                    @timeline.push(post)
+                end
             end 
         
         render json: {user: UserSerializer.new(@user), timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), chatrooms: chatrooms}
