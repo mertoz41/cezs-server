@@ -1,7 +1,7 @@
 class UserdescpostcommentSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :user_id, :userdescpost_id, :comment, :username, :avatar
+  attributes :id, :user_id, :userdescpost_id, :comment, :username, :avatar, :created_at
   def username
     user = User.find(object.user_id)
     return user.username
