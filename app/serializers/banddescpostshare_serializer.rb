@@ -1,7 +1,8 @@
 class BanddescpostshareSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :clip, :description, :bandname, :bandpicture, :created_at, :share_count, :band_id
+  attributes :id, :clip, :description, :bandname, :bandpicture, :created_at, :share_count, :band_id, :comment_count, :banddescpost_id
+
   def clip
     banddescpost = object.banddescpost
     return url_for(banddescpost.clip)
@@ -30,6 +31,12 @@ class BanddescpostshareSerializer < ActiveModel::Serializer
     banddescpost = object.banddescpost
     return banddescpost.band.id
   end
+  def comment_count
+    banddescpost = object.banddescpost
+    return banddescpost.banddescpostcomments.size
+  end 
+
+
 
     
 
