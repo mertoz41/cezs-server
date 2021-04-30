@@ -32,8 +32,8 @@ class BandpostsController < ApplicationController
 
     def share
         # byebug
-        nu_share = Bandpostshare.create(user_id: params[:user_id].to_i, bandpost_id: params[:bandpost_id].to_i)
-        render json: {nu_share: nu_share}
+        @nu_share = Bandpostshare.create(user_id: params[:user_id].to_i, bandpost_id: params[:bandpost_id].to_i)
+        render json: {nu_share: BandpostshareSerializer.new(@nu_share)}
         # findbandpost and user
         # create instance
 

@@ -11,8 +11,8 @@ class UserdescpostsController < ApplicationController
     def share
         userdescpost = Userdescpost.find(params[:userdescpost_id])
         user = User.find(params[:user_id])
-        nu_share = Userdescpostshare.create(user_id: user.id, userdescpost_id: userdescpost.id)
-        render json: {nu_share: nu_share}
+        @nu_share = Userdescpostshare.create(user_id: user.id, userdescpost_id: userdescpost.id)
+        render json: {nu_share: UserdescpostshareSerializer.new(@nu_share)}
     end
     def unshare
         share = Userdescpostshare.find(params[:id])
