@@ -1,7 +1,7 @@
 class UserdescpostshareSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :clip, :description, :username, :useravatar, :created_at, :share_count, :user_id, :comment_count, :userdescpost_id
+  attributes :id, :clip, :description, :username, :useravatar, :created_at, :share_count, :user_id, :comment_count, :userdescpost_id, :thumbnail
   def clip 
     userdescpost = object.userdescpost
     return url_for(userdescpost.clip)
@@ -13,6 +13,10 @@ class UserdescpostshareSerializer < ActiveModel::Serializer
   def username
     userdescpost = object.userdescpost
     return userdescpost.user.username
+  end
+  def thumbnail
+    userdescpost = object.userdescpost
+    return userdescpost.thumbnail
   end
   def useravatar 
     userdescpost = object.userdescpost

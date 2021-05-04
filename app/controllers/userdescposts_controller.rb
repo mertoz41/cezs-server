@@ -20,8 +20,8 @@ class UserdescpostsController < ApplicationController
         render json: {message: 'post unshared.'}
     end
     def destroy
-        banddescpost = Banddescpost.find(params[:id])
-        banddescpost.destroy
-        render json: {message: 'banddescpost deleted.'}
+        userdescpost = Userdescpost.find(params[:id])
+        userdescpost.destroy
+        render json: {message: 'userdescpost deleted.'}
     end
 end
