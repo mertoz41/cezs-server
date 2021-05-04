@@ -3,7 +3,7 @@ class BanddescpostsController < ApplicationController
         band_id = params[:band_id].to_i
         description = params[:description]
         instruments = JSON.parse params[:instruments]
-        @new_post = Banddescpost.create(band_id: band_id, description: description)
+        @new_post = Banddescpost.create(band_id: band_id, description: description, thumbnail: params[:thumbnail])
         instruments.each do |inst|
             Banddescpostinstrument.create(instrument_id: inst, banddescpost_id: @new_post.id)
         end
