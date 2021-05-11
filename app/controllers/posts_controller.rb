@@ -28,23 +28,72 @@ class PostsController < ApplicationController
 
     def filter
         instruments = params[:selected_instruments]
-        @posts = Post.where(instrument_id: instruments)
-        @userdescposts = Userdescpost.where(instrument_id: instruments)
-        @bandposts = []
-        @banddescposts = []
-        instruments.each do |inst|
-            instrument = Instrument.find(inst)
-            instrument.bandposts.each do |post|
-                @bandposts.push(post)
+        # byebug
+        if instruments.length > 0 
+            @posts = Post.where(instrument_id: instruments)
+            @userdescposts = Userdescpost.where(instrument_id: instruments)
+            @bandposts = []
+            @banddescposts = []
+            instruments.each do |inst|
+                instrument = Instrument.find(inst)
+                instrument.bandposts.each do |post|
+                    @bandposts.push(post)
+                end
+                instrument.banddescposts.each do |post|
+                    @banddescposts.push(post)
+                end
             end
-            instrument.banddescposts.each do |post|
-                @banddescposts.push(post)
-            end
-        end
-            
-        # @bandposts = Bandpost.where()
-        render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
+            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
 
+            
+        end
+        
+        if params[:song_name].length > 0 
+            songs = Song.where(Song.arel_table[:name].lower.matches("%#{params[:song_name].downcase}%"))
+            # byebug
+            
+            @bandposts = []
+            @posts = []
+            songs.each do |song|
+                song.posts.each do |post|
+                    @posts.push(post)
+                end
+                song.bandposts.each do |post|
+                    @bandposts.push(post)
+                end
+               
+                # @bandposts.push(songbandpost)
+            end
+            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
+                
+        end
+        if params[:artist_name].length > 0
+            artists = Artist.where(Artist.arel_table[:name].lower.matches("%#{params[:artist_name].downcase}%"))
+            @bandposts = []
+            @posts = []
+            artists.each do |artis|
+                artis.posts.each do |post|
+                    @posts.push(post)
+                end
+                artis.bandposts.each do |post|
+                    @bandposts.push(post)
+                end
+            end
+            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
+        end
+
+        
+        
+        
+        
+        
+        
+        
+        # if params[:song_name].length
+        #     posts
+        
+        # @bandposts = Bandpost.where()
+        
     end
     def destroy
         post = Post.find(params[:id])
