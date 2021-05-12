@@ -29,7 +29,8 @@ class PostsController < ApplicationController
     def filter
         instruments = params[:selected_instruments]
         # byebug
-        if instruments.length > 0 
+        if instruments.length > 0 && params[:song_name].length == 0 && params[:artist_name].length == 0
+            # only by instrument
             @posts = Post.where(instrument_id: instruments)
             @userdescposts = Userdescpost.where(instrument_id: instruments)
             @bandposts = []
@@ -48,7 +49,8 @@ class PostsController < ApplicationController
             
         end
         
-        if params[:song_name].length > 0 
+        if params[:song_name].length > 0 && params[:artist_name].length == 0 && instruments.length == 0
+            # only by song name
             songs = Song.where(Song.arel_table[:name].lower.matches("%#{params[:song_name].downcase}%"))
             # byebug
             
@@ -67,7 +69,8 @@ class PostsController < ApplicationController
             render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
                 
         end
-        if params[:artist_name].length > 0
+        if params[:artist_name].length > 0 && params[:song_name].length == 0 && instruments.length == 0
+            # only by artist name
             artists = Artist.where(Artist.arel_table[:name].lower.matches("%#{params[:artist_name].downcase}%"))
             @bandposts = []
             @posts = []
@@ -82,18 +85,53 @@ class PostsController < ApplicationController
             render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
         end
 
-        
-        
-        
-        
-        
-        
-        
-        # if params[:song_name].length
-        #     posts
-        
-        # @bandposts = Bandpost.where()
-        
+        if params[:artist_name].length > 0 && params[:song_name].length > 0
+            # only by song name and artist name
+            artists = Artist.where(Artist.arel_table[:name].lower.matches("%#{params[:artist_name].downcase}%"))
+            songs = Song.where(Song.arel_table[:name].lower.matches("%#{params[:song_name].downcase}%"))
+            @bandposts = []
+            @posts = []
+            artists.each do |artis|
+                artis.posts.each do |post|
+                    @posts.push(post)
+                end
+                artis.bandposts.each do |post|
+                    @bandposts.push(post)
+                end
+            end
+            songs.each do |song|
+                song.posts.each do |post|
+                    # check to see if post already exists in @posts
+                    # if it does do nothing
+                    if !@posts.include?(post)
+                    @posts.push(post)
+                    end
+                end
+                song.bandposts.each do |post|
+                    @bandposts.push(post)
+                end
+                # @bandposts.push(songbandpost)
+            end
+            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
+
+        end
+
+        if params[:artist_name].length > 0 && instruments.length > 0
+            # only by instrument and artist name
+            artists = Artist.where(Artist.arel_table[:name].lower.matches("%#{params[:artist_name].downcase}%"))
+            @bandposts = []
+            @posts = []
+            artists.each do |artis|
+                artis.posts.each do |post|
+                    @posts.push(post)
+                end
+                artis.bandposts.each do |post|
+                    @bandposts.push(post)
+                end
+            end
+
+        end
+
     end
     def destroy
         post = Post.find(params[:id])
