@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   post '/artistsearch', to: 'artists#searching'
   post '/bandsearch', to: 'bands#searching'
   post '/filter', to: 'posts#filter'
+  post '/instrumentfilter', to: 'instruments#filter'
   post '/deleteinfluence', to: 'userinfluences#delete'
   post '/instrumentsearch', to: 'instruments#searching'
   post '/deleteuserinstrument', to: 'userinstruments#delete'
