@@ -1,14 +1,12 @@
 class UserdescpostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-
-  attributes :id, :clip, :description, :instrument_id, :created_at, :username, :useravatar, :user_id, :share_count, :comment_count, :thumbnail
-  
+  attributes :id, :clip, :description, :instrument_id, :created_at, :username, :useravatar, :user_id, :share_count, :comment_count, :thumbnail, :genre, :genre_id
   def clip
     url_for(object.clip)
   end
-  # def created_at
-  #   object.created_at.to_date
-  # end
+  def genre
+    return object.genre.name
+  end
   def username
     user = User.find(object.user_id)
     return user.username

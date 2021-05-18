@@ -1,10 +1,13 @@
 class BanddescpostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :clip, :description, :created_at, :bandname, :bandpicture, :band_id, :comment_count, :share_count, :thumbnail
+  attributes :id, :clip, :description, :created_at, :bandname, :bandpicture, :band_id, :comment_count, :share_count, :thumbnail, :genre_id, :genre
   has_many :instruments
   def clip
     url_for(object.clip)
+  end
+  def genre 
+    return object.genre.name
   end
   def bandname
     band = Band.find(object.band_id)

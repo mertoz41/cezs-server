@@ -3,7 +3,7 @@ class UserdescpostsController < ApplicationController
         user_id = params[:user_id].to_i
         description = params[:description]
         instrument_id = params[:instrument_id]
-        @new_post = Userdescpost.create(user_id: user_id, description: description, instrument_id: instrument_id, thumbnail: params[:thumbnail])
+        @new_post = Userdescpost.create(user_id: user_id, description: description, instrument_id: instrument_id, thumbnail: params[:thumbnail], genre_id: genre_id)
         @new_post.clip.attach(params[:clip])
         render json: @new_post, serializer: UserdescpostSerializer
     end 
