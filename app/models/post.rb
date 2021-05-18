@@ -4,6 +4,7 @@ class Post < ApplicationRecord
     has_many :shares, dependent: :destroy 
     belongs_to :user
     belongs_to :instrument
+    belongs_to :genre
     belongs_to :artist
     belongs_to :song
 end
