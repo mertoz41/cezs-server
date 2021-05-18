@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_124802) do
+ActiveRecord::Schema.define(version: 2021_05_18_141026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_124802) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "thumbnail"
+    t.integer "genre_id"
   end
 
   create_table "banddescpostshares", force: :cascade do |t|
@@ -150,6 +151,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_124802) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "thumbnail"
+    t.integer "genre_id"
   end
 
   create_table "bandpostshares", force: :cascade do |t|
@@ -228,6 +230,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_124802) do
     t.integer "artist_id"
     t.integer "song_id"
     t.string "thumbnail"
+    t.integer "genre_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -283,6 +286,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_124802) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "thumbnail"
+    t.integer "genre_id"
   end
 
   create_table "userdescpostshares", force: :cascade do |t|
