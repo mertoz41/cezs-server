@@ -15,8 +15,25 @@ class LocationsController < ApplicationController
         # if it doesnt exist, create location, then create userlocation model with locations id and user id.
 
         @user = User.find(params[:user_id])
-        location = Location.find_or_create_by(city: params[:city], latitude: params[:latitude], longitude: params[:longitude])
-        user_location = Userlocation.create(user_id: @user.id, location_id: location.id)
+
+       
+        # if @user.location.users.size == 1
+        location = Location.find_by(city: params[:city])
+        if location
+            # if location exists
+            user_location = Userlocation.create(user_id: @user.id, location_id: location.id)
+        else
+            new_location = Location.create(city: params[:city], latitude: params[:latitude], longitude: params[:longitude])
+            new_user_location = Userlocation.create(user_id: @user.id, location_id: new_location.id)
+            # if its a new location create location first
+            # then create user_location
+        end
+
+       
+
+        # find or create by city only
+
+        # check that users last location to see if another user exists in that location
         @locations = Location.all
         render json: {locations: ActiveModel::Serializer::CollectionSerializer.new(@locations, each_serializer: LocationSerializer), user: UserSerializer.new(@user)}
     end 
@@ -26,9 +43,27 @@ class LocationsController < ApplicationController
         # need to update Userlocation model. 
         # find userlocation by user_id
         @user = User.find(params[:user_id])
-        location = Location.find_or_create_by(city: params[:regionName], latitude: params[:latitude], longitude: params[:longitude])
+        old_location = @user.location
         user_location = Userlocation.find_by(user_id: @user.id)
-        user_location.update(location_id: location.id)
+        location = Location.find_by(city: params[:city])
+        if location
+            # if location exists 
+            user_location.update(location_id: location.id)
+           
+            # user_location = Userlocation.create(user_id: @user.id, location_id: location.id)
+        else
+            new_location = Location.create(city: params[:city], latitude: params[:latitude], longitude: params[:longitude])
+            user_location.update(location_id: new_location.id)
+
+            # if its a new location create location first
+            # then create user_location
+        end
+
+        if old_location.users.length == 0
+            # delete location if there are no users
+            old_location.destroy
+        end
+      
         render json: {user: UserSerializer.new(@user)}
     end 
 end
