@@ -1,6 +1,7 @@
 class UserdescpostsController < ApplicationController
     def create
         user_id = params[:user_id].to_i
+        genre_id = params[:genre_id].to_i
         description = params[:description]
         instrument_id = params[:instrument_id]
         @new_post = Userdescpost.create(user_id: user_id, description: description, instrument_id: instrument_id, thumbnail: params[:thumbnail], genre_id: genre_id)
