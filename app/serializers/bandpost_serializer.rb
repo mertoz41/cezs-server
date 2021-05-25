@@ -16,9 +16,7 @@ class BandpostSerializer < ActiveModel::Serializer
     band = Band.find(object.band_id)
     return url_for(band.picture)
   end 
-  def created_at
-    object.created_at.to_date
-  end
+
   def bandname
     band = Band.find(object.band_id)
     return band.name
