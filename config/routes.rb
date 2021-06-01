@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   # post '/experiment', to: 'users#experiment'
   get '/experiment', to: 'users#experiment'
   post '/login', to: 'auth#create'
-  post '/check', to: 'auth#check'
+  get '/check', to: 'auth#check'
   post '/avatar', to: 'users#avatar'
   post '/picture', to: 'bands#picture'
   post '/usersearch', to: 'users#searching'

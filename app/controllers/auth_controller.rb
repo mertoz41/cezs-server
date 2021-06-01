@@ -54,7 +54,8 @@ class AuthController < ApplicationController
     end
 
     def check
-        @user = User.find(decode(params[:token])["user_id"])
+        token = request.headers["Authorization"].split(' ')[1]
+        @user = User.find(decode(token)["user_id"])
         @timeline = []
         # @posts = []
             
