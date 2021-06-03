@@ -5,21 +5,23 @@ class PostsController < ApplicationController
         instrument_id = params[:instrument_id].to_i
         genre_id = params[:genre_id].to_i
         artist_name = params[:artist_name]
-        spotify_id = params[:spotify_id]
+        artist_spotify_id = params[:artist_spotify_id]
+        song_spotify_id = params[:song_spotify_id]
         song_name = params[:song_name]
+        byebug
         # find artist by artist name and spotify id
         # if artist found use it for post creation
-        artist = Artist.find_by(name: artist_name, spotify_id: spotify_id)
+        artist = Artist.find_by(name: artist_name, spotify_id: artist_spotify_id)
         if artist
-            song = Song.find_or_create_by(name: song_name, artist_id: artist.id)
+            song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id)
             @post = Post.create(user_id: user_id, instrument_id: instrument_id, artist_id: artist.id, song_id: song.id, thumbnail: params[:thumbnail], genre_id: genre_id)
             @post.clip.attach(params[:clip])
             render json: @post, serializer: PostSerializer
         else
         # if not create an artist instance
         # then create post instance
-            new_artist = Artist.create(name: artist_name, spotify_id: spotify_id, avatar: params[:artist_pic])
-            song = Song.create(name: song_name, artist_id: new_artist.id)
+            new_artist = Artist.create(name: artist_name, spotify_id: artist_spotify_id)
+            song = Song.find_or_create_by(name: song_name, artist_id: new_artist.id, spotify_id: song_spotify_id)
             @post = Post.create(user_id: user_id, instrument_id: instrument_id, artist_id: new_artist.id, song_id: song.id, thumbnail: params[:thumbnail], genre_id: genre_id)
             @post.clip.attach(params[:clip])
             render json: @post, serializer: PostSerializer
