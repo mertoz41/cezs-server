@@ -8,7 +8,6 @@ class PostsController < ApplicationController
         artist_spotify_id = params[:artist_spotify_id]
         song_spotify_id = params[:song_spotify_id]
         song_name = params[:song_name]
-        byebug
         # find artist by artist name and spotify id
         # if artist found use it for post creation
         artist = Artist.find_by(name: artist_name, spotify_id: artist_spotify_id)
