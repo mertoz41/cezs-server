@@ -25,6 +25,9 @@ class User < ApplicationRecord
     has_one :bio, dependent: :destroy
     has_one :userlocation, dependent: :destroy
     has_one :location, through: :userlocation
+    
+    has_one :usersong, dependent: :destroy
+    has_one :favoritesong, through: :usersong
 
     has_many :bandmembers, dependent: :destroy
     has_many :bands, through: :bandmembers
