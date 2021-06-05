@@ -22,6 +22,10 @@ class User < ApplicationRecord
 
     validates :username, uniqueness: { case_sensitive: false }
     # has_one :location
+
+    has_one :userartist, dependent: :destroy
+    has_one :favoriteartist, through: :userartist
+    
     has_one :bio, dependent: :destroy
     has_one :userlocation, dependent: :destroy
     has_one :location, through: :userlocation

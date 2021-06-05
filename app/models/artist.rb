@@ -10,5 +10,10 @@ class Artist < ApplicationRecord
     has_many :artistfollows, dependent: :destroy
     has_many :followingusers, through: :artistfollows
 
+    has_many :userartists, dependent: :destroy
+    has_many :favoriteusers, through: :userartists
+
+    
+
 
 end
