@@ -15,6 +15,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :banddescpostshares
   has_many :userdescpostshares
   has_one :favoritesong
+  has_one :favoriteartist
   
   def created_at
     object.created_at.to_date
