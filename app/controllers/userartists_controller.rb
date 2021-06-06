@@ -16,4 +16,14 @@ class UserartistsController < ApplicationController
             # create user artist instance
         end
     end
+    def delete
+        user = User.find(params[:user_id])
+        artist = Artist.find(params[:artist_id])
+        userartist = Userartist.find_by(user_id: user.id, artist_id: artist.id)
+        userartist.destroy
+        if artist.posts.size == 0 && artist.bandposts.size == 0 && artist.userinfluences.size == 0 && artist.artistfollows.size == 0 && artist.userartists.size == 0
+            artist.destroy
+        end
+        render json: {message: 'users favorite artist deleted.'}
+    end
 end
