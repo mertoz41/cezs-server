@@ -29,4 +29,15 @@ class UsersongsController < ApplicationController
         # if song does not exist create the song
         # and then create usersong instance
     end
+
+    def delete
+        user = User.find(params[:user_id])
+        song = Song.find(params[:song_id])
+        usersong = Usersong.find_by(user_id: user.id, song_id: song.id)
+        usersong.destroy
+        if song.posts.size == 0 && song.bandposts.size == 0 && song.usersongs.size == 0
+            song.destroy
+        end
+        render json: {message: 'favorite song successfully deleted.'}
+    end
 end
