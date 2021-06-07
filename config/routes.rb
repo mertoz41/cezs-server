@@ -66,5 +66,6 @@ Rails.application.routes.draw do
   delete '/unshareuserdescpost/:id', to: 'userdescposts#unshare'
   post  '/deleteuserartist', to: 'userartists#delete'
   post '/deleteusersong', to: 'usersongs#delete'
+  get '/albumcheck/:id', to: 'albums#albumcheck'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
