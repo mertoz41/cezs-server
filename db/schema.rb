@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_05_023206) do
+ActiveRecord::Schema.define(version: 2021_06_07_030438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 2021_06_05_023206) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "albums", force: :cascade do |t|
+    t.string "name"
+    t.integer "artist_id"
+    t.string "spotify_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "artistfollows", force: :cascade do |t|
@@ -262,6 +270,7 @@ ActiveRecord::Schema.define(version: 2021_06_05_023206) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "spotify_id"
+    t.integer "album_id"
   end
 
   create_table "userartists", force: :cascade do |t|
