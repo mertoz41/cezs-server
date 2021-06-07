@@ -11,4 +11,13 @@ class SongsController < ApplicationController
         render json: {songs: ActiveModel::Serializer::CollectionSerializer.new(@songs, each_serializer: SongSerializer)}
         # serializer isnt very smart for this situation
     end
+
+    def check
+        @song = Song.find_by(spotify_id: params[:id])
+        if @song
+            render json: {song: SongSerializer.new(@song)}
+        else
+            render json: {message: 'song not found'}
+        end
+    end
 end

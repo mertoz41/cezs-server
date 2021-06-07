@@ -67,5 +67,6 @@ Rails.application.routes.draw do
   post  '/deleteuserartist', to: 'userartists#delete'
   post '/deleteusersong', to: 'usersongs#delete'
   get '/albumcheck/:id', to: 'albums#albumcheck'
+  get '/songcheck/:id', to: 'songs#check'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
