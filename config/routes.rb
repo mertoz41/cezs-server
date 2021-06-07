@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :userdescpostcomments 
   resources :usersongs
   resources :userartists
+  resources :useralbums
 
   mount ActionCable.server => '/cable'
 
