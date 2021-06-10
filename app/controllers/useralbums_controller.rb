@@ -58,12 +58,13 @@ class UseralbumsController < ApplicationController
                 new_artist = Artist.create(name: params[:artist_name], spotify_id: params[:artistSpotifyId])
                 @new_album = Album.create(name: params[:name], spotify_id: params[:albumSpotifyId], artist_id: new_artist.id)
                 user_album.update(album_id: @new_album.id)
-                render json: {album: AlbumSerialier.new(@new_album)}
+                render json: {album: AlbumSerializer.new(@new_album)}
 
             end
 
         end
-        if old_album.songs.length == 0 && old_album.favoriteusers == 0
+        if old_album.songs.size == 0 && old_album.favoriteusers.size == 0
+            byebug
             old_album.destroy
         end
 
