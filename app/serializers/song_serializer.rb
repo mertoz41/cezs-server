@@ -1,5 +1,5 @@
 class SongSerializer < ActiveModel::Serializer
-  attributes :id, :name, :artist_name, :post_count, :user_count, :bandpost_count, :spotify_id
+  attributes :id, :name, :artist_name, :post_count, :user_count, :bandpost_count, :spotify_id, :album_name
   has_many :posts
   has_many :bandposts
   
@@ -15,4 +15,8 @@ class SongSerializer < ActiveModel::Serializer
   def bandpost_count
     return object.bandposts.size
   end
+  def album_name
+    return object.album.name
+  end
 end
+

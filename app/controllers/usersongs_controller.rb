@@ -2,7 +2,6 @@ class UsersongsController < ApplicationController
     def create
         user = User.find(params[:user_id])
         song = Song.find_by(spotify_id: params[:songSpotifyId])
-        byebug
         if song
             user_song = Usersong.create(user_id: user.id, song_id: song.id)
         else
@@ -47,7 +46,7 @@ class UsersongsController < ApplicationController
         user = User.find(params[:user_id])
         user_song = user.usersong
         old_artist = user.favoritesong.artist
-        byebug
+        # byebug
         # what is to be updated
         song = Song.find_by(spotify_id: params[:songSpotifyId])
         if song
