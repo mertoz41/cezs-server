@@ -5,40 +5,52 @@ class UseralbumsController < ApplicationController
         album_spotify_id = params[:albumSpotifyId]
         artist_name = params[:artist_name]
         artist_spotify_id = params[:artistSpotifyId]
-        album = Album.find_by(spotify_id: album_spotify_id)
-        if album
+        @album = Album.find_by(spotify_id: album_spotify_id)
+        if @album
             # if album exists
-            new_useralbum = Useralbum.create(user_id: user.id, album_id: album.id)
-            render json: {album: album}
+            new_useralbum = Useralbum.create(user_id: user.id, album_id: @album.id)
+            render json: {album: AlbumSerializer.new(@album)}
         else
             artist = Artist.find_by(spotify_id: artist_spotify_id)
             if artist
                 # if artist exists
-                new_album = Album.create(name: album_name, spotify_id: album_spotify_id, artist_id: artist.id)
-                new_useralbum = Useralbum.create(user_id: user.id, album_id: new_album.id)
-                render json: {album: new_album}
+                @new_album = Album.create(name: album_name, spotify_id: album_spotify_id, artist_id: artist.id)
+                new_useralbum = Useralbum.create(user_id: user.id, album_id: @new_album.id)
+                render json: {album: AlbumSerializer.new(@new_album)}
 
             else 
                 # if artist doesnt exist
                 new_artist = Artist.create(name: artist_name, spotify_id: artist_spotify_id)
-                new_album = Album.create(name: album_name, spotify_id: album_spotify_id, artist_id: new_artist.id)
-                new_useralbum = Useralbum.create(user_id: user.id, album_id: new_album.id)
-                render json: {album: new_album}
+                @new_album = Album.create(name: album_name, spotify_id: album_spotify_id, artist_id: new_artist.id)
+                new_useralbum = Useralbum.create(user_id: user.id, album_id: @new_album.id)
+                render json: {album: AlbumSerializer.new(@new_album)}
 
             end
             # if album does not exist
         end
-
-
-
         # find album first
         # if album doesnt exist
         # find artist
         # if artist doesnt exist
         # create artist first, then album, then useralbum instance
-
-
     end
+
+
+
+    def delete
+        user = User.find(params[:user_id])
+        album = Album.find(params[:album_id])
+        user_album = Useralbum.find_by(user_id: user.id, album_id: album.id)
+        user_album.destroy
+        if album.songs.size == 0 && album.favoriteusers.size == 0
+            album.destroy
+        end
+        render json: {message: 'users favorite album deleted.'}
+    end
+
+
+
+
     def update
         user = User.find(params[:user_id])
         user_album = user.useralbum
