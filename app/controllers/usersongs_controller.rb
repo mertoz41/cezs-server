@@ -55,6 +55,7 @@ class UsersongsController < ApplicationController
             # song doesnt exist
             artist = Artist.find_by(spotify_id: params[:artistSpotifyId])
             if !artist
+                byebug
                 new_artist = Artist.create(name: params[:artist_name], spotify_id: params[:artistSpotifyId])
                 new_album = Album.create(name: params[:album_name], spotify_id: params[:albumSpotifyId], artist_id: new_artist.id)
                 @new_song = Song.create(name: params[:name], spotify_id: params[:songSpotifyId], artist_id: new_artist.id, album_id: new_album.id)
@@ -62,6 +63,7 @@ class UsersongsController < ApplicationController
                 render json: {song: SongSerializer.new(@new_song)}
             else
                 album = Album.find_by(spotify_id: params[:albumSpotifyId])
+                byebug
                 if album
                     @new_song = Song.create(name: params[:name], spotify_id: params[:songSpotifyId], artist_id: artist.id, album_id: album.id)
                     user_song.update(song_id: @new_song.id)
@@ -69,7 +71,7 @@ class UsersongsController < ApplicationController
                 else
                     new_album = Album.create(name: params[:album_name], spotify_id: params[:albumSpotifyId], artist_id: artist.id)
                     @new_song = Song.create(name: params[:name], spotify_id: params[:songSpotifyId], artist_id: artist.id, album_id: new_album.id)
-                    new_user_song = Usersong.create(user_id: user.id, song_id: @new_song.id)
+                    user_song.update(song_id: @new_song.id)
                     render json: {song: SongSerializer.new(@new_song)}
                 end
 
