@@ -48,14 +48,15 @@ class UsersongsController < ApplicationController
         old_artist = user.favoritesong.artist
         # byebug
         # what is to be updated
-        song = Song.find_by(spotify_id: params[:songSpotifyId])
-        if song
-            user_song.update(song_id: song.id)
+        @song = Song.find_by(spotify_id: params[:songSpotifyId])
+        if @song
+            user_song.update(song_id: @song.id)
+            render json: {song: SongSerializer.new(@song)}
         else
             # song doesnt exist
             artist = Artist.find_by(spotify_id: params[:artistSpotifyId])
             if !artist
-                byebug
+                # byebug
                 new_artist = Artist.create(name: params[:artist_name], spotify_id: params[:artistSpotifyId])
                 new_album = Album.create(name: params[:album_name], spotify_id: params[:albumSpotifyId], artist_id: new_artist.id)
                 @new_song = Song.create(name: params[:name], spotify_id: params[:songSpotifyId], artist_id: new_artist.id, album_id: new_album.id)
@@ -63,7 +64,7 @@ class UsersongsController < ApplicationController
                 render json: {song: SongSerializer.new(@new_song)}
             else
                 album = Album.find_by(spotify_id: params[:albumSpotifyId])
-                byebug
+                # byebug
                 if album
                     @new_song = Song.create(name: params[:name], spotify_id: params[:songSpotifyId], artist_id: artist.id, album_id: album.id)
                     user_song.update(song_id: @new_song.id)
