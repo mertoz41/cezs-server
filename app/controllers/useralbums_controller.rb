@@ -76,7 +76,6 @@ class UseralbumsController < ApplicationController
 
         end
         if old_album.songs.size == 0 && old_album.favoriteusers.size == 0
-            byebug
             old_album.destroy
         end
 
