@@ -11,7 +11,7 @@ class ArtistfollowsController < ApplicationController
 
     end
     def newartist
-        @artist = Artist.create(name: params[:name], spotify_id: params[:id], avatar: params[:avatar])
+        @artist = Artist.create(name: params[:name], spotify_id: params[:artistSpotifyId])
         artis_follow = Artistfollow.create(user_id: params[:user_id], artist_id: @artist.id)
         render json: {artist: ArtistSerializer.new(@artist)}
 
