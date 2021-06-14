@@ -11,7 +11,7 @@ class PostsController < ApplicationController
         album_name = params[:album_name]
         album_spotify_id = params[:album_spotify_id]
 
-        # byebug
+        byebug
 
         # find artist by artist name and spotify id
         # if artist found use it for post creation
@@ -21,13 +21,13 @@ class PostsController < ApplicationController
             if artist_album
                 # if album exists, use it for song creation
                 song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id, album_id: artist_album)
-                @post = Post.create(user_id: user_id, instrument_id: instrument_id, artist_id: artist.id, song_id: song.id, thumbnail: params[:thumbnail], genre_id: genre_id)
+                # @post = Post.create(user_id: user_id, instrument_id: instrument_id, artist_id: artist.id, song_id: song.id, thumbnail: params[:thumbnail], genre_id: genre_id)
                 @post.clip.attach(params[:clip])
                 render json: @post, serializer: PostSerializer
             else
                 new_artist_album = Album.create(name: album_name, spotify_id: album_spotify_id, artist_id: artist.id)
                 new_song = Song.create(name: song_name, artist_id: artist.id, album_id: new_artist_album.id, spotify_id: song_spotify_id)
-                @post = Post.create(user_id: user_id, instrument_id: instrument_id, artist_id: artist.id, song_id: new_song.id, thumbnail: params[:thumbnail], genre_id: genre_id)
+                # @post = Post.create(user_id: user_id, instrument_id: instrument_id, artist_id: artist.id, song_id: new_song.id, thumbnail: params[:thumbnail], genre_id: genre_id)
                 @post.clip.attach(params[:clip])
                 render json: @post, serializer: PostSerializer
             end
