@@ -7,4 +7,7 @@ class Post < ApplicationRecord
     belongs_to :genre
     belongs_to :artist
     belongs_to :song
+
+    has_many :postfeatures, dependent: :destroy
+    has_many :featuredusers, through: :postfeatures
 end
