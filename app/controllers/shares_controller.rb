@@ -1,6 +1,7 @@
 class SharesController < ApplicationController
-    def create      
-        @nu_share = Share.create(user_id: params[:user_id].to_i, post_id: params[:post_id])
+    def create
+        user = User.find(params[:user_id])
+        @nu_share = Share.create(user_id: user.id, post_id: params[:post_id])
         render json: @nu_share, serializer: ShareSerializer
     end
 
