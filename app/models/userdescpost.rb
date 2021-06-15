@@ -2,7 +2,9 @@ class Userdescpost < ApplicationRecord
     has_one_attached :clip
     belongs_to :user
     belongs_to :genre
-    belongs_to :instrument
+    has_many :userdescpostinstruments, dependent: :destroy
+    has_many :instruments, through: :userdescpostinstruments
+    # belongs_to :instrument
     has_many :userdescpostcomments, dependent: :destroy
     has_many :userdescpostshares, dependent: :destroy
 
