@@ -4,6 +4,9 @@ class UserdescpostSerializer < ActiveModel::Serializer
   def clip
     url_for(object.clip)
   end
+  def thumbnail
+    url_for(object.thumbnail)
+  end
   def genre
     return object.genre.name
   end

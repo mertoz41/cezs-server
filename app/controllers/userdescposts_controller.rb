@@ -5,7 +5,8 @@ class UserdescpostsController < ApplicationController
         description = params[:description]
         features = JSON.parse params[:features]
         instruments = JSON.parse params[:instruments]
-        @new_post = Userdescpost.create(user_id: user_id, description: description, thumbnail: params[:thumbnail], genre_id: genre_id)
+        byebug
+        @new_post = Userdescpost.create(user_id: user_id, description: description, genre_id: genre_id)
         if features.length > 0
             features.each do |id|
                 Userdescpostfeature.create(user_id: id, userdescpost_id: @new_post.id)
@@ -17,6 +18,7 @@ class UserdescpostsController < ApplicationController
             end
         end
         @new_post.clip.attach(params[:clip])
+        @new_post.thumbnail.attach(params[:thumbnail])
         render json: @new_post, serializer: UserdescpostSerializer
     end 
 

@@ -23,7 +23,7 @@ class PostsController < ApplicationController
             if artist_album
                 # if album exists, use it for song creation
                 song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id, album_id: artist_album)
-                @post = Post.create(user_id: user_id, artist_id: artist.id, song_id: song.id, thumbnail: params[:thumbnail], genre_id: genre_id)
+                @post = Post.create(user_id: user_id, artist_id: artist.id, song_id: song.id, genre_id: genre_id)
                 if features.length > 0
                     features.each do |id|
                         Postfeature.create(user_id: id, post_id: @post.id)
@@ -38,11 +38,12 @@ class PostsController < ApplicationController
                 # create the post first
                 # then create postfeature and postinstruments instances
                 @post.clip.attach(params[:clip])
+                @post.thumbnail.attach(params[:thumbnail])
                 render json: @post, serializer: PostSerializer
             else
                 new_artist_album = Album.create(name: album_name, spotify_id: album_spotify_id, artist_id: artist.id)
                 new_song = Song.create(name: song_name, artist_id: artist.id, album_id: new_artist_album.id, spotify_id: song_spotify_id)
-                @post = Post.create(user_id: user_id, artist_id: artist.id, song_id: new_song.id, thumbnail: params[:thumbnail], genre_id: genre_id)
+                @post = Post.create(user_id: user_id, artist_id: artist.id, song_id: new_song.id, genre_id: genre_id)
                 if features.length > 0
                     features.each do |id|
                         Postfeature.create(user_id: id, post_id: @post.id)
@@ -55,6 +56,7 @@ class PostsController < ApplicationController
                     end
                 end
                 @post.clip.attach(params[:clip])
+                @post.thumbnail.attach(params[:thumbnail])
                 render json: @post, serializer: PostSerializer
             end
             # if artist exists, find album by artist_id, album_spotify_id, and album_name
@@ -65,7 +67,7 @@ class PostsController < ApplicationController
             new_artist = Artist.create(name: artist_name, spotify_id: artist_spotify_id)
             new_album = Album.create(name: album_name, spotify_id: album_spotify_id, artist_id: new_artist.id)
             song = Song.find_or_create_by(name: song_name, artist_id: new_artist.id, spotify_id: song_spotify_id, album_id: new_album.id)
-            @post = Post.create(user_id: user_id, artist_id: new_artist.id, song_id: song.id, thumbnail: params[:thumbnail], genre_id: genre_id)
+            @post = Post.create(user_id: user_id, artist_id: new_artist.id, song_id: song.id, genre_id: genre_id)
             if features.length > 0
                 features.each do |id|
                     Postfeature.create(user_id: id, post_id: @post.id)
@@ -78,6 +80,7 @@ class PostsController < ApplicationController
                 end
             end
             @post.clip.attach(params[:clip])
+            @post.thumbnail.attach(params[:thumbnail])
             render json: @post, serializer: PostSerializer
         end
 

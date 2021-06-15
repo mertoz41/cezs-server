@@ -4,11 +4,12 @@ class BanddescpostsController < ApplicationController
         description = params[:description]
         genre_id = params[:genre_id].to_i
         instruments = JSON.parse params[:instruments]
-        @new_post = Banddescpost.create(band_id: band_id, description: description, thumbnail: params[:thumbnail], , genre_id: genre_id)
+        @new_post = Banddescpost.create(band_id: band_id, description: description, genre_id: genre_id)
         instruments.each do |inst|
             Banddescpostinstrument.create(instrument_id: inst, banddescpost_id: @new_post.id)
         end
         @new_post.clip.attach(params[:clip])
+        @new_post.thumbnail.attach(params[:thumbnail])
         render json: @new_post, serializer: BanddescpostSerializer
     end 
 

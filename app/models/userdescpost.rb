@@ -1,5 +1,6 @@
 class Userdescpost < ApplicationRecord
     has_one_attached :clip
+    has_one_attached :thumbnail
     belongs_to :user
     belongs_to :genre
     has_many :userdescpostinstruments, dependent: :destroy
