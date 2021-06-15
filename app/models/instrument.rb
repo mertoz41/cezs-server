@@ -5,7 +5,7 @@ class Instrument < ApplicationRecord
     has_many :postinstruments
     has_many :posts, through: :instruments 
 
-    has_many userdescpostinstruments, dependent: :destroy
+    has_many :userdescpostinstruments, dependent: :destroy
     has_many :userdescposts, through: :userdescpostinstruments
 
     has_many :bandpostinstruments

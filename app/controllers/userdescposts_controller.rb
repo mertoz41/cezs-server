@@ -3,8 +3,19 @@ class UserdescpostsController < ApplicationController
         user_id = params[:user_id].to_i
         genre_id = params[:genre_id].to_i
         description = params[:description]
-        instrument_id = params[:instrument_id]
-        @new_post = Userdescpost.create(user_id: user_id, description: description, instrument_id: instrument_id, thumbnail: params[:thumbnail], genre_id: genre_id)
+        features = JSON.parse params[:features]
+        instruments = JSON.parse params[:instruments]
+        @new_post = Userdescpost.create(user_id: user_id, description: description, thumbnail: params[:thumbnail], genre_id: genre_id)
+        if features.length > 0
+            features.each do |id|
+                Userdescpostfeature.create(user_id: id, userdescpost_id: @new_post.id)
+            end
+        end
+        if instruments.length > 0
+            instruments.each do |id|
+                Userdescpostinstrument.create(instrument_id: id, userdescpost_id: @new_post.id)
+            end
+        end
         @new_post.clip.attach(params[:clip])
         render json: @new_post, serializer: UserdescpostSerializer
     end 
