@@ -23,8 +23,11 @@ class User < ApplicationRecord
     validates :username, uniqueness: { case_sensitive: false }
     # has_one :location
 
+    has_many :userdescpostfeatures, dependent: :destroy
+    has_many :featureduserdescposts, through: :userdescpostfeatures
+
     has_many :postfeatures, dependent: :destroy
-    has_many :featuredsongs, through: :postfeatures
+    has_many :featuredposts, through: :postfeatures
 
     has_one :useralbum, dependent: :destroy
     has_one :favoritealbum, through: :useralbum
