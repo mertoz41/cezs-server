@@ -85,17 +85,30 @@ class PostsController < ApplicationController
 
     end 
 
+
+
+
+
+
+
+
     def filter
         instruments = params[:selected_instruments]
         genres = params[:selected_genres]
         if instruments.length > 0 && params[:song_name].length == 0 && params[:artist_name].length == 0 && genres.length == 0
             # only by instrument
-            @posts = Post.where(instrument_id: instruments)
-            @userdescposts = Userdescpost.where(instrument_id: instruments)
+            @posts = []
+            @userdescposts = []
             @bandposts = []
             @banddescposts = []
             instruments.each do |inst|
                 instrument = Instrument.find(inst)
+                instrument.posts.each do |post|
+                    @posts.push(post)
+                end
+                instrument.userdescposts.each do |post|
+                    @userdescposts.push(post)
+                end
                 instrument.bandposts.each do |post|
                     @bandposts.push(post)
                 end
@@ -221,7 +234,8 @@ class PostsController < ApplicationController
         end
         if instruments.length > 0 && genres.length > 0 && params[:song_name].length == 0 && params[:artist_name].length == 0
             # only by instrument and genre
-            @posts = Post.where(instrument_id: instruments, genre_id: genres)
+            posts_by_genre = Post.where(genre_id: genres)
+            @posts = []
             bandposts_by_genre = Bandpost.where(genre_id: genres)
             @bandposts = []
             bandposts_by_genre.each do |post|
@@ -230,19 +244,35 @@ class PostsController < ApplicationController
                         @bandposts.push(post)
                     end
                 end
+
+            end
+            posts_by_genre.each do |post|
+                post.instruments.each do |instrument|
+                    if instruments.include?(instrument.id)
+                        @posts.push(post)
+                    end
+                end
             end
 
             # how to grab posts by instruments?
 
                 
             # found by genre, filter by instrument
-            @userdescposts = Userdescpost.where(instrument_id: instruments, genre_id: genres)
+            userdescposts_by_genre = Userdescpost.where(genre_id: genres)
+            @userdescposts = []
             @banddescposts = []
             banddescposts_by_genre = Banddescpost.where(genre_id: genres)
             banddescposts_by_genre.each do |post|
                 post.instruments.each do |instrument|
                     if instruments.include?(instrument.id)
                         @banddescposts.push(post)
+                    end
+                end
+            end
+            userdescposts_by_genre.each do |post|
+                post.instruments.each do |instrument|
+                    if instruments.include?(instrument.id)
+                        @userdescposts.push(post)
                     end
                 end
             end
