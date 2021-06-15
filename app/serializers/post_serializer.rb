@@ -6,6 +6,9 @@ class PostSerializer < ActiveModel::Serializer
   def clip
     url_for(object.clip)
   end
+  def thumbnail
+    url_for(object.thumbnail)
+  end
 
   def instruments
     object.instruments.map do |instrument|

@@ -14,7 +14,6 @@ class PostsController < ApplicationController
         features = JSON.parse params[:features]
         instruments = JSON.parse params[:instruments]
 
-
         # find artist by artist name and spotify id
         # if artist found use it for post creation
         artist = Artist.find_by(name: artist_name, spotify_id: artist_spotify_id)
