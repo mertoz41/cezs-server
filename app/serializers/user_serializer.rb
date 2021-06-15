@@ -17,10 +17,22 @@ class UserSerializer < ActiveModel::Serializer
   has_one :favoritesong
   has_one :favoriteartist
   has_one :favoritealbum
+  # has_many :featuredposts
+  # has_many :featureduserdescposts
   
   def created_at
     object.created_at.to_date
   end
+  # def featuredposts
+  #   object.featuredposts.map do |post|
+  #     PostSerializer.new(post)
+  #   end
+  # end
+  # def featureduserdescposts
+  #   object.featureduserdescposts.map do |post|
+  #     UserdescpostSerializer.new(post)
+  #   end
+  # end
 
   def avatar
     return url_for(object.avatar)
