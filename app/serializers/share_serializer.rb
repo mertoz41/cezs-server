@@ -28,7 +28,7 @@ class ShareSerializer < ActiveModel::Serializer
   end
   def thumbnail
     post = object.post
-    return post.thumbnail
+    return url_for(post.thumbnail)
   end
   def songSpotifyId
     return object.post.song.spotify_id
