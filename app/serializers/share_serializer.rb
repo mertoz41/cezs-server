@@ -1,7 +1,7 @@
 class ShareSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :post_id, :user_id, :clip, :song_name, :useravatar, :artist_name, :username, :share_count, :comment_count, :artist_id, :created_at, :thumbnail, :songSpotifyId
+  attributes :id, :post_id, :user_id, :clip, :song_name, :useravatar, :artist_name, :username, :share_count, :comment_count, :artist_id, :created_at, :thumbnail, :songSpotifyId, :featuredusers
 
   def clip
     post = object.post
@@ -17,6 +17,12 @@ class ShareSerializer < ActiveModel::Serializer
     post = object.post
     return post.song.name
   end 
+  def featuredusers
+    post = object.post
+    post.featuredusers.map do |user|
+      {username: user.username, id: user.id, avatar: url_for(user.avatar)}
+    end
+  end
 
   def artist_name
     post = object.post
