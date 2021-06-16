@@ -17,7 +17,7 @@ class PostSerializer < ActiveModel::Serializer
   end
   def featuredusers
     object.featuredusers.map do |user|
-      UserSerializer.new(user)
+      {username: user.username, id: user.id, avatar: url_for(user.avatar)}
     end
   end
 

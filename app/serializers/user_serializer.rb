@@ -17,8 +17,8 @@ class UserSerializer < ActiveModel::Serializer
   has_one :favoritesong
   has_one :favoriteartist
   has_one :favoritealbum
-  # has_many :featuredposts
-  # has_many :featureduserdescposts
+  has_many :featuredposts
+  has_many :featureduserdescposts
   
   def created_at
     object.created_at.to_date
