@@ -4,6 +4,6 @@ class Album < ApplicationRecord
 
     has_many :useralbums, dependent: :destroy
     has_many :favoriteusers, through: :useralbums
-    # has_many :posts, through: :songs
-    # has_many :bandposts, through: :songs
+    has_many :posts, through: :songs
+    has_many :bandposts, through: :songs
 end
