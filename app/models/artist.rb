@@ -6,7 +6,7 @@ class Artist < ApplicationRecord
     has_many :albums, dependent: :destroy
     
     has_many :userinfluences
-    has_many :users, through: :userinfluences
+    has_many :influencedusers, through: :userinfluences
 
     has_many :artistfollows, dependent: :destroy
     has_many :followingusers, through: :artistfollows

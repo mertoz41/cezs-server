@@ -6,7 +6,7 @@ class ArtistSerializer < ActiveModel::Serializer
   has_many :songs
   
   def influence_count
-    return object.users.size
+    return object.influencedusers.size
   end
   def song_count
     return object.songs.size

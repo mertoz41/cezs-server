@@ -3,7 +3,7 @@ class User < ApplicationRecord
     has_one_attached :avatar
 
     has_many :userinfluences
-    has_many :artists, through: :userinfluences
+    has_many :influencers, through: :userinfluences
     
     # has_and_belongs_to_many :chatrooms, dependent: :destroy
     has_many :messages, dependent: :destroy
