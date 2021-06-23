@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    skip_before_action :authorized, only: [:create]
 
     def create
         user = User.create(username: params[:username], password: params[:password])

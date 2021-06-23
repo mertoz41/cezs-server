@@ -2,6 +2,7 @@ class AuthController < ApplicationController
     skip_before_action :authorized, only: [:create]
 
     def create
+        # byebug
         @user = User.find_by(username: params[:username])
         if @user && @user.authenticate(params[:password])
             payload = {user_id: @user.id}
@@ -56,6 +57,7 @@ class AuthController < ApplicationController
     end
 
     def check
+        # byebug
         token = request.headers["Authorization"].split(' ')[1]
         @user = User.find(decode(token)["user_id"])
         @timeline = []
