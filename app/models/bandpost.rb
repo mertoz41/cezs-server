@@ -7,7 +7,7 @@ class Bandpost < ApplicationRecord
     belongs_to :artist
     has_many :bandpostinstruments, dependent: :destroy
     has_many :instruments, through: :bandpostinstruments
-
+    has_many :bandpostviews, dependent: :destroy
     has_many :bandpostcomments, dependent: :destroy
     has_many :bandpostshares, dependent: :destroy
 

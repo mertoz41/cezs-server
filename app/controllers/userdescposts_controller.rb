@@ -21,6 +21,13 @@ class UserdescpostsController < ApplicationController
         @new_post.thumbnail.attach(params[:thumbnail])
         render json: @new_post, serializer: UserdescpostSerializer
     end 
+    def createview
+        byebug
+        user = User.find(params[:user_id])
+        post = Userdescpost.find(params[:userdescpost_id])
+        Userdescpostview.create(user_id: user.id, userdescpost_id: post.id)
+        render json: {message: 'view counted'}
+    end
 
     def share
         userdescpost = Userdescpost.find(params[:userdescpost_id])

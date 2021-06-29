@@ -35,6 +35,13 @@ class BandpostsController < ApplicationController
 
         # artist = Artist.find_or_create_by(name: artist_name, spotify_id: spotify_id, avatar: params[:artist_pic])
     end
+    def createview
+        # byebug
+        user = User.find(params[:user_id])
+        post = Bandpost.find(params[:bandpost_id])
+        Bandpostview.create(user_id: user.id, bandpost_id: post.id)
+        render json: {message: 'view counted'}
+    end
 
     def share
         # byebug

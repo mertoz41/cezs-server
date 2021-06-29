@@ -1,8 +1,6 @@
 class PostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-
-  attributes :id, :user_id, :song_id, :artist_id, :clip, :created_at, :username, :artist_name, :song_name, :useravatar, :comment_count, :share_count, :thumbnail, :genre_id, :genre, :instruments, :featuredusers
-
+  attributes :id, :user_id, :song_id, :artist_id, :clip, :created_at, :username, :artist_name, :song_name, :useravatar, :comment_count, :share_count, :thumbnail, :genre_id, :genre, :instruments, :featuredusers, :view_count
   def clip
     url_for(object.clip)
   end
@@ -19,6 +17,9 @@ class PostSerializer < ActiveModel::Serializer
     object.featuredusers.map do |user|
       {username: user.username, id: user.id, avatar: url_for(user.avatar)}
     end
+  end
+  def view_count
+    object.postviews.size
   end
 
   

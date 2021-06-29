@@ -70,5 +70,9 @@ Rails.application.routes.draw do
   post '/deleteuseralbum', to: 'useralbums#delete'
   get '/albumcheck/:id', to: 'albums#albumcheck'
   get '/songcheck/:id', to: 'songs#check'
+  post '/postviewcount', to: 'posts#createview'
+  post '/bandpostviewcount', to: 'bandposts#createview'
+  post '/descpostviewcount', to: 'userdescposts#createview'
+  post '/banddescpostviewcount', to: 'banddescposts#createview'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

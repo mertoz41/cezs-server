@@ -289,6 +289,13 @@ class PostsController < ApplicationController
         end
 
     end
+    def createview
+        # byebug
+        user = User.find(params[:user_id])
+        post = Post.find(params[:post_id])
+        Postview.create(user_id: user.id, post_id: post.id)
+        render json: {message: 'view counted'}
+    end
     def destroy
         post = Post.find(params[:id])
         song = Song.find(post.song_id)
