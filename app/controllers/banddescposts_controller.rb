@@ -23,7 +23,6 @@ class BanddescpostsController < ApplicationController
         # create instance
     end
     def createview
-        byebug
         user = User.find(params[:user_id])
         post = Banddescpost.find(params[:banddescpost_id])
         Banddescpostview.create(user_id: user.id, banddescpost_id: post.id)

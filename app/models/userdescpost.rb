@@ -8,7 +8,7 @@ class Userdescpost < ApplicationRecord
     # belongs_to :instrument
     has_many :userdescpostcomments, dependent: :destroy
     has_many :userdescpostshares, dependent: :destroy
-
+    has_many :userdescpostviews, dependent: :destroy
     has_many :userdescpostfeatures, dependent: :destroy
     has_many :featuredusers, through: :userdescpostfeatures
 end
