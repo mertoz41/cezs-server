@@ -6,11 +6,13 @@ class BandpostsController < ApplicationController
         song_spotify_id = params[:song_spotify_id]
         genre_id = params[:genre_id].to_i
         song_name = params[:song_name]
+        album_name = params[:album_name]
+        album_spotify_id = params[:album_spotify_id]
         instruments = JSON.parse params[:instruments]
         artist = Artist.find_by(name: artist_name, spotify_id: artist_spotify_id)
-        # byebug
         if artist
-            song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id)
+            album = Album.find_or_create_by(name: album_name, spotify_id: album_spotify_id, artist_id: artist.id)
+            song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id, album_id: album.id)
             @bandpost = Bandpost.create(band_id: band_id, artist_id: artist.id, song_id: song.id, genre_id: genre_id)
             instruments.each do |inst|
                 Bandpostinstrument.create(instrument_id: inst, bandpost_id: @bandpost.id)
@@ -20,7 +22,8 @@ class BandpostsController < ApplicationController
             render json: @bandpost, serializer: BandpostSerializer
         else
             new_artist = Artist.create(name: artist_name, spotify_id: artist_spotify_id)
-            song = Song.create(name: song_name, artist_id: new_artist.id, spotify_id: song_spotify_id)
+            new_album = Album.create(name: album_name, spotify_id: album_spotify_id, artist_id: new_artist.id)
+            song = Song.create(name: song_name, artist_id: new_artist.id, spotify_id: song_spotify_id, album_id: new_album.id)
             @bandpost = Bandpost.create(band_id: band_id, artist_id: new_artist.id, song_id: song.id, genre_id: genre_id)
             instruments.each do |inst|
                 Bandpostinstrument.create(instrument_id: inst, bandpost_id: @bandpost.id)
