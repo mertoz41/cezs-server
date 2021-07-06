@@ -104,16 +104,25 @@ class PostsController < ApplicationController
             instruments.each do |inst|
                 instrument = Instrument.find(inst)
                 instrument.posts.each do |post|
-                    @posts.push(post)
+                    if !@posts.include?(post)
+                        @posts.push(post)
+                    end
                 end
                 instrument.userdescposts.each do |post|
-                    @userdescposts.push(post)
+                    if !@userdescposts.include?(post)
+                        @userdescposts.push(post)
+                    end
+                        
                 end
                 instrument.bandposts.each do |post|
-                    @bandposts.push(post)
+                    if !@bandposts.include?(post)
+                        @bandposts.push(post)
+                    end
                 end
                 instrument.banddescposts.each do |post|
-                    @banddescposts.push(post)
+                    if !@banddescposts.include?(post)
+                        @banddescposts.push(post)
+                    end
                 end
             end
             render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
