@@ -5,7 +5,7 @@ class UserdescpostsController < ApplicationController
         description = params[:description]
         features = JSON.parse params[:features]
         instruments = JSON.parse params[:instruments]
-        byebug
+        # byebug
         @new_post = Userdescpost.create(user_id: user_id, description: description, genre_id: genre_id)
         if features.length > 0
             features.each do |id|
