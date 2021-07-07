@@ -29,7 +29,7 @@ class UserdescpostSerializer < ActiveModel::Serializer
   end
   def instruments
     object.instruments.map do |instrument|
-      {id: instrument.id, name: instrument.name}
+    instrument.id
     end
   end
   def featuredusers
