@@ -85,22 +85,14 @@ class PostsController < ApplicationController
 
     end 
 
-
-
-
-
-
-
-
     def filter
         instruments = params[:selected_instruments]
         genres = params[:selected_genres]
-        if instruments.length > 0 && genres.length == 0
-            # only by instrument
-            @posts = []
-            @userdescposts = []
-            @bandposts = []
-            @banddescposts = []
+        @posts = []
+        @userdescposts = []
+        @bandposts = []
+        @banddescposts = []
+        if instruments.length > 0
             instruments.each do |inst|
                 instrument = Instrument.find(inst)
                 instrument.posts.each do |post|
@@ -125,21 +117,37 @@ class PostsController < ApplicationController
                     end
                 end
             end
-            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
-
-            
         end
-        if genres.length > 0 && instruments.length == 0
-            # only by genre
-            @posts = Post.where(genre_id: genres)
-            @userdescposts = Userdescpost.where(genre_id: genres)
-            @bandposts = Bandpost.where(genre_id: genres)
-            @banddescposts = Banddescpost.where(genre_id: genres)
-            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
-        end
-        
 
+        if genres.length > 0
+            genres.each do |genr|
+                genre = Genre.find(genr)
+                genre.posts.each do |post|
+                    if !@posts.include?(post)
+                        @posts.push(post)
+                    end
+                end
+                genre.userdescposts.each do |post|
+                    if !@userdescposts.include?(post)
+                        @userdescposts.push(post)
+                    end
+                        
+                end
+                genre.bandposts.each do |post|
+                    if !@bandposts.include?(post)
+                        @bandposts.push(post)
+                    end
+                end
+                genre.banddescposts.each do |post|
+                    if !@banddescposts.include?(post)
+                        @banddescposts.push(post)
+                    end
+                end
+            end
+        end
+        render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
     end
+
     def createview
         # byebug
         user = User.find(params[:user_id])
@@ -147,6 +155,7 @@ class PostsController < ApplicationController
         Postview.create(user_id: user.id, post_id: post.id)
         render json: {message: 'view counted'}
     end
+
     def destroy
         post = Post.find(params[:id])
         song = Song.find(post.song_id)
@@ -157,4 +166,5 @@ class PostsController < ApplicationController
         end
         render json: {message: 'post deleted.'}
     end
+
 end
