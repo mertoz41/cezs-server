@@ -95,7 +95,7 @@ class PostsController < ApplicationController
     def filter
         instruments = params[:selected_instruments]
         genres = params[:selected_genres]
-        if instruments.length > 0 && params[:song_name].length == 0 && params[:artist_name].length == 0 && genres.length == 0
+        if instruments.length > 0 && genres.length == 0
             # only by instrument
             @posts = []
             @userdescposts = []
@@ -129,7 +129,7 @@ class PostsController < ApplicationController
 
             
         end
-        if genres.length > 0 && instruments.length == 0 && params[:artist_name].length == 0 && params[:song_name].length == 0
+        if genres.length > 0 && instruments.length == 0
             # only by genre
             @posts = Post.where(genre_id: genres)
             @userdescposts = Userdescpost.where(genre_id: genres)
@@ -138,164 +138,6 @@ class PostsController < ApplicationController
             render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
         end
         
-        if params[:song_name].length > 0 && params[:artist_name].length == 0 && instruments.length == 0 && genres.length == 0
-            # only by song name
-            songs = Song.where(Song.arel_table[:name].lower.matches("%#{params[:song_name].downcase}%"))
-            # byebug
-            
-            @bandposts = []
-            @posts = []
-            songs.each do |song|
-                song.posts.each do |post|
-                    @posts.push(post)
-                end
-                song.bandposts.each do |post|
-                    @bandposts.push(post)
-                end
-            end
-            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
-                
-        end
-        if params[:artist_name].length > 0 && params[:song_name].length == 0 && instruments.length == 0 && genres.length == 0
-            # only by artist name
-            artists = Artist.where(Artist.arel_table[:name].lower.matches("%#{params[:artist_name].downcase}%"))
-            @bandposts = []
-            @posts = []
-            artists.each do |artis|
-                artis.posts.each do |post|
-                    @posts.push(post)
-                end
-                artis.bandposts.each do |post|
-                    @bandposts.push(post)
-                end
-            end
-            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
-        end
-
-        if params[:artist_name].length > 0 && params[:song_name].length > 0 && genres.length == 0
-            # only by song name and artist name
-            artists = Artist.where(Artist.arel_table[:name].lower.matches("%#{params[:artist_name].downcase}%"))
-            songs = Song.where(Song.arel_table[:name].lower.matches("%#{params[:song_name].downcase}%"))
-            @bandposts = []
-            @posts = []
-            artists.each do |artis|
-                artis.posts.each do |post|
-                    @posts.push(post)
-                end
-                artis.bandposts.each do |post|
-                    @bandposts.push(post)
-                end
-            end
-            songs.each do |song|
-                song.posts.each do |post|
-                    # check to see if post already exists in @posts
-                    # if it does do nothing
-                    if !@posts.include?(post)
-                    @posts.push(post)
-                    end
-                end
-                song.bandposts.each do |post|
-                    @bandposts.push(post)
-                end
-                # @bandposts.push(songbandpost)
-            end
-            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
-
-        end
-
-        if params[:artist_name].length > 0 && instruments.length > 0 && genres.length == 0
-            # only by instrument and artist name
-            artists = Artist.where(Artist.arel_table[:name].lower.matches("%#{params[:artist_name].downcase}%"))
-            @bandposts = []
-            @posts = []
-            artists.each do |artis|
-                artis.posts.each do |post|
-                    if instruments.include?(post.instrument_id)
-                        @posts.push(post)
-                    end
-                end
-                artis.bandposts.each do |post|
-                    byebug
-                    @bandposts.push(post)
-                end
-            end
-            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
-        end
-        if params[:song_name].length > 0 && instruments.length > 0 && genres.length == 0
-            # only by instrument and song name
-            songs = Song.where(Song.arel_table[:name].lower.matches("%#{params[:song_name].downcase}%"))
-            @bandposts = []
-            @posts = []
-            songs.each do |song|
-                song.posts.each do |post|
-                    if instruments.include?(post.instrument_id)
-                        @posts.push(post)
-                    end
-                end
-                song.bandposts.each do |post|
-                    @bandposts.push(post)
-                end
-            end
-            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer)}
-
-
-
-        end
-        if instruments.length > 0 && genres.length > 0 && params[:song_name].length == 0 && params[:artist_name].length == 0
-            # only by instrument and genre
-            posts_by_genre = Post.where(genre_id: genres)
-            @posts = []
-            bandposts_by_genre = Bandpost.where(genre_id: genres)
-            @bandposts = []
-            bandposts_by_genre.each do |post|
-                post.instruments.each do |instrument|
-                    if instruments.include?(instrument.id)
-                        @bandposts.push(post)
-                    end
-                end
-
-            end
-            posts_by_genre.each do |post|
-                post.instruments.each do |instrument|
-                    if instruments.include?(instrument.id)
-                        @posts.push(post)
-                    end
-                end
-            end
-
-            # how to grab posts by instruments?
-
-                
-            # found by genre, filter by instrument
-            userdescposts_by_genre = Userdescpost.where(genre_id: genres)
-            @userdescposts = []
-            @banddescposts = []
-            banddescposts_by_genre = Banddescpost.where(genre_id: genres)
-            banddescposts_by_genre.each do |post|
-                post.instruments.each do |instrument|
-                    if instruments.include?(instrument.id)
-                        @banddescposts.push(post)
-                    end
-                end
-            end
-            userdescposts_by_genre.each do |post|
-                post.instruments.each do |instrument|
-                    if instruments.include?(instrument.id)
-                        @userdescposts.push(post)
-                    end
-                end
-            end
-            # found by genre, filter by instrument
-            render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
-
-        end
-        if params[:song_name].length > 0 && instruments.length > 0 && params[:artist_name].length > 0
-            # filter all
-
-
-
-            
-        end
 
     end
     def createview
