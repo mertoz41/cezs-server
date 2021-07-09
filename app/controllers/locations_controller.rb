@@ -66,4 +66,8 @@ class LocationsController < ApplicationController
       
         render json: {user: UserSerializer.new(@user)}
     end 
+
+    def filterlocations
+        # action to get all existing states in db
+    end
 end
