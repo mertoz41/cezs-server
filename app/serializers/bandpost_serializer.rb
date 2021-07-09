@@ -1,7 +1,7 @@
 class BandpostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :band_id, :song_id, :artist_id, :clip, :created_at, :bandname, :artist_name, :song_name, :bandpicture, :spotify_id, :comment_count, :share_count, :thumbnail, :genre, :genre_id, :view_count, :instruments
+  attributes :id, :band_id, :song_id, :artist_id, :clip, :created_at, :bandname, :artist_name, :song_name, :bandpicture, :spotify_id, :comment_count, :share_count, :thumbnail, :genre, :genre_id, :view_count, :instruments, :current_state
   # has_many :instruments 
   def clip
     url_for(object.clip)
@@ -11,6 +11,10 @@ class BandpostSerializer < ActiveModel::Serializer
   end
   def thumbnail
     url_for(object.thumbnail)
+  end
+  def current_state
+    band = object.band
+    return band.location.city.split()[1]
   end
   def genre
     return object.genre.name

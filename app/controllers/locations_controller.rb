@@ -68,6 +68,14 @@ class LocationsController < ApplicationController
     end 
 
     def filterlocations
+        locations = Location.all
+        states = []
+        locations.each do |location|
+            if !states.include?(location.city.split()[1])
+                states.push(location.city.split()[1])
+            end
+        end
+        render json: {states: states}
         # action to get all existing states in db
     end
 end

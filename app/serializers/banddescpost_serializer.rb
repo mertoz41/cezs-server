@@ -1,10 +1,14 @@
 class BanddescpostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :clip, :description, :created_at, :bandname, :bandpicture, :band_id, :comment_count, :share_count, :thumbnail, :genre_id, :genre, :view_count
+  attributes :id, :clip, :description, :created_at, :bandname, :bandpicture, :band_id, :comment_count, :share_count, :thumbnail, :genre_id, :genre, :view_count, :current_state
   has_many :instruments
   def clip
     url_for(object.clip)
+  end
+  def current_state
+    band = object.band
+    return band.location.city.split()[1]
   end
   def view_count
     object.banddescpostviews.size

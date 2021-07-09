@@ -88,6 +88,7 @@ class PostsController < ApplicationController
     def filter
         instruments = params[:selected_instruments]
         genres = params[:selected_genres]
+        states = params[:selected_states]
         @posts = []
         @userdescposts = []
         @bandposts = []
@@ -144,6 +145,47 @@ class PostsController < ApplicationController
                     end
                 end
             end
+        end
+
+
+        if states.length > 0
+            states.each do |state|
+                users = User.joins(:location).merge(Location.where("city like?", "%#{state}%"))
+                bands = Band.joins(:location).merge(Location.where("city like?", "%#{state}%"))
+                users.each do |user|
+
+                    user.posts.each do |post|
+                        if !@posts.include?(post)
+                            @posts.push(post)
+                        end
+                    end
+
+                    user.userdescposts.each do |post|
+                        if !@userdescposts.include?(post)
+                            @userdescposts.push(post)
+                        end
+                    end
+
+                end
+
+                bands.each do |band|
+
+                    band.bandposts.each do |post|
+                        if !@bandposts.include?(post)
+                            @bandposts.push(post)
+                        end
+                    end
+
+                    band.banddescposts.each do |post|
+                        if !@banddescposts.include?(post)
+                            @banddescposts.push(post)
+                        end
+                    end
+                end
+            end
+
+                
+
         end
         render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
     end
