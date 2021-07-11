@@ -2,7 +2,7 @@ class UserartistsController < ApplicationController
     def create
         user = User.find(params[:user_id])
         @artist = Artist.find_by(spotify_id: params[:artistSpotifyId])
-
+        
         if @artist
             user_artist = Userartist.create(user_id: user.id, artist_id: @artist.id)
             render json: {artist: ArtistSerializer.new(@artist)}
