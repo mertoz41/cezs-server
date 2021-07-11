@@ -29,18 +29,19 @@ class User < ApplicationRecord
     has_many :postfeatures, dependent: :destroy
     has_many :featuredposts, through: :postfeatures
 
-    has_one :useralbum, dependent: :destroy
-    has_one :favoritealbum, through: :useralbum
+    has_many :useralbums, dependent: :destroy
+    has_many :favoritealbums, through: :useralbums
 
-    has_one :userartist, dependent: :destroy
-    has_one :favoriteartist, through: :userartist
+    has_many :userartists, dependent: :destroy
+    has_many :favoriteartists, through: :userartists
+
+    has_many :usersongs, dependent: :destroy
+    has_many :favoritesongs, through: :usersongs
     
     has_one :bio, dependent: :destroy
     has_one :userlocation, dependent: :destroy
     has_one :location, through: :userlocation
     
-    has_one :usersong, dependent: :destroy
-    has_one :favoritesong, through: :usersong
 
     has_many :bandmembers, dependent: :destroy
     has_many :bands, through: :bandmembers

@@ -15,9 +15,9 @@ class UserSerializer < ActiveModel::Serializer
   has_many :bandpostshares
   has_many :banddescpostshares
   has_many :userdescpostshares
-  has_one :favoritesong
-  has_one :favoriteartist
-  has_one :favoritealbum
+  has_many :favoritesongs
+  has_many :favoriteartists
+  has_many :favoritealbums
   has_many :featuredposts
   has_many :featureduserdescposts
   
