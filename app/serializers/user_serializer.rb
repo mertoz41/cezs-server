@@ -7,6 +7,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :influencers
   has_many :followedbands
   has_many :followedartists
+  has_many :followedsongs
   has_many :userevents
   has_many :songs
   has_many :userdescposts

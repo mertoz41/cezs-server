@@ -75,5 +75,7 @@ Rails.application.routes.draw do
   post '/descpostviewcount', to: 'userdescposts#createview'
   post '/banddescpostviewcount', to: 'banddescposts#createview'
   get '/filterlocations', to: 'locations#filterlocations'
+  post '/songfollow', to: 'songs#songfollow'
+  post '/songunfollow', to: 'songs#songunfollow'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
