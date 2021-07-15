@@ -44,44 +44,40 @@ class UsersongsController < ApplicationController
     end
     def update
         user = User.find(params[:user_id])
-        user_song = user.usersong
-        old_artist = user.favoritesong.artist
-        # byebug
+        old_favorite = Usersong.find_by(song_id: params[:oldSongId], user_id: user.id)
+        old_favorite.destroy
         # what is to be updated
         @song = Song.find_by(spotify_id: params[:songSpotifyId])
         if @song
-            user_song.update(song_id: @song.id)
+            # song exists
+            new_favorite = Usersong.create(song_id: @song.id, user_id: user.id)
             render json: {song: SongSerializer.new(@song)}
         else
             # song doesnt exist
             artist = Artist.find_by(spotify_id: params[:artistSpotifyId])
             if !artist
-                # byebug
+                # artist doesnt exist
                 new_artist = Artist.create(name: params[:artist_name], spotify_id: params[:artistSpotifyId])
                 new_album = Album.create(name: params[:album_name], spotify_id: params[:albumSpotifyId], artist_id: new_artist.id)
                 @new_song = Song.create(name: params[:name], spotify_id: params[:songSpotifyId], artist_id: new_artist.id, album_id: new_album.id)
-                user_song.update(song_id: @new_song.id)
+                new_favorite = Usersong.create(song_id: @new_song.id, user_id: user.id)
                 render json: {song: SongSerializer.new(@new_song)}
             else
+                # artist exists
                 album = Album.find_by(spotify_id: params[:albumSpotifyId])
-                # byebug
                 if album
+                    # album exists
                     @new_song = Song.create(name: params[:name], spotify_id: params[:songSpotifyId], artist_id: artist.id, album_id: album.id)
-                    user_song.update(song_id: @new_song.id)
+                    new_favorite = Usersong.create(song_id: @new_song.id, user_id: user.id)
                     render json: {song: SongSerializer.new(@new_song)}
                 else
+                    # album doesnt exit
                     new_album = Album.create(name: params[:album_name], spotify_id: params[:albumSpotifyId], artist_id: artist.id)
                     @new_song = Song.create(name: params[:name], spotify_id: params[:songSpotifyId], artist_id: artist.id, album_id: new_album.id)
-                    user_song.update(song_id: @new_song.id)
+                    new_favorite = Usersong.create(song_id: @new_song.id, user_id: user.id)
                     render json: {song: SongSerializer.new(@new_song)}
                 end
-
-                
             end
-            
-        end
-        if old_artist.bandposts.length == 0 && old_artist.posts.length == 0 && old_artist.favoriteusers.length == 0 && old_artist.users.length == 0
-            old_artist.destroy
         end
     end
 
