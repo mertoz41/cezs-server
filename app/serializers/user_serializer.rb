@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :follows, :followed_by, :location, :instruments, :post_count
+  attributes :id, :username, :created_at, :avatar, :follows, :followed_by, :location, :instruments, :post_count, :chatrooms
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   has_many :bands
@@ -21,6 +21,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :favoritealbums
   has_many :featuredposts
   has_many :featureduserdescposts
+  # has_many :chatrooms 
   
   def created_at
     object.created_at.to_date
@@ -36,6 +37,16 @@ class UserSerializer < ActiveModel::Serializer
   #   end
   # end
 
+  def chatrooms
+    object.chatrooms.map do |room|
+      users = room.users.filter { |user| user != object}
+      users_wit_avatar = users.map do |user|
+        {username: user.username, id: user.id, avatar: url_for(user.avatar)}
+      end
+      {users: users_wit_avatar, room_id: room.id}
+    end
+  end
+  
   def avatar
     return url_for(object.avatar)
   end

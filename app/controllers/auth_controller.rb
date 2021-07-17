@@ -111,7 +111,7 @@ class AuthController < ApplicationController
                 end
             end 
         
-        render json: {user: UserSerializer.new(@user), timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), chatrooms: chatrooms}
+        render json: {user: UserSerializer.new(@user), timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer)}
     end
 
 end
