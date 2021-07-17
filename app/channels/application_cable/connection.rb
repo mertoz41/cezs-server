@@ -8,16 +8,15 @@ module ApplicationCable
 
     private
       def find_verified_user
-        # or however you want to verify the user on your system
-        # byebug
-        # user_id = JWT.decode(request[:token], 'experiment', true, {algorithm: 'HS256'})[0]
-        # # client_id = request.params[:client]
-        # # verified_user = User.find_by(email: client_id)
-        # if user = User.find(user_id)
-        #   user
-        # else
-        #   reject_unauthorized_connection
-        # end
+        header_array = request.headers[:HTTP_SEC_WEBSOCKET_PROTOCOL].split(',')
+        token = header_array[header_array.length-1].strip()      
+        user_id = JWT.decode(token, 'experiment', true, {algorithm: 'HS256'})[0]
+        user = User.find(user_id["user_id"])
+        if user
+          user
+        else
+          reject_unauthorized_connection
+        end
       end
   end
 end
