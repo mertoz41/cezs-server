@@ -58,7 +58,6 @@ Rails.application.routes.draw do
   post '/removemember', to: 'bandmembers#removemember'
   post '/artistunfollow', to: 'artistfollows#destroy'
   post '/eventbydate', to: 'userevents#bydate'
-  post '/newartistfollow', to: 'artistfollows#newartist'
   post '/bandpostshares', to: 'bandposts#share'
   post '/banddescpostshares', to: 'banddescposts#share'
   post '/userdescpostshares', to: 'userdescposts#share'
