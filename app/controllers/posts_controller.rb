@@ -20,8 +20,9 @@ class PostsController < ApplicationController
         if artist
             artist_album = Album.find_by(spotify_id: album_spotify_id, artist_id: artist.id, name: album_name)
             if artist_album
+                byebug
                 # if album exists, use it for song creation
-                song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id, album_id: artist_album)
+                song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id, album_id: artist_album.id)
                 @post = Post.create(user_id: user_id, artist_id: artist.id, song_id: song.id, genre_id: genre_id)
                 if features.length > 0
                     features.each do |id|

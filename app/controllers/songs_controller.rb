@@ -28,13 +28,13 @@ class SongsController < ApplicationController
             album = Album.find_or_create_by(name: params[:album_name], spotify_id: params[:albumSpotifyId], artist_id: artist.id)
             @song = Song.find_or_create_by(name: params[:name], artist_id: artist.id, album_id: album.id, spotify_id: params[:songSpotifyId])
             followed_song = Songfollow.create(song_id: @song.id, user_id: params[:user_id])
-            render json: {song: @song.spotify_id}
+            render json: {song: {spotify_id: @song.spotify_id, song_id: @song.id}}
         else
             new_artist = Artist.create(name: params[:artist_name], spotify_id: params[:artistSpotifyId])
             new_album = Album.create(name: params[:album_name], spotify_id: params[:albumSpotifyId], artist_id: new_artist.id)
             @new_song = Song.create(name: params[:name], artist_id: new_artist.id, album_id: new_album.id, spotify_id: params[:songSpotifyId])
             followed_song = Songfollow.create(song_id: @new_song.id, user_id: params[:user_id])
-            render json: {song: @new_song.spotify_id}
+            render json: {song: {spotify_id: @new_song.spotify_id, song_id: @new_song.id}}
         end
     end
 
