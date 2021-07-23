@@ -10,7 +10,7 @@ class PostSerializer < ActiveModel::Serializer
 
   def instruments
     object.instruments.map do |instrument|
-      InstrumentSerializer.new(instrument)
+      instrument.id
     end
   end
   def featuredusers
