@@ -15,4 +15,10 @@ class InstrumentsController < ApplicationController
         end
         render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: UserSerializer)}
     end
+
+    def instrumentsearch
+        instruments = Instrument.where("name like?", "%#{params[:searching]}%")
+        render json: {instruments: instruments}
+        # byebug
+    end
 end

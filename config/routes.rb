@@ -76,5 +76,7 @@ Rails.application.routes.draw do
   get '/filterlocations', to: 'locations#filterlocations'
   post '/songfollow', to: 'songs#songfollow'
   post '/songunfollow', to: 'songs#songunfollow'
+  post '/instrumentsearch', to: 'instruments#instrumentsearch'
+  post '/genresearch', to: 'genres#genresearch'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
