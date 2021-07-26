@@ -12,7 +12,9 @@ class PostsController < ApplicationController
         album_spotify_id = params[:album_spotify_id]
 
         features = JSON.parse params[:features]
-        instruments = JSON.parse params[:instruments]
+
+        
+         
 
         # find artist by artist name and spotify id
         # if artist found use it for post creation
@@ -30,11 +32,16 @@ class PostsController < ApplicationController
                     end
 
                 end
-                if instruments.length > 0
-                    instruments.each do |id|
+                if params[:instruments].kind_of?(Array)
+                    selected_instruments = JSON.parse params[:instruments]
+                    selected_instruments.each do |id|
                         Postinstrument.create(instrument_id: id, post_id: @post.id)
                     end
+                else
+                    instrument = Instrument.find_or_create_by(name: params[:instruments])
+                    Postinstrument.create(instrument_id: instrument.id, post_id: @post.id)
                 end
+               
                 # create the post first
                 # then create postfeature and postinstruments instances
                 @post.clip.attach(params[:clip])
@@ -50,10 +57,14 @@ class PostsController < ApplicationController
                     end
 
                 end
-                if instruments.length > 0
-                    instruments.each do |id|
+                if params[:instruments].kind_of?(Array)
+                    selected_instruments = JSON.parse params[:instruments]
+                    selected_instruments.each do |id|
                         Postinstrument.create(instrument_id: id, post_id: @post.id)
                     end
+                else
+                    instrument = Instrument.find_or_create_by(name: params[:instruments])
+                    Postinstrument.create(instrument_id: instrument.id, post_id: @post.id)
                 end
                 @post.clip.attach(params[:clip])
                 @post.thumbnail.attach(params[:thumbnail])
@@ -74,10 +85,14 @@ class PostsController < ApplicationController
                 end
 
             end
-            if instruments.length > 0
-                instruments.each do |id|
+            if params[:instruments].kind_of?(Array)
+                selected_instruments = JSON.parse params[:instruments]
+                selected_instruments.each do |id|
                     Postinstrument.create(instrument_id: id, post_id: @post.id)
                 end
+            else
+                instrument = Instrument.find_or_create_by(name: params[:instruments])
+                Postinstrument.create(instrument_id: instrument.id, post_id: @post.id)
             end
             @post.clip.attach(params[:clip])
             @post.thumbnail.attach(params[:thumbnail])
