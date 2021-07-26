@@ -30,7 +30,6 @@ class PostsController < ApplicationController
                     features.each do |id|
                         Postfeature.create(user_id: id, post_id: @post.id)
                     end
-
                 end
                 if params[:instruments].kind_of?(Array)
                     selected_instruments = JSON.parse params[:instruments]
