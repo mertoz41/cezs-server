@@ -12,15 +12,19 @@ class UserdescpostsController < ApplicationController
                 Userdescpostfeature.create(user_id: id, userdescpost_id: @new_post.id)
             end
         end
-        if instruments.length > 0
-            instruments.each do |id|
-                Userdescpostinstrument.create(instrument_id: id, userdescpost_id: @new_post.id)
-            end
+        instruments.each do |instrument|
+            inst = Instrument.find_or_create_by(name: instrument)
+            Userdescpostinstrument.create(instrument_id: inst.id, userdescpost_id: @new_post.id)
         end
+
         @new_post.clip.attach(params[:clip])
         @new_post.thumbnail.attach(params[:thumbnail])
         render json: @new_post, serializer: UserdescpostSerializer
-    end 
+    end
+    
+    
+
+
     def createview
         user = User.find(params[:user_id])
         post = Userdescpost.find(params[:userdescpost_id])

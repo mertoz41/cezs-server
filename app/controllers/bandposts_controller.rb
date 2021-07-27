@@ -7,21 +7,17 @@ class BandpostsController < ApplicationController
         song_name = params[:song_name]
         album_name = params[:album_name]
         album_spotify_id = params[:album_spotify_id]
-
+        instruments = JSON.parse params[:instruments]
         artist = Artist.find_or_create_by(name: artist_name, spotify_id: artist_spotify_id)
         album = Album.find_or_create_by(name: album_name, artist_id: artist.id, spotify_id: album_spotify_id)
         song = Song.find_or_create_by(name: song_name, artist_id: artist.id, album_id: album.id, spotify_id: song_spotify_id)
         genre = Genre.find_or_create_by(name: params[:genre])
         @bandpost = Bandpost.create(band_id: band_id, artist_id: artist.id, song_id: song.id, genre_id: genre.id)
-        if params[:instruments].kind_of?(Array)
-            selected_instruments = JSON.parse params[:instruments]
-            selected_instruments.each do |id|
-                Bandpostinstrument.create(instrument_id: id, bandpost_id: @bandpost.id)
-            end
-        else
-            instrument = Instrument.find_or_create_by(name: params[:instruments])
-            Bandpostinstrument.create(instrument_id: instrument.id, bandpost_id: @bandpost.id)
+        instruments.each do |instrument| 
+            inst = Instrument.find_or_create_by(name: instrument)
+            Bandpostinstrument.create(bandpost_id: @bandpost.id, instrument_id: inst.id)
         end
+       
         @bandpost.clip.attach(params[:clip])
         @bandpost.thumbnail.attach(params[:thumbnail])
         render json: @bandpost, serializer: BandpostSerializer
