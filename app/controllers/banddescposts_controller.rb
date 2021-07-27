@@ -2,11 +2,16 @@ class BanddescpostsController < ApplicationController
     def create
         band_id = params[:band_id].to_i
         description = params[:description]
-        genre_id = params[:genre_id].to_i
-        instruments = JSON.parse params[:instruments]
-        @new_post = Banddescpost.create(band_id: band_id, description: description, genre_id: genre_id)
-        instruments.each do |inst|
-            Banddescpostinstrument.create(instrument_id: inst, banddescpost_id: @new_post.id)
+        genre = Genre.find_or_create_by(name: params[:genre])
+        @new_post = Banddescpost.create(band_id: band_id, description: description, genre_id: genre.id)
+        if params[:instruments].kind_of?(Array)
+            selected_instruments = JSON.parse params[:instruments]
+            selected_instruments.each do |id|
+            Banddescpostinstrument.create(instrument_id: id, banddescpost_id: @new_post.id)
+            end
+        else
+            instrument = Instrument.find_or_create_by(name: params[:instruments])
+            Banddescpostinstrument.create(instrument_id: instrument.id, banddescpost_id: @new_post.id)
         end
         @new_post.clip.attach(params[:clip])
         @new_post.thumbnail.attach(params[:thumbnail])
