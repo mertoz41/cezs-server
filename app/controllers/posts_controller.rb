@@ -9,7 +9,7 @@ class PostsController < ApplicationController
         album_name = params[:album_name]
         album_spotify_id = params[:album_spotify_id]
         features = JSON.parse params[:features]
-
+        instruments = JSON.parse params[:instruments]
         artist = Artist.find_or_create_by(name: artist_name, spotify_id: artist_spotify_id)
         album = Album.find_or_create_by(name: album_name, spotify_id: album_spotify_id, artist_id: artist.id)
         song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id, album_id: album.id)
@@ -20,14 +20,9 @@ class PostsController < ApplicationController
                 Postfeature.create(user_id: id, post_id: @post.id)
             end
         end
-        if params[:instruments].kind_of?(Array)
-            selected_instruments = JSON.parse params[:instruments]
-            selected_instruments.each do |id|
-                Postinstrument.create(instrument_id: id, post_id: @post.id)
-            end
-        else
-            instrument = Instrument.find_or_create_by(name: params[:instruments])
-            Postinstrument.create(instrument_id: instrument.id, post_id: @post.id)
+        instruments.each do |instrument|
+            inst = Instrument.find_or_create_by(name: instrument)
+            Postinstrument.create(instrument_id: inst.id, post_id: @post.id)
         end
         @post.clip.attach(params[:clip])
         @post.thumbnail.attach(params[:thumbnail])
