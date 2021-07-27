@@ -1,12 +1,12 @@
 class UserdescpostsController < ApplicationController
     def create
         user_id = params[:user_id].to_i
-        genre_id = params[:genre_id].to_i
         description = params[:description]
         features = JSON.parse params[:features]
         instruments = JSON.parse params[:instruments]
         # byebug
-        @new_post = Userdescpost.create(user_id: user_id, description: description, genre_id: genre_id)
+        genre = Genre.find_or_create_by(name: params[:genre])
+        @new_post = Userdescpost.create(user_id: user_id, description: description, genre_id: genre.id)
         if features.length > 0
             features.each do |id|
                 Userdescpostfeature.create(user_id: id, userdescpost_id: @new_post.id)
