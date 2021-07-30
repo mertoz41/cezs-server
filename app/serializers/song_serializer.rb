@@ -32,6 +32,9 @@ class SongSerializer < ActiveModel::Serializer
     object.posts.each do |post|
       view += post.postviews.size
     end
+    object.bandposts.each do |post|
+      view += post.bandpostviews.size
+    end
     return view
   end
 end
