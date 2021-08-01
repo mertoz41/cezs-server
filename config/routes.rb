@@ -78,6 +78,6 @@ Rails.application.routes.draw do
   post '/songunfollow', to: 'songs#songunfollow'
   post '/instrumentsearch', to: 'instruments#instrumentsearch'
   post '/genresearch', to: 'genres#genresearch'
-  get '/timeline/:id', to: 'timeline#user_timeline'
+  post '/timeline', to: 'timeline#user_timeline'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
