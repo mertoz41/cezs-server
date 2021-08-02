@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :followed_by, :location, :instruments, :post_count, :chatrooms, :follows_count, :followed_users, :followed_artists, :followed_songs
+  attributes :id, :username, :created_at, :avatar, :followed_by, :location, :instruments, :post_count, :chatrooms, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   has_many :bands
@@ -22,6 +22,12 @@ class UserSerializer < ActiveModel::Serializer
   
   def created_at
     object.created_at.to_date
+  end
+
+  def followed_bands
+    object.followedbands.map do |band|
+      band.id
+    end
   end
 
   def follows_count
