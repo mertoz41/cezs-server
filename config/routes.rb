@@ -79,5 +79,6 @@ Rails.application.routes.draw do
   post '/instrumentsearch', to: 'instruments#instrumentsearch'
   post '/genresearch', to: 'genres#genresearch'
   post '/timeline', to: 'timeline#user_timeline'
+  get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
