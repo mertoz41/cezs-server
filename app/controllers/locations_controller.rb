@@ -44,27 +44,17 @@ class LocationsController < ApplicationController
         # find userlocation by user_id
         @user = User.find(params[:user_id])
         old_location = @user.location
-        user_location = Userlocation.find_by(user_id: @user.id)
+        user_location = Userlocation.find_by(user_id: @user.id, location_id: old_location.id)
         location = Location.find_by(city: params[:city])
+        
         if location
-            # if location exists 
             user_location.update(location_id: location.id)
-           
-            # user_location = Userlocation.create(user_id: @user.id, location_id: location.id)
+            render json: {location: location}
         else
             new_location = Location.create(city: params[:city], latitude: params[:latitude], longitude: params[:longitude])
             user_location.update(location_id: new_location.id)
-
-            # if its a new location create location first
-            # then create user_location
+            render json: {location: new_location}
         end
-
-        if old_location.users.length == 0
-            # delete location if there are no users
-            old_location.destroy
-        end
-      
-        render json: {user: UserSerializer.new(@user)}
     end 
 
     def filterlocations
