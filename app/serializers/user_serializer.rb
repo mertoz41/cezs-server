@@ -36,6 +36,11 @@ class UserSerializer < ActiveModel::Serializer
 
   end
 
+  def instruments
+    object.instruments.map do |inst|
+      {id: inst.id, name: inst.name}
+    end
+  end
   def view_count
     views = 0
     object.posts.each do |post|
