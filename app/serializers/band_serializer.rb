@@ -20,7 +20,13 @@ class BandSerializer < ActiveModel::Serializer
 
   def members
     object.members.map do |member|
-      {username: member.username, avatar: url_for(member.avatar), id: member.id}
+    instruments = []
+      if member.instruments.length
+        member.instruments.each do |inst|
+        instruments.push(inst.id)
+        end
+      end
+      {username: member.username, avatar: url_for(member.avatar), id: member.id, instruments: instruments}
     end
   end
 
