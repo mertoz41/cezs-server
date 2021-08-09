@@ -1,7 +1,7 @@
 class UserinstrumentsController < ApplicationController
     def create
         @user = User.find(params[:user_id])
-        instrument = Instrument.find_or_create_by(id: params[:instrument_id], name: params[:name])
+        instrument = Instrument.find_or_create_by(name: params[:instrument])
         user_instrument = Userinstrument.create(user_id: @user.id, instrument_id: instrument.id)
         render json: {instrument: {id: instrument.id, name: instrument.name}}
     end 
