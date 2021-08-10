@@ -61,10 +61,20 @@ class LocationsController < ApplicationController
         locations = Location.all
         states = []
         locations.each do |location|
-            if !states.include?(location.city.split()[1])
-                states.push(location.city.split()[1])
+            location.users.each do |user|
+                if user.posts.size > 0 || user.userdescposts.size > 0 && !states.include?(location.city)
+                    states.push(location.city)
+                end
             end
+            # location.bands.each do |band|
+            #     if !states.include?(location.city) && band.bandposts.size > 0 || band.banddescposts.size > 0 
+            #         states.push(location.city)
+            #     end
+            # end
         end
+            # if !states.include?(location.city) && location.posts.size > 0 || location.bandposts
+            # end
+        
         render json: {states: states}
         # action to get all existing states in db
     end
