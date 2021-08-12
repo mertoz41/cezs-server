@@ -7,8 +7,9 @@ class Band < ApplicationRecord
     has_one :bandlocation, dependent: :destroy
     has_one :location, through: :bandlocation
 
-    has_many :bandposts, dependent: :destroy
-    has_many :songs, through: :bandposts
+    # has_many :bandposts, dependent: :destroy
+    has_many :posts, dependent: :destroy
+    has_many :songs, through: :posts
 
     has_many :bandfollows, dependent: :destroy
     has_many :followers, through: :bandfollows

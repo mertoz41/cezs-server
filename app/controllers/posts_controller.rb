@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
 
     def create
+        byebug
         user_id = params[:user_id].to_i
         artist_name = params[:artist_name]
         artist_spotify_id = params[:artist_spotify_id]

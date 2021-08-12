@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_14_060540) do
+ActiveRecord::Schema.define(version: 2021_08_12_170310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,6 +262,8 @@ ActiveRecord::Schema.define(version: 2021_07_14_060540) do
     t.integer "artist_id"
     t.integer "song_id"
     t.integer "genre_id"
+    t.integer "band_id"
+    t.string "description"
   end
 
   create_table "postviews", force: :cascade do |t|

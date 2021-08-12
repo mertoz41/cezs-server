@@ -71,27 +71,27 @@ class AuthController < ApplicationController
             obj['users'] = ActiveModel::Serializer::CollectionSerializer.new(@room_users, each_serializer: UserSerializer)
             chatrooms.push(obj)
         end 
-        @user.followedbands.each do |band|
-            band.bandposts.each do |bandpost|
-                @timeline.push(bandpost)
-            end
-        end 
-        @user.bands.each do |band|
-            band.bandposts.each do |bandpost|
-                @timeline.push(bandpost)
-            end
-            band.banddescposts.each do |banddescpost|
-                @timeline.push(banddescpost)
-            end
-        end
+        # @user.followedbands.each do |band|
+        #     band.bandposts.each do |bandpost|
+        #         @timeline.push(bandpost)
+        #     end
+        # end 
+        # @user.bands.each do |band|
+        #     band.bandposts.each do |bandpost|
+        #         @timeline.push(bandpost)
+        #     end
+        #     band.banddescposts.each do |banddescpost|
+        #         @timeline.push(banddescpost)
+        #     end
+        # end
         
         @user.followedartists.each do |artist|
             artist.posts.each do |post|
                 @timeline.push(post)
             end
-            artist.bandposts.each do |post|
-                @timeline.push(post)
-            end
+            # artist.bandposts.each do |post|
+            #     @timeline.push(post)
+            # end
         end 
         
         # @shares = @user.shares
