@@ -77,6 +77,21 @@ class PostsController < ApplicationController
         render json: @post, serializer: PostSerializer
     end
 
+    def createbanddescposts
+        band_id = params[:band_id].to_i
+        description = params[:description]
+        genre = Genre.find_or_create_by(name: params[:genre])
+        instruments = JSON.parse params[:instruments]
+        @new_post = Post.create(band_id: band_id, description: description, genre_id: genre.id)
+        instruments.each do |instrument|
+            inst = Instrument.find_or_create_by(name: instrument)
+            Postinstrument.create(post_id: @new_post.id, instrument_id: inst.id)
+        end
+        @new_post.clip.attach(params[:clip])
+        @new_post.thumbnail.attach(params[:thumbnail])
+        render json: @new_post, serializer: PostSerializer
+    end
+
 
     def filter
         instruments = params[:selected_instruments]

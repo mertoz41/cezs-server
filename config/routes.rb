@@ -82,6 +82,7 @@ Rails.application.routes.draw do
   get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
   post '/userdescpost', to: 'posts#createuserdescpost'
   post '/bandposts', to: 'posts#createbandpost'
+  post '/banddescposts', to: 'posts#createbanddescpost'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
