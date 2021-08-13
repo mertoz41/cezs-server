@@ -8,7 +8,8 @@ class AlbumSerializer < ActiveModel::Serializer
     return object.favoriteusers.size
   end
   def post_count
-    return object.posts.size + object.bandposts.size
+    return 0
+    # return object.posts.size + object.bandposts.size
   end
   def artistSpotifyId
     return object.artist.spotify_id

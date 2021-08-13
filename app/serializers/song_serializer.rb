@@ -12,7 +12,8 @@ class SongSerializer < ActiveModel::Serializer
   end
 
   def post_count
-    return object.posts.size + object.bandposts.size
+    # return object.posts.size + object.bandposts.size
+    return 0
   end
 
   def instruments
@@ -25,13 +26,13 @@ class SongSerializer < ActiveModel::Serializer
       end
     end
 
-    object.bandposts.each do |post|
-      post.instruments.each do |instrument|
-        if !instruments.include? instrument.name
-        instruments.push(instrument.name)
-        end
-      end
-    end
+    # object.bandposts.each do |post|
+    #   post.instruments.each do |instrument|
+    #     if !instruments.include? instrument.name
+    #     instruments.push(instrument.name)
+    #     end
+    #   end
+    # end
     
     return instruments
   end
@@ -54,12 +55,12 @@ class SongSerializer < ActiveModel::Serializer
 
   def view_count
     view = 0
-    object.posts.each do |post|
-      view += post.postviews.size
-    end
-    object.bandposts.each do |post|
-      view += post.bandpostviews.size
-    end
+    # object.posts.each do |post|
+    #   view += post.postviews.size
+    # end
+    # object.bandposts.each do |post|
+    #   view += post.bandpostviews.size
+    # end
     return view
   end
 

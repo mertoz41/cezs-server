@@ -4,9 +4,9 @@ class BandSerializer < ActiveModel::Serializer
   attributes :id, :name, :picture, :created_at, :location, :followers_count, :members, :songs, :view_count, :share_count
   attribute :bandbio, if: -> {object.bandbio}
 
-  has_many :bandposts
+  # has_many :bandposts
   has_many :bandevents
-  has_many :banddescposts
+  # has_many :banddescposts
   
   def picture
     url_for(object.picture)
@@ -32,23 +32,23 @@ class BandSerializer < ActiveModel::Serializer
 
   def view_count
     views = 0
-    object.bandposts.each do |post|
-      views += post.bandpostviews.size
-    end
-    object.banddescposts.each do |post|
-      views += post.banddescpostviews.size
-    end
+    # object.bandposts.each do |post|
+    #   views += post.bandpostviews.size
+    # end
+    # object.banddescposts.each do |post|
+    #   views += post.banddescpostviews.size
+    # end
     return views 
   end
 
   def share_count
     shares = 0
-    object.bandposts.each do |post|
-      shares += post.bandpostshares.size
-    end
-    object.banddescposts.each do |post|
-      shares += post.banddescpostshares.size
-    end
+    # object.bandposts.each do |post|
+    #   shares += post.bandpostshares.size
+    # end
+    # object.banddescposts.each do |post|
+    #   shares += post.banddescpostshares.size
+    # end
     return shares
   end
 

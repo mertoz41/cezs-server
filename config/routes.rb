@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :artists
   resources :users
   resources :bands
-  resources :bandposts
+  # resources :bandposts
   resources :bandfollows
   resources :bandbios
   resources :bandlocations
@@ -80,5 +80,8 @@ Rails.application.routes.draw do
   post '/genresearch', to: 'genres#genresearch'
   post '/timeline', to: 'timeline#user_timeline'
   get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
+  post '/userdescpost', to: 'posts#createuserdescpost'
+  post '/bandposts', to: 'posts#createbandpost'
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -23,32 +23,32 @@ class AuthController < ApplicationController
                 # @posts.push(post)
                 @timeline.push(post)
             end 
-            @user.bands.each do |band|
-                band.bandposts.each do |bandpost|
-                    @timeline.push(bandpost)
-                end
-            end
+            # @user.bands.each do |band|
+            #     band.bandposts.each do |bandpost|
+            #         @timeline.push(bandpost)
+            #     end
+            # end
             @user.followeds.each do |user|
                 user.posts.each do |post|
                 @timeline.push(post)
                 end 
             end
-            @user.followedbands.each do |band|
-                band.bandposts.each do |bandpost|
-                    @timeline.push(bandpost)
-                end
-            end 
+            # @user.followedbands.each do |band|
+            #     band.bandposts.each do |bandpost|
+            #         @timeline.push(bandpost)
+            #     end
+            # end 
             @user.followedartists.each do |artist|
                 artist.posts.each do |post|
                     @timeline.push(post)
                 end
-                artist.bandposts.each do |post|
-                    @timeline.push(post)
-                end
+                # artist.bandposts.each do |post|
+                #     @timeline.push(post)
+                # end
             end 
-            @user.userdescposts.each do |post|
-                @timeline.push(post)
-            end
+            # @user.userdescposts.each do |post|
+            #     @timeline.push(post)
+            # end
 
             render json: {user: UserSerializer.new(@user), token: token, timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), chatrooms: chatrooms}
         else 
