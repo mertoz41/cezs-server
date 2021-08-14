@@ -199,7 +199,6 @@ class PostsController < ApplicationController
     end
 
     def createview
-        # byebug
         user = User.find(params[:user_id])
         post = Post.find(params[:post_id])
         Postview.create(user_id: user.id, post_id: post.id)
@@ -208,12 +207,7 @@ class PostsController < ApplicationController
 
     def destroy
         post = Post.find(params[:id])
-        song = Song.find(post.song_id)
-
         post.destroy
-        if song.bandposts.length == 0 && song.posts.length == 0
-            song.destroy
-        end
         render json: {message: 'post deleted.'}
     end
 
