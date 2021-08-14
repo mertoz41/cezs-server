@@ -25,8 +25,8 @@ Rails.application.routes.draw do
   resources :artistfollows
   resources :userevents
   resources :bandevents
-  resources :banddescposts
-  resources :userdescposts
+  # resources :banddescposts
+  # resources :userdescposts
   resources :bandpostcomments 
   resources :banddescpostcomments
   resources :userdescpostcomments 
@@ -80,7 +80,7 @@ Rails.application.routes.draw do
   post '/genresearch', to: 'genres#genresearch'
   post '/timeline', to: 'timeline#user_timeline'
   get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
-  post '/userdescpost', to: 'posts#createuserdescpost'
+  post '/userdescposts', to: 'posts#createuserdescpost'
   post '/bandposts', to: 'posts#createbandpost'
   post '/banddescposts', to: 'posts#createbanddescpost'
 

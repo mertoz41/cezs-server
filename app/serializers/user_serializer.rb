@@ -7,17 +7,17 @@ class UserSerializer < ActiveModel::Serializer
   has_many :influencers
   has_many :userevents
   has_many :songs
-  has_many :userdescposts
+  # has_many :userdescposts
   has_many :posts
   has_many :shares
-  has_many :bandpostshares
-  has_many :banddescpostshares
-  has_many :userdescpostshares
+  # has_many :bandpostshares
+  # has_many :banddescpostshares
+  # has_many :userdescpostshares
   has_many :favoritesongs
   has_many :favoriteartists
   has_many :favoritealbums
   has_many :featuredposts
-  has_many :featureduserdescposts
+  # has_many :featureduserdescposts
   # has_many :chatrooms 
   
   def created_at
@@ -29,9 +29,9 @@ class UserSerializer < ActiveModel::Serializer
     object.posts.each do |post|
       shares += post.shares.size
     end
-    object.userdescposts.each do |post|
-      shares += post.userdescpostshares.size
-    end
+    # object.userdescposts.each do |post|
+    #   shares += post.userdescpostshares.size
+    # end
     return shares
 
   end
@@ -46,9 +46,9 @@ class UserSerializer < ActiveModel::Serializer
     object.posts.each do |post|
       views += post.postviews.size
     end
-    object.userdescposts.each do |post|
-      views += post.userdescpostviews.size
-    end
+    # object.userdescposts.each do |post|
+    #   views += post.userdescpostviews.size
+    # end
     return views
   end
 
