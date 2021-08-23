@@ -11,11 +11,11 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
-  config.action_mailer.default_url_options = { :host => "10.0.0.206:3000" }
-  # config.action_mailer.default_url_options = { :host => '10.0.0.218:3000' }
+  # config.action_mailer.default_url_options = { :host => "10.0.0.206:3000" }
+  config.action_mailer.default_url_options = { :host => '192.168.1.100:3000' }
 
-  Rails.application.routes.default_url_options[:host] = "10.0.0.206:3000"
-  # Rails.application.routes.default_url_options[:host] = '10.0.0.218:3000'
+  # Rails.application.routes.default_url_options[:host] = "10.0.0.206:3000"
+  Rails.application.routes.default_url_options[:host] = '192.168.1.100:3000'
 
   # Show full error reports.
   config.consider_all_requests_local = true

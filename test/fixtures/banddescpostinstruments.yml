@@ -1,9 +1,0 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  banddescpost_id: 1
-  instrument_id: 1
-
-two:
-  banddescpost_id: 1
-  instrument_id: 1

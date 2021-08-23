@@ -1,6 +1,5 @@
 class ArtistSerializer < ActiveModel::Serializer
   attributes :id, :name, :spotify_id, :influence_count, :song_count, :favoriteusers_count, :followingusers_count, :view_count, :instruments
-  has_many :bandposts
   has_many :posts
   has_many :songs
   
@@ -27,13 +26,7 @@ class ArtistSerializer < ActiveModel::Serializer
       end
     end
 
-    object.bandposts.each do |post|
-      post.instruments.each do |instrument|
-        if !instruments.include? instrument.name
-        instruments.push(instrument.name)
-        end
-      end
-    end
+
     
     return instruments
 
@@ -45,9 +38,7 @@ class ArtistSerializer < ActiveModel::Serializer
     object.posts.each do |post|
       views += post.postviews.size
     end
-    object.bandposts.each do |post|
-      views += post.bandpostviews.size
-    end
+    
     return views
 
   end

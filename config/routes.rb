@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   resources :userinfluences
   resources :songs
   resources :shares
-  resources :responses
-  resources :requests
   resources :posts
   resources :instruments
   resources :genres
@@ -17,7 +15,6 @@ Rails.application.routes.draw do
   resources :artists
   resources :users
   resources :bands
-  # resources :bandposts
   resources :bandfollows
   resources :bandbios
   resources :bandlocations
@@ -25,11 +22,6 @@ Rails.application.routes.draw do
   resources :artistfollows
   resources :userevents
   resources :bandevents
-  # resources :banddescposts
-  # resources :userdescposts
-  resources :bandpostcomments 
-  resources :banddescpostcomments
-  resources :userdescpostcomments 
   resources :usersongs
   resources :userartists
   resources :useralbums
@@ -58,21 +50,12 @@ Rails.application.routes.draw do
   post '/removemember', to: 'bandmembers#removemember'
   post '/artistunfollow', to: 'artistfollows#destroy'
   post '/eventbydate', to: 'userevents#bydate'
-  post '/bandpostshares', to: 'bandposts#share'
-  post '/banddescpostshares', to: 'banddescposts#share'
-  post '/userdescpostshares', to: 'userdescposts#share'
-  delete '/unsharebandpost/:id', to: 'bandposts#unshare'
-  delete '/unsharebanddescpost/:id', to: 'banddescposts#unshare'
-  delete '/unshareuserdescpost/:id', to: 'userdescposts#unshare'
   post  '/deleteuserartist', to: 'userartists#delete'
   post '/deleteusersong', to: 'usersongs#delete'
   post '/deleteuseralbum', to: 'useralbums#delete'
   get '/albumcheck/:id', to: 'albums#albumcheck'
   get '/songcheck/:id', to: 'songs#check'
   post '/postviewcount', to: 'posts#createview'
-  post '/bandpostviewcount', to: 'bandposts#createview'
-  post '/descpostviewcount', to: 'userdescposts#createview'
-  post '/banddescpostviewcount', to: 'banddescposts#createview'
   get '/filterlocations', to: 'locations#filterlocations'
   post '/songfollow', to: 'songs#songfollow'
   post '/songunfollow', to: 'songs#songunfollow'

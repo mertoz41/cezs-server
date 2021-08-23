@@ -72,43 +72,6 @@ ActiveRecord::Schema.define(version: 2021_08_12_170310) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "banddescpostcomments", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "banddescpost_id"
-    t.string "comment"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "banddescpostinstruments", force: :cascade do |t|
-    t.integer "banddescpost_id"
-    t.integer "instrument_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "banddescposts", force: :cascade do |t|
-    t.integer "band_id"
-    t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "genre_id"
-  end
-
-  create_table "banddescpostshares", force: :cascade do |t|
-    t.integer "banddescpost_id"
-    t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "banddescpostviews", force: :cascade do |t|
-    t.integer "banddescpost_id"
-    t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "bandevents", force: :cascade do |t|
     t.string "address"
     t.string "description"
@@ -140,44 +103,6 @@ ActiveRecord::Schema.define(version: 2021_08_12_170310) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
-  end
-
-  create_table "bandpostcomments", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "bandpost_id"
-    t.string "comment"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "bandpostinstruments", force: :cascade do |t|
-    t.integer "bandpost_id"
-    t.integer "instrument_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "bandposts", force: :cascade do |t|
-    t.integer "band_id"
-    t.integer "song_id"
-    t.integer "artist_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "genre_id"
-  end
-
-  create_table "bandpostshares", force: :cascade do |t|
-    t.integer "bandpost_id"
-    t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "bandpostviews", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "bandpost_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "bands", force: :cascade do |t|
@@ -273,23 +198,6 @@ ActiveRecord::Schema.define(version: 2021_08_12_170310) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "requests", force: :cascade do |t|
-    t.boolean "fulfilled"
-    t.integer "user_id"
-    t.integer "artist_id"
-    t.integer "song_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "responses", force: :cascade do |t|
-    t.integer "request_id"
-    t.integer "user_id"
-    t.integer "instrument_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "shares", force: :cascade do |t|
     t.integer "post_id"
     t.datetime "created_at", precision: 6, null: false
@@ -330,50 +238,6 @@ ActiveRecord::Schema.define(version: 2021_08_12_170310) do
   create_table "userchatrooms", force: :cascade do |t|
     t.integer "user_id"
     t.integer "chatroom_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "userdescpostcomments", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "userdescpost_id"
-    t.string "comment"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "userdescpostfeatures", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "userdescpost_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "userdescpostinstruments", force: :cascade do |t|
-    t.integer "userdescpost_id"
-    t.integer "instrument_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "userdescposts", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "genre_id"
-  end
-
-  create_table "userdescpostshares", force: :cascade do |t|
-    t.integer "userdescpost_id"
-    t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "userdescpostviews", force: :cascade do |t|
-    t.integer "userdescpost_id"
-    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
