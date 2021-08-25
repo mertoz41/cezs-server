@@ -98,9 +98,7 @@ class PostsController < ApplicationController
         genres = params[:selected_genres]
         states = params[:selected_states]
         @posts = []
-        @userdescposts = []
-        @bandposts = []
-        @banddescposts = []
+
         if instruments.length > 0
             instruments.each do |inst|
                 instrument = Instrument.find(inst)
@@ -109,22 +107,7 @@ class PostsController < ApplicationController
                         @posts.push(post)
                     end
                 end
-                instrument.userdescposts.each do |post|
-                    if !@userdescposts.include?(post)
-                        @userdescposts.push(post)
-                    end
-                        
-                end
-                instrument.bandposts.each do |post|
-                    if !@bandposts.include?(post)
-                        @bandposts.push(post)
-                    end
-                end
-                instrument.banddescposts.each do |post|
-                    if !@banddescposts.include?(post)
-                        @banddescposts.push(post)
-                    end
-                end
+                
             end
         end
 
@@ -136,22 +119,7 @@ class PostsController < ApplicationController
                         @posts.push(post)
                     end
                 end
-                genre.userdescposts.each do |post|
-                    if !@userdescposts.include?(post)
-                        @userdescposts.push(post)
-                    end
-                        
-                end
-                genre.bandposts.each do |post|
-                    if !@bandposts.include?(post)
-                        @bandposts.push(post)
-                    end
-                end
-                genre.banddescposts.each do |post|
-                    if !@banddescposts.include?(post)
-                        @banddescposts.push(post)
-                    end
-                end
+                
             end
         end
 
@@ -168,25 +136,14 @@ class PostsController < ApplicationController
                         end
                     end
 
-                    user.userdescposts.each do |post|
-                        if !@userdescposts.include?(post)
-                            @userdescposts.push(post)
-                        end
-                    end
+                    
 
                 end
 
                 bands.each do |band|
-
-                    band.bandposts.each do |post|
-                        if !@bandposts.include?(post)
-                            @bandposts.push(post)
-                        end
-                    end
-
-                    band.banddescposts.each do |post|
-                        if !@banddescposts.include?(post)
-                            @banddescposts.push(post)
+                    band.posts.each do |post|
+                        if !@posts.include?(post)
+                            @posts.push(post)
                         end
                     end
                 end
@@ -195,7 +152,7 @@ class PostsController < ApplicationController
                 
 
         end
-        render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer), bandposts: ActiveModel::Serializer::CollectionSerializer.new(@bandposts, each_serializer: BandpostSerializer), userdescposts: ActiveModel::Serializer::CollectionSerializer.new(@userdescposts, each_serializer: UserdescpostSerializer), banddescposts: ActiveModel::Serializer::CollectionSerializer.new(@banddescposts, each_serializer: BanddescpostSerializer)}
+        render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
     end
 
     def createview
