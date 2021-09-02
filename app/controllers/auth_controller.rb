@@ -45,8 +45,6 @@ class AuthController < ApplicationController
                     @timeline.push(post)
                 end
             end
-
-
             render json: {user: UserSerializer.new(@user), token: token, timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer), chatrooms: chatrooms}
         else 
             render json: {message: 'Invalid username or password.'}
@@ -92,6 +90,12 @@ class AuthController < ApplicationController
                 @timeline.push(post)
                 end
             end 
+
+            @user.followedsongs.each do |song|
+                song.posts.each do |post|
+                    @timeline.push(post)
+                end
+            end
         
         render json: {user: UserSerializer.new(@user), timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer)}
     end
