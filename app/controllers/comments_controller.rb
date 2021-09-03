@@ -12,4 +12,10 @@ class CommentsController < ApplicationController
         @comment = Comment.create(comment: params[:comment], user_id: user.id, post_id: post.id)
         render json: {comment: CommentSerializer.new(@comment)}
     end
+
+    def destroy
+        comment = Comment.find(params[:id])
+        comment.destroy
+        render json: {message: 'comment deleted.'}
+    end
 end
