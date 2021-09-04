@@ -77,4 +77,48 @@ class User < ApplicationRecord
     has_many :followers, through: :followed_by, source: :follower
     has_many :follows, class_name: "Follow", foreign_key: :follower_id, dependent: :destroy
     has_many :followeds, through: :follows, source: :followed
+
+
+    def timeline
+        arr = []
+        # users own posts
+        self.posts.each do |post|
+            arr.push(post)
+        end 
+        # users bands posts
+        self.bands.each do |band|
+            band.posts.each do |bandpost|
+                arr.push(bandpost)
+            end
+        end
+        # followed users posts
+        self.followeds.each do |user|
+            user.posts.each do |post|
+            arr.push(post)
+            end 
+        end
+        # followed bands posts
+        self.followedbands.each do |band|
+            band.posts.each do |bandpost|
+                arr.push(bandpost)
+            end
+        end 
+        # followed artists posts
+        self.followedartists.each do |artist|
+            artist.posts.each do |post|
+                if !arr.include?(post)
+                arr.push(post)
+                end
+            end
+        end 
+        # followed songs posts
+        self.followedsongs.each do |song|
+            song.posts.each do |post|
+                if !arr.include?(post)
+                arr.push(post)
+                end
+            end
+        end
+        return arr.sort_by(&:created_at).reverse.take(10)
+    end
 end
