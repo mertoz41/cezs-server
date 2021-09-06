@@ -121,4 +121,30 @@ class User < ApplicationRecord
         end
         return arr.sort_by(&:created_at).reverse.take(10)
     end
+
+    def timeline_refresh(date)
+        arr = []
+         # followed users posts
+         self.followeds.each do |user|
+            followedposts = user.posts.where('created_at > ?', date)
+            arr = arr + followedposts
+        end
+
+         # followed bands posts
+         self.followedbands.each do |band|
+            followedbandsposts = band.posts.where('created_at > ?', date)
+            arr = arr + followedbandsposts
+        end
+        # followed artists posts
+        self.followedartists.each do |artist|
+            followedartists = artist.posts.where('created_at > ?', date)
+            arr = arr + followedartists
+        end 
+        # followed songs posts
+        self.followedsongs.each do |song|
+            followedsongs = song.posts.where('created_at > ?', date)
+            arr = arr + followedsongs
+        end
+        return arr.sort_by(&:created_at).reverse.take(10)
+    end
 end
