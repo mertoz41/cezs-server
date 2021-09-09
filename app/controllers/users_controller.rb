@@ -15,9 +15,10 @@ class UsersController < ApplicationController
 
     def avatar
         @user = User.find(params[:user_id])
+        byebug
         @user.avatar.attach(params[:avatar])
         # @posts = @user.posts
-        render json: {user: UserSerializer.new(@user)}
+        render json: {message: 'avatar changed.'}
     end
 
     def searching
