@@ -32,6 +32,8 @@ class SongSerializer < ActiveModel::Serializer
     return object.users.size
   end
 
+  
+
   def album_name
     return object.album.name
   end

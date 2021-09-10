@@ -1,6 +1,10 @@
 class AlbumSerializer < ActiveModel::Serializer
-  attributes :id, :name, :spotify_id, :artist_name, :artist_id, :favoriteusers_count, :post_count, :artistSpotifyId
+  attributes :id, :name, :spotify_id, :artist_name, :artist_id, :favoriteusers_count, :post_count, :artistSpotifyId, :song_count
   has_many :songs
+
+  def song_count
+    return object.songs.size
+  end
   def artist_name
     return object.artist.name
   end

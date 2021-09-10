@@ -7,4 +7,9 @@ class AlbumsController < ApplicationController
             render json: {message: 'album not found'}
         end
     end
+
+    def albumsongs
+        album = Album.find(params[:id])
+        render json: {songs: album.songs}
+    end
 end
