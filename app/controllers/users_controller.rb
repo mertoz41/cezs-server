@@ -13,6 +13,23 @@ class UsersController < ApplicationController
         render json: {user: UserSerializer.new(@user)}
     end 
 
+    def update
+        user = User.find(params[:id])
+        if params[:name]
+            user.update(name: params[:name])
+        end
+        if params[:last_name]
+            user.update(last_name: params[:last_name])
+        end
+        if params[:username]
+            user.update(username: params[:username])
+        end
+        if params[:email]
+            user.update(email: params[:email])
+        end
+        byebug
+    end
+
     def avatar
         @user = User.find(params[:user_id])
         byebug
