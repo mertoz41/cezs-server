@@ -15,19 +15,31 @@ class UsersController < ApplicationController
 
     def update
         user = User.find(params[:id])
+
         if params[:name]
             user.update(name: params[:name])
         end
         if params[:last_name]
             user.update(last_name: params[:last_name])
         end
-        if params[:username]
-            user.update(username: params[:username])
-        end
         if params[:email]
             user.update(email: params[:email])
         end
-        byebug
+
+        if params[:username]
+            found = User.find_by(username: params[:username])
+            # byebug
+            if found
+                render json: {error: 'this name is being used.'}
+            else
+                user.update(username: params[:username])
+                render json: {username: user.username}
+            end
+        else 
+            render json: {message: 'somethings changed'}
+        end
+
+        # render json: {username: user.username}
     end
 
     def avatar
