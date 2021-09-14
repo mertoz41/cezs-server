@@ -67,6 +67,7 @@ Rails.application.routes.draw do
   post '/bandposts', to: 'posts#createbandpost'
   post '/banddescposts', to: 'posts#createbanddescposts'
   get '/albumsongs/:id', to: 'albums#albumsongs'
+  post '/usertoken', to: 'users#usertoken'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

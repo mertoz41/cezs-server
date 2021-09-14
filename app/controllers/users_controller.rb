@@ -57,5 +57,15 @@ class UsersController < ApplicationController
         # serializer isnt very smart for this situation
 
     end
+    def usertoken
+        user = User.find(params[:user_id])
+        if !user.notification_token
+            new_expo_token = NotificationToken.create(user_id: user.id, token: params[:expo_token])
+        else
+            token = user.notification_token
+            token.update(token: params[:expo_token])
+        end
+        render json: {message: 'token added.'}
+    end
 
 end

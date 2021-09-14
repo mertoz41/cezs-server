@@ -1,12 +1,13 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :chatrooms, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followers_count, :view_count, :share_count, :name, :last_name, :email
+  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :chatrooms, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followers_count, :view_count, :share_count, :name, :last_name, :email, :notification_token
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   has_many :bands
   has_many :influencers
   has_many :userevents
   has_many :songs
+  # has_one :notification_token
   # has_many :userdescposts
   has_many :posts
   has_many :shares
@@ -19,7 +20,9 @@ class UserSerializer < ActiveModel::Serializer
   has_many :featuredposts
   # has_many :featureduserdescposts
   # has_many :chatrooms 
-  
+  def notification_token
+    return object.notification_token.token
+  end
   def created_at
     object.created_at.to_date
   end
