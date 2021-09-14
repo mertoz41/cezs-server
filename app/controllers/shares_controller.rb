@@ -1,4 +1,5 @@
 class SharesController < ApplicationController
+
     def create
         user = User.find(params[:user_id])
         post = Post.find(params[:post_id])
@@ -24,4 +25,5 @@ class SharesController < ApplicationController
         share.destroy
         render json: {message: "Success"}
     end 
+    
 end

@@ -10,6 +10,15 @@ class CommentsController < ApplicationController
         post = Post.find(params[:post_id])
         user = User.find(params[:user_id])
         @comment = Comment.create(comment: params[:comment], user_id: user.id, post_id: post.id)
+        new_notification = CommentNotification.create(user_id: post.user.id, post_id: post.id, action_user_id: user.id, seen: false)
+        if post.user.notification_token
+            client = Exponent::Push::Client.new
+            messages = [{
+                to: post.user.notification_token.token,
+                body: "#{user.username} commented on your post!"
+            }]
+            handler = client.send_messages(messages)
+        end
         render json: {comment: CommentSerializer.new(@comment)}
     end
 
