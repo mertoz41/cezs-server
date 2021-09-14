@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_14_181258) do
+ActiveRecord::Schema.define(version: 2021_09_14_185953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,10 +123,30 @@ ActiveRecord::Schema.define(version: 2021_09_14_181258) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "comment_notifications", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "user_id"
+    t.integer "action_user_id"
+    t.integer "band_id"
+    t.boolean "seen"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "comments", force: :cascade do |t|
     t.string "comment"
     t.string "user_id"
     t.integer "post_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "follow_notifications", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "user_id"
+    t.integer "action_user_id"
+    t.integer "band_id"
+    t.boolean "seen"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -211,6 +231,8 @@ ActiveRecord::Schema.define(version: 2021_09_14_181258) do
     t.integer "action_user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "band_id"
+    t.boolean "seen"
   end
 
   create_table "shares", force: :cascade do |t|
