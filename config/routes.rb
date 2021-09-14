@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :usersongs
   resources :userartists
   resources :useralbums
+  
 
   mount ActionCable.server => '/cable'
 
@@ -68,6 +69,6 @@ Rails.application.routes.draw do
   post '/banddescposts', to: 'posts#createbanddescposts'
   get '/albumsongs/:id', to: 'albums#albumsongs'
   post '/usertoken', to: 'users#usertoken'
-
+  get '/experimentnotification', to: 'notifications#experiment'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
