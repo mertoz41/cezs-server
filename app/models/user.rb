@@ -15,6 +15,7 @@ class User < ApplicationRecord
 
     has_many :share_notifications, dependent: :destroy
     has_many :comment_notifications, dependent: :destroy
+    has_many :follow_notifications, dependent: :destroy
 
     has_many :bandfollows, dependent: :destroy
     has_many :followedbands, through: :bandfollows
