@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_13_192942) do
+ActiveRecord::Schema.define(version: 2021_09_14_181258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,14 @@ ActiveRecord::Schema.define(version: 2021_09_13_192942) do
   create_table "postviews", force: :cascade do |t|
     t.integer "user_id"
     t.integer "post_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "share_notifications", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "user_id"
+    t.integer "action_user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

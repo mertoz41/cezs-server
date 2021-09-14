@@ -13,6 +13,8 @@ class User < ApplicationRecord
     has_many :userevents, dependent: :destroy
 
 
+    has_many :share_notifications, dependent: :destroy
+
     has_many :bandfollows, dependent: :destroy
     has_many :followedbands, through: :bandfollows
 

@@ -21,7 +21,11 @@ class UserSerializer < ActiveModel::Serializer
   # has_many :featureduserdescposts
   # has_many :chatrooms 
   def notification_token
-    return object.notification_token.token
+    if object.notification_token
+      return object.notification_token.token
+    else
+      return nil
+    end
   end
   def created_at
     object.created_at.to_date

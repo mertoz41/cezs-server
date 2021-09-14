@@ -7,4 +7,8 @@ class NotificationsController < ApplicationController
         }]
         handler = client.send_messages(messages)
     end
+
+    def share_notification
+        # 
+    end
 end
