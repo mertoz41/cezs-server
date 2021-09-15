@@ -92,6 +92,11 @@ class PostsController < ApplicationController
         render json: @new_post, serializer: PostSerializer
     end
 
+    def show
+        @post = Post.find(params[:id])
+        render json: @post, serializer: PostSerializer
+    end
+
 
     def filter
         instruments = params[:selected_instruments]
