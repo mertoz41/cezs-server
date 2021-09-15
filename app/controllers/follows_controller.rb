@@ -8,17 +8,17 @@ class FollowsController < ApplicationController
         if followed_user.notification_token
             client = Exponent::Push::Client.new
             messages = [{
-                to: followed_user.notification.token,
+                to: followed_user.notification_token.token,
                 body: "#{following_user.username} follows you."
             }]
             handler = client.send_messages(messages)
         end
-        render json: {follow: new_follow}
+        render json: {message: 'is followed.'}
     end
-    def destroy
-        follow = Follow.find(params[:id])
+    def unfollow
+        follow = Follow.find_by(follower_id: params[:unfollower_id], followed_id: params[:unfollowed_id])
         follow.destroy
-        render json: {message: "succezs"}
+        render json: {message: "is unfollowed."}
     end 
 
     def follows

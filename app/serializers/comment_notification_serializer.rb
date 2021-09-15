@@ -12,8 +12,6 @@ class CommentNotificationSerializer < ActiveModel::Serializer
     return url_for(user.avatar)
   end
 
-
-
   def message
     return 'commented on your post.'
   end

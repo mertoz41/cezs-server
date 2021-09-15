@@ -70,5 +70,6 @@ Rails.application.routes.draw do
   get '/albumsongs/:id', to: 'albums#albumsongs'
   post '/usertoken', to: 'users#usertoken'
   get '/experimentnotification', to: 'notifications#experiment'
+  post '/unfollow', to: 'follows#unfollow'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
