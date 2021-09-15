@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+    include Rails.application.routes.url_helpers
+
     def show
         post = Post.find(params[:id])
         @comments = post.comments
@@ -15,7 +17,8 @@ class CommentsController < ApplicationController
             client = Exponent::Push::Client.new
             messages = [{
                 to: post.user.notification_token.token,
-                body: "#{user.username} commented on your post!"
+                body: "#{user.username} commented on your post!",
+                data: {post_id: post.id}
             }]
             handler = client.send_messages(messages)
         end
