@@ -1,4 +1,6 @@
 class FollowsController < ApplicationController
+    include Rails.application.routes.url_helpers
+
     def create
         following_user = User.find(params[:followerId])
         followed_user = User.find(params[:followedId])
@@ -9,7 +11,8 @@ class FollowsController < ApplicationController
             client = Exponent::Push::Client.new
             messages = [{
                 to: followed_user.notification_token.token,
-                body: "#{following_user.username} follows you."
+                body: "#{following_user.username} follows you.",
+                data: {user_id: following_user.id, avatar: url_for(following_user.avatar), username: following_user.username}
             }]
             handler = client.send_messages(messages)
         end

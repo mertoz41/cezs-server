@@ -11,7 +11,8 @@ class SharesController < ApplicationController
             client = Exponent::Push::Client.new
             messages = [{
                 to: post.user.notification_token.token,
-                body: "#{user.username} shared your post!"
+                body: "#{user.username} shared your post!",
+                data: {post_id: post.id}
             }]
             handler = client.send_messages(messages)
         end
