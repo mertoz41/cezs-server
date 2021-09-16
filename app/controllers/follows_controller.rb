@@ -1,18 +1,17 @@
 class FollowsController < ApplicationController
-    include Rails.application.routes.url_helpers
 
     def create
         following_user = User.find(params[:followerId])
         followed_user = User.find(params[:followedId])
         new_follow = Follow.create(follower_id: following_user.id, followed_id: followed_user.id)
-        new_notification = FollowNotification.create(user_id: followed_user.id, action_user_id: following_user.id, seen: false)
+        @new_notification = FollowNotification.create(user_id: followed_user.id, action_user_id: following_user.id, seen: false)
         
         if followed_user.notification_token
             client = Exponent::Push::Client.new
             messages = [{
                 to: followed_user.notification_token.token,
-                body: "#{following_user.username} follows you.",
-                data: {user_id: following_user.id, avatar: url_for(following_user.avatar), username: following_user.username}
+                body: "#{following_user.username} is now following you.",
+                data: FollowNotificationSerializer.new(@new_notification)
             }]
             handler = client.send_messages(messages)
         end

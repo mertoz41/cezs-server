@@ -1,7 +1,7 @@
 class FollowNotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :user_id, :action_user_id, :action_username, :action_user_avatar, :message, :created_at
+  attributes :id, :user_id, :action_user_id, :action_username, :action_user_avatar, :message, :created_at, :seen
   def action_username
     user = User.find(object.action_user_id)
     return user.username

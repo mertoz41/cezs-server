@@ -6,13 +6,13 @@ class SharesController < ApplicationController
         @nu_share = Share.create(user_id: user.id, post_id: post.id)
 
         # create notification for the owner of content
-        new_notification = ShareNotification.create(user_id: post.user.id, post_id: post.id, action_user_id: user.id)
+        @new_notification = ShareNotification.create(user_id: post.user.id, post_id: post.id, action_user_id: user.id)
         if post.user.notification_token
             client = Exponent::Push::Client.new
             messages = [{
                 to: post.user.notification_token.token,
                 body: "#{user.username} shared your post!",
-                data: {post_id: post.id}
+                data: {ShareNotificationSerializer.new(@new_notification)}
             }]
             handler = client.send_messages(messages)
         end
