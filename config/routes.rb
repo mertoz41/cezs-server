@@ -71,5 +71,6 @@ Rails.application.routes.draw do
   post '/usertoken', to: 'users#usertoken'
   get '/experimentnotification', to: 'notifications#experiment'
   post '/unfollow', to: 'follows#unfollow'
+  post '/marknotifications', to: 'notifications#marknotifications'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
