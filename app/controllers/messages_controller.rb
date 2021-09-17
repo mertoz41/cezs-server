@@ -2,6 +2,7 @@ class MessagesController < ApplicationController
   def create
     chatroom = Chatroom.find(params[:chatroom_id])
     user = User.find(params[:user_id])
+    # byebug
     message = Message.create(chatroom_id: chatroom.id, user_id: user.id, content: params[:content])
     # serialized_data = ActiveModelSerializers::Adapter::Json.new(MessageSerializer.new(message)).serializable_hash
     # MessagesChannel.broadcast_to chatroom, message
