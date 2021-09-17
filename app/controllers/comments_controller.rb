@@ -15,12 +15,15 @@ class CommentsController < ApplicationController
         @new_notification = CommentNotification.create(user_id: post.user.id, post_id: post.id, action_user_id: user.id, seen: false)
         if post.user.notification_token
             client = Exponent::Push::Client.new
+            # byebug
             messages = [{
-                to: post.user.notification_token.token,
-                body: "#{user.username} commented on your post!",
-                data: CommentNotificationSerializer.new(@new_notification)
+            to: post.user.notification_token.token,
+            body: "#{user.username} commented on your post!",
+            data: CommentNotificationSerializer.new(@new_notification)
             }]
             handler = client.send_messages(messages)
+            # SendNotificationJob.perform_later post, user, @new_notification
+            
         end
         render json: {comment: CommentSerializer.new(@comment)}
     end
