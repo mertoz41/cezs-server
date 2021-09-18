@@ -12,10 +12,14 @@ class ChatroomSerializer < ActiveModel::Serializer
   end
 
   def last_message
-    return object.messages.last.content
+    if object.messages.length > 0
+      return object.messages.last.content
+    end
   end
   
   def last_message_time
-    return object.messages.last.created_at
+    if object.messages.length > 0
+      return object.messages.last.created_at
+    end
   end
 end

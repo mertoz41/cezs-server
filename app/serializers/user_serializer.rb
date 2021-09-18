@@ -88,16 +88,6 @@ class UserSerializer < ActiveModel::Serializer
     end
 
   end
-
-  # def chatrooms
-  #   object.chatrooms.map do |room|
-  #     users = room.users.filter { |user| user != object}
-  #     users_wit_avatar = users.map do |user|
-  #       {username: user.username, id: user.id, avatar: url_for(user.avatar)}
-  #     end
-  #     {users: users_wit_avatar, room_id: room.id}
-  #   end
-  # end
   
   def avatar
     return url_for(object.avatar)
