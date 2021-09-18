@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :chatrooms, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followers_count, :view_count, :share_count, :name, :last_name, :email, :notification_token
+  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followers_count, :view_count, :share_count, :name, :last_name, :email, :notification_token
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   has_many :bands
@@ -16,7 +16,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :favoriteartists
   has_many :favoritealbums
   has_many :featuredposts
-  # has_many :chatrooms 
+  has_many :chatrooms 
   def notification_token
     if object.notification_token
       return object.notification_token.token
@@ -89,15 +89,15 @@ class UserSerializer < ActiveModel::Serializer
 
   end
 
-  def chatrooms
-    object.chatrooms.map do |room|
-      users = room.users.filter { |user| user != object}
-      users_wit_avatar = users.map do |user|
-        {username: user.username, id: user.id, avatar: url_for(user.avatar)}
-      end
-      {users: users_wit_avatar, room_id: room.id}
-    end
-  end
+  # def chatrooms
+  #   object.chatrooms.map do |room|
+  #     users = room.users.filter { |user| user != object}
+  #     users_wit_avatar = users.map do |user|
+  #       {username: user.username, id: user.id, avatar: url_for(user.avatar)}
+  #     end
+  #     {users: users_wit_avatar, room_id: room.id}
+  #   end
+  # end
   
   def avatar
     return url_for(object.avatar)
