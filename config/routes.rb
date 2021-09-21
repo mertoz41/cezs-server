@@ -72,5 +72,6 @@ Rails.application.routes.draw do
   get '/experimentnotification', to: 'notifications#experiment'
   post '/unfollow', to: 'follows#unfollow'
   post '/marknotifications', to: 'notifications#marknotifications'
+  post '/seemessages', to: 'chatrooms#seemessages'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

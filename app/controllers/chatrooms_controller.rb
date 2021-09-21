@@ -19,4 +19,9 @@ class ChatroomsController < ApplicationController
     # chatroom = Chatroom.create(title: params[:title])
     # ActionCable.server.broadcast "chatrooms_channel", chatroom
   end
+  def seemessages
+    Message.where(user_id: params[:user_id], chatroom_id: params[:chatroom_id]).update_all(seen: true)
+    # Messages.where('chatroom_id LIKE ?', "%#{params[:id]}%").update_all(seen: true)
+    render json: {message: 'all messages seen.'}
+  end
 end
