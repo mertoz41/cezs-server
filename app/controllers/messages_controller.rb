@@ -3,8 +3,24 @@ class MessagesController < ApplicationController
   def create
     chatroom = Chatroom.find(params[:chatroom_id])
     user = User.find(params[:user_id])
-    # byebug
-    message = Message.create(chatroom_id: chatroom.id, user_id: user.id, content: params[:content], seen: false)
+    @message = Message.create(chatroom_id: chatroom.id, user_id: user.id, content: params[:content], seen: false)
+    other_user = chatroom.users.select do |usr|
+      usr.id != user.id
+    end
+    if other_user[0].notification_token
+      client = Exponent::Push::Client.new
+      messages = [{
+        to: other_user[0].notification_token.token,
+        body: "#{other_user[0].username} sent you a message!",
+        data: MessageSerializer.new(@message)
+      }]
+      handler = client.send_messages(messages)
+
+    end
+
+    # find other user that is outside this user,
+    # check if it has token if so send notification
+
     # find chatrooms other users
     # check if they have token
     # if so send notifications
@@ -21,7 +37,7 @@ class MessagesController < ApplicationController
     # serialized_data = ActiveModelSerializers::Adapter::Json.new(MessageSerializer.new(message)).serializable_hash
     # MessagesChannel.broadcast_to chatroom, message
     # MessagesChannel.broadcast_to(chatroom, serialized_data)
-    ActionCable.server.broadcast "chatrooms_channel_#{chatroom.id}", message
+    ActionCable.server.broadcast "chatrooms_channel_#{chatroom.id}", @message
 
     head :ok
   end
