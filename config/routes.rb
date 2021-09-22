@@ -20,8 +20,8 @@ Rails.application.routes.draw do
   resources :bandlocations
   resources :bandmembers
   resources :artistfollows
-  resources :userevents
-  resources :bandevents
+  # resources :userevents
+  # resources :bandevents
   resources :usersongs
   resources :userartists
   resources :useralbums
@@ -73,5 +73,8 @@ Rails.application.routes.draw do
   post '/unfollow', to: 'follows#unfollow'
   post '/marknotifications', to: 'notifications#marknotifications'
   post '/seemessages', to: 'chatrooms#seemessages'
+  post '/userevent', to: 'events#userevent'
+  post '/bandevent', to: 'events#bandevent'
+  get '/events', to: 'events#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

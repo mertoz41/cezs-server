@@ -19,8 +19,7 @@ class Band < ApplicationRecord
     has_many :followers, through: :bandfollows
 
     has_one :bandbio, dependent: :destroy
-
-    has_many :bandevents, dependent: :destroy
+    has_many :events, dependent: :destroy
     has_many :banddescposts, dependent: :destroy
 
 

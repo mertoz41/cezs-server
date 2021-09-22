@@ -1,10 +1,10 @@
 class MessagesController < ApplicationController
   require "base64"
   def create
-    chatroom = Chatroom.find(params[:chatroom_id])
+    @chatroom = Chatroom.find(params[:chatroom_id])
     user = User.find(params[:user_id])
-    @message = Message.create(chatroom_id: chatroom.id, user_id: user.id, content: params[:content], seen: false)
-    other_user = chatroom.users.select do |usr|
+    message = Message.create(chatroom_id: @chatroom.id, user_id: user.id, content: params[:content], seen: false)
+    other_user = @chatroom.users.select do |usr|
       usr.id != user.id
     end
     if other_user[0].notification_token
@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
       messages = [{
         to: other_user[0].notification_token.token,
         body: "#{other_user[0].username} sent you a message!",
-        data: MessageSerializer.new(@message)
+        data: ChatroomSerializer.new(@chatroom)
       }]
       handler = client.send_messages(messages)
 
@@ -37,7 +37,7 @@ class MessagesController < ApplicationController
     # serialized_data = ActiveModelSerializers::Adapter::Json.new(MessageSerializer.new(message)).serializable_hash
     # MessagesChannel.broadcast_to chatroom, message
     # MessagesChannel.broadcast_to(chatroom, serialized_data)
-    ActionCable.server.broadcast "chatrooms_channel_#{chatroom.id}", @message
+    ActionCable.server.broadcast "chatrooms_channel_#{params[:chatroom_id]}", @message
 
     head :ok
   end
