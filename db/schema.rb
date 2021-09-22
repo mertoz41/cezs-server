@@ -72,18 +72,6 @@ ActiveRecord::Schema.define(version: 2021_09_22_051303) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "bandevents", force: :cascade do |t|
-    t.string "address"
-    t.string "description"
-    t.integer "band_id"
-    t.float "latitude"
-    t.float "longitude"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "event_date"
-    t.string "event_time"
-  end
-
   create_table "bandfollows", force: :cascade do |t|
     t.integer "band_id"
     t.integer "user_id"
@@ -290,18 +278,6 @@ ActiveRecord::Schema.define(version: 2021_09_22_051303) do
     t.integer "chatroom_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "userevents", force: :cascade do |t|
-    t.string "address"
-    t.string "description"
-    t.integer "user_id"
-    t.float "latitude"
-    t.float "longitude"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "event_date"
-    t.string "event_time"
   end
 
   create_table "userinfluences", force: :cascade do |t|
