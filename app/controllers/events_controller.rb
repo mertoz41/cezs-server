@@ -3,6 +3,10 @@ class EventsController < ApplicationController
         @events = Event.where('event_date >= ?', Date.today)
         render json: {events: ActiveModel::Serializer::CollectionSerializer.new(@events, each_serializer: EventSerializer)}
     end
+    def show
+        @event = Event.find(params[:id])
+        render json: @event, serializer: EventSerializer
+    end
     def bandevent
         @event = Event.create(address: params[:address], 
         description: params[:description], 

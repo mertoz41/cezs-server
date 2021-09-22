@@ -12,6 +12,10 @@ class NotificationsController < ApplicationController
             shre = ShareNotification.find(share)
             shre.update(seen: true)
         end
+        params[:events].each do |event|
+            evnt = EventNotification.find(event)
+            evnt.update(seen: true)
+        end
         render json: {message: 'notifications seen.'}
     end
 

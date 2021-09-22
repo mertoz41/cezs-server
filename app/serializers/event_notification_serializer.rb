@@ -20,4 +20,6 @@ class EventNotificationSerializer < ActiveModel::Serializer
   def address
     return object.event.address
   end
+
+  
 end
