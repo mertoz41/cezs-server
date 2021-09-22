@@ -29,10 +29,11 @@ class EventsController < ApplicationController
         client = Exponent::Push::Client.new
 
         users_by_state.each do |user|
+            @new_noti = EventNotification.create(event_id: @event.id, action_user_id: params[:user_id], user_id: user.id, seen: false)
             if user.notification_token
                 obj = {to: user.notification_token.token,
                         body: "#{@event.user.username} has an upcoming gig!",
-                        data: EventSerializer.new(@event)
+                        data: EventNotificationSerializer.new(@new_noti)
                 }
                 messages.push(obj)
             end

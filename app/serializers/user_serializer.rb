@@ -6,6 +6,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :bands
   has_many :influencers
   has_many :events
+  has_many :event_notifications
   has_many :songs
   has_many :share_notifications
   has_many :comment_notifications
