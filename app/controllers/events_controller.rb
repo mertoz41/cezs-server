@@ -24,6 +24,24 @@ class EventsController < ApplicationController
         event_date: params[:event_date],
         event_time: params[:event_time]
         )
+        users_by_state = User.joins(:location).where('city like?', "%#{params[:address].split().last}%")
+        messages = []
+        client = Exponent::Push::Client.new
+
+        users_by_state.each do |user|
+            if user.notification_token
+                obj = {to: user.notification_token.token,
+                        body: "#{@event.user.username} has an upcoming gig!",
+                        data: EventSerializer.new(@event)
+                }
+                messages.push(obj)
+            end
+        end
+        handler = client.send_messages(messages)
+
+        # find location from the end of params[:address]
+        # get users that are in that location
+        # send notis to those users
         render json: {event: EventSerializer.new(@event)}
     end
 end
