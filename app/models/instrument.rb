@@ -4,13 +4,7 @@ class Instrument < ApplicationRecord
     
     has_many :postinstruments
     has_many :posts, through: :postinstruments 
-
-    has_many :userdescpostinstruments, dependent: :destroy
-    has_many :userdescposts, through: :userdescpostinstruments
-
-    has_many :bandpostinstruments
-    has_many :bandposts, through: :bandpostinstruments
-
-    has_many :banddescpostinstruments
-    has_many :banddescposts, through: :banddescpostinstruments
+    
+    has_many :eventinstruments
+    has_many :events, through: :eventinstruments
 end
