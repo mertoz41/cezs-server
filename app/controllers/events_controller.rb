@@ -16,6 +16,11 @@ class EventsController < ApplicationController
         event_date: params[:event_date],
         event_time: params[:event_time]
         )
+        if params[:instruments].length > 0
+            params[:instruments].each do |inst|
+                EventInstrument.create(instrument_id: inst, event_id: @event.id)
+            end
+        end
         render json: {event: EventSerializer.new(@event)}
     end
 
@@ -28,6 +33,11 @@ class EventsController < ApplicationController
         event_date: params[:event_date],
         event_time: params[:event_time]
         )
+        if params[:instruments].length > 0
+            params[:instruments].each do |inst|
+                EventInstrument.create(instrument_id: inst, event_id: @event.id)
+            end
+        end
         users_by_state = User.joins(:location).where('city like?', "%#{params[:address].split().last}%")
         messages = []
         client = Exponent::Push::Client.new

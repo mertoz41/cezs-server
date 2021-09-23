@@ -2,6 +2,7 @@ class EventSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
   attributes :id, :address, :description, :latitude, :longitude, :event_date, :event_time, :user, :band
+  has_many :instruments
   def user
     if object.user
       user = {}

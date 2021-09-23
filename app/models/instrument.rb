@@ -5,6 +5,6 @@ class Instrument < ApplicationRecord
     has_many :postinstruments
     has_many :posts, through: :postinstruments 
     
-    has_many :eventinstruments
-    has_many :events, through: :eventinstruments
+    has_many :event_instruments
+    has_many :events, through: :event_instruments
 end
