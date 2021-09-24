@@ -16,9 +16,9 @@ class EventSerializer < ActiveModel::Serializer
     if object.band
       band = {}
       band[:name] = object.band.name
-      band[:avatar] = url_for(object.band.avatar)
+      band[:picture] = url_for(object.band.picture)
       band[:id] = object.band.id
-      return user
+      return band
     end
   end
 end
