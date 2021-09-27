@@ -7,14 +7,6 @@ class AuthController < ApplicationController
             payload = {user_id: @user.id}
             token = encode(payload)
             @timeline = @user.timeline
-            # chatrooms = []
-            # @user.chatrooms.each do |room|
-            #     obj = {}
-            #     obj = room.attributes
-            #     @room_users = room.users
-            #     obj['users'] = ActiveModel::Serializer::CollectionSerializer.new(@room_users, each_serializer: UserSerializer)
-            #     chatrooms.push(obj)
-            # end 
             render json: {user: UserSerializer.new(@user), token: token, timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer)}
         else 
             render json: {message: 'Invalid username or password.'}
@@ -25,14 +17,6 @@ class AuthController < ApplicationController
         token = request.headers["Authorization"].split(' ')[1]
         @user = User.find(decode(token)["user_id"])
         @timeline = @user.timeline
-        # chatrooms = []
-        # @user.chatrooms.each do |room|
-        #     obj = {}
-        #     obj = room.attributes
-        #     @room_users = room.users
-        #     obj['users'] = ActiveModel::Serializer::CollectionSerializer.new(@room_users, each_serializer: UserSerializer)
-        #     chatrooms.push(obj)
-        # end 
         render json: {user: UserSerializer.new(@user), timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer)}
     end
 
