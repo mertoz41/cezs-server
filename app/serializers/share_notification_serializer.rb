@@ -1,6 +1,6 @@
 class ShareNotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :post_id, :action_user_id, :action_username, :action_user_avatar, :message, :post_thumbnail, :created_at, :seen
+  attributes :id, :post_id, :action_user_id, :action_username, :action_user_avatar, :message, :post_thumbnail, :created_at, :seen, :share_notification
 
   def action_username
     user = User.find(object.action_user_id)
@@ -14,6 +14,9 @@ class ShareNotificationSerializer < ActiveModel::Serializer
 
   def message
     return 'shared your post.'
+  end
+  def share_notification
+    return true
   end
 
   def post_thumbnail

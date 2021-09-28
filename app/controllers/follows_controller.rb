@@ -37,4 +37,9 @@ class FollowsController < ApplicationController
         @followed_by_users = user.followers
         render json: {followers: ActiveModel::Serializer::CollectionSerializer.new(@followed_by_users, each_serializer: UserSerializer)}
     end
+
+    def seenotification
+        noti = FollowNotification.find(params[:id])
+        noti.update(seen: true)
+    end
 end

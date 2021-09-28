@@ -78,5 +78,8 @@ Rails.application.routes.draw do
   get '/events', to: 'events#index'
   get '/events/:id', to: 'events#show'
   get '/seegignoti/:id', to: 'events#seenotification'
+  get '/seefollownoti/:id', to: 'follows#seenotification'
+  get '/seesharenoti/:id', to: 'shares#seenotification'
+  get '/seecommentnoti/:id', to: 'comments#seenotification'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

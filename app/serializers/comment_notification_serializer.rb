@@ -20,4 +20,6 @@ class CommentNotificationSerializer < ActiveModel::Serializer
     post = Post.find(object.post_id)
     return url_for(post.thumbnail)
   end
+
+  
 end
