@@ -77,5 +77,6 @@ Rails.application.routes.draw do
   post '/bandevent', to: 'events#bandevent'
   get '/events', to: 'events#index'
   get '/events/:id', to: 'events#show'
+  get '/seegignoti/:id', to: 'events#seenotification'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

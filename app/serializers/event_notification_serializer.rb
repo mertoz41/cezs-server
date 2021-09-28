@@ -1,7 +1,7 @@
 class EventNotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :event_id, :action_user_id, :action_username, :action_user_avatar, :message, :seen, :event_date, :created_at, :address
+  attributes :id, :event_id, :action_user_id, :action_username, :action_user_avatar, :message, :seen, :event_date, :created_at, :address, :latitude, :longitude
   
   def action_user_avatar
     user = User.find(object.action_user_id)
@@ -20,6 +20,12 @@ class EventNotificationSerializer < ActiveModel::Serializer
   end
   def address
     return object.event.address
+  end
+  def latitude
+    return object.event.latitude
+  end
+  def longitude
+    return object.event.longitude
   end
 
   
