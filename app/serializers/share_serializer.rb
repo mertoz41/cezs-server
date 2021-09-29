@@ -1,7 +1,7 @@
 class ShareSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :post_id, :user_id, :clip, :song_name, :useravatar, :artist_name, :username, :share_count, :comment_count, :artist_id, :created_at, :thumbnail, :songSpotifyId, :featuredusers, :view_count
+  attributes :id, :band_id, :post_id, :bandpicture, :user_id, :clip, :song_name, :useravatar, :artist_name, :username, :share_count, :comment_count, :artist_id, :created_at, :thumbnail, :songSpotifyId, :featuredusers, :view_count
 
   def clip
     post = object.post
@@ -15,12 +15,16 @@ class ShareSerializer < ActiveModel::Serializer
 
   def artist_id
     post = object.post
-    return post.artist.id
+    if post.artist
+      return post.artist.id
+    end
   end
 
   def song_name
     post = object.post
-    return post.song.name
+    if post.song
+      return post.song.name
+    end
   end 
   def featuredusers
     post = object.post
@@ -31,7 +35,9 @@ class ShareSerializer < ActiveModel::Serializer
 
   def artist_name
     post = object.post
-    return post.artist.name
+    if post.artist
+      return post.artist.name
+    end
   end 
   def created_at
     post = object.post
@@ -50,14 +56,24 @@ class ShareSerializer < ActiveModel::Serializer
 
   def username
     post = object.post
-    return post.user.username
+    if post.user
+      return post.user.username
+    end
   end 
 
   def useravatar
     post = object.post
-    user = User.find(post.user_id)
-    return url_for(user.avatar)
+    if post.user
+      return url_for(post.user.avatar)
+    end
   end 
+  def bandpicture
+    post = object.post
+    if post.band
+      return url_for(post.band.picture)
+    end
+  end
+
   def comment_count
     post = object.post
     return post.comments.length
@@ -69,7 +85,16 @@ class ShareSerializer < ActiveModel::Serializer
   end 
   def user_id
     post = object.post
-    return post.user.id
+    if post.user
+      return post.user.id
+    end
+  end
+
+  def band_id
+    post = object.post
+    if post.band
+      return post.band.id
+    end
   end
 
 end
