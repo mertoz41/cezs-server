@@ -5,9 +5,9 @@ class FollowsController < ApplicationController
         followed_user = User.find(params[:followedId])
         new_follow = Follow.create(follower_id: following_user.id, followed_id: followed_user.id)
         @new_notification = FollowNotification.create(user_id: followed_user.id, action_user_id: following_user.id, seen: false)
+        client = Exponent::Push::Client.new
         
         if followed_user.notification_token
-            client = Exponent::Push::Client.new
             messages = [{
                 to: followed_user.notification_token.token,
                 body: "#{following_user.username} is now following you.",

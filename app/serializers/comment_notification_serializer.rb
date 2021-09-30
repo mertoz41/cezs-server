@@ -13,7 +13,12 @@ class CommentNotificationSerializer < ActiveModel::Serializer
   end
 
   def message
-    return 'commented on your post.'
+    post = Post.find(object.post_id)
+    if post.user
+      return 'commented on your post.'
+    else 
+      return "commented on #{post.band.name}#{post.band.name.last == 's' ? "'" : "'s"}"
+    end
   end
 
   def post_thumbnail

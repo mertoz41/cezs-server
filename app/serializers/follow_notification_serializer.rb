@@ -16,6 +16,10 @@ class FollowNotificationSerializer < ActiveModel::Serializer
   end
   
   def message
-    return 'followed you.'
+    if object.band
+      return "follows #{object.band.name}."
+    else
+      return 'follows you.'
+    end
   end
 end
