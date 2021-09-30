@@ -81,5 +81,6 @@ Rails.application.routes.draw do
   get '/seefollownoti/:id', to: 'follows#seenotification'
   get '/seesharenoti/:id', to: 'shares#seenotification'
   get '/seecommentnoti/:id', to: 'comments#seenotification'
+  post '/bandunfollow', to: 'bandfollows#unfollow'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
