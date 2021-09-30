@@ -8,7 +8,7 @@ class SharesController < ApplicationController
         # create notification for the owner of content
         client = Exponent::Push::Client.new
         if post.user
-            @new_notification = ShareNotification.create(user_id: post.user.id, post_id: post.id, action_user_id: user.id, seen: false)
+            @new_notification = ShareNotification.create(share_id: @nu_share.id, user_id: post.user.id, post_id: post.id, action_user_id: user.id, seen: false)
             if post.user.notification_token
             messages = [{
                 to: post.user.notification_token.token,
@@ -24,8 +24,9 @@ class SharesController < ApplicationController
                 @new_notification = ShareNotification.create(user_id: member.id, post_id: post.id, action_user_id: user.id, seen: false)
                 if member.notification_token
                     obj = {to: member.notification_token.token,
-                            body: "#{user.username} shared #{post.band.name}s post!",
+                            body: "#{user.username} shared #{post.band.name}#{post.band.name.last == 's' ? "'" : "'s"} post!",
                             data: ShareNotificationSerializer.new(@new_notification)}
+
                     messages.push(obj)
                 end
             end
