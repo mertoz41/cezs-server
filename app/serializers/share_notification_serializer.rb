@@ -13,7 +13,12 @@ class ShareNotificationSerializer < ActiveModel::Serializer
   end
 
   def message
-    return 'shared your post.'
+    post = Post.find(object.post_id)
+    if post.user
+      return 'shared your post.'
+    else
+      return "shared #{post.band.name}#{post.band.name.last == 's' ? "'" : "'s"} post."
+    end
   end
   def share_notification
     return true

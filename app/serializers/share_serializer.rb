@@ -48,7 +48,10 @@ class ShareSerializer < ActiveModel::Serializer
     return url_for(post.thumbnail)
   end
   def songSpotifyId
-    return object.post.song.spotify_id
+    post = object.post
+    if post.song
+      return post.song.spotify_id
+    end
   end
 
 
@@ -76,12 +79,12 @@ class ShareSerializer < ActiveModel::Serializer
 
   def comment_count
     post = object.post
-    return post.comments.length
+    return post.comments.size
   end 
 
   def share_count
     post = object.post
-    return post.shares.length
+    return post.shares.size
   end 
   def user_id
     post = object.post
