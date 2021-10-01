@@ -1,15 +1,22 @@
 class EventNotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :event_id, :action_user_id, :action_username, :action_user_avatar, :message, :seen, :event_date, :created_at, :address, :latitude, :longitude
+  attributes :id, :event_id, :action_user_id, :performer_name, :performer_avatar, :message, :seen, :event_date, :created_at, :address, :latitude, :longitude
   
-  def action_user_avatar
-    user = User.find(object.action_user_id)
-    return url_for(user.avatar)
+  def performer_avatar
+
+    if object.performing_user
+      return url_for(object.performing_user.avatar)
+    else
+      return url_for(object.performing_band.picture)
+    end
   end
-  def action_username
-    user = User.find(object.action_user_id)
-    return user.username
+  def performer_name
+    if object.performing_user
+      return object.performing_user.username
+    else
+      return object.performing_band.name
+    end
   end
   def message
     return ' is performing'
