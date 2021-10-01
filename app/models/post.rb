@@ -2,6 +2,7 @@ class Post < ApplicationRecord
     has_one_attached :clip
     has_one_attached :thumbnail
     has_many :comments, dependent: :destroy
+    has_many :comment_notifications, dependent: :destroy
     has_many :shares, dependent: :destroy 
     # old version to be updated with optional
     belongs_to :user, optional: true
