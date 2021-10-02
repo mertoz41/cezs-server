@@ -43,5 +43,11 @@ class MessagesController < ApplicationController
     head :ok
   end
 
+  def oldermessages
+    message = Message.find(params[:id])
+    older_messages = Message.where("chatroom_id = ? AND created_at < ?", "%#{message.chatroom_id}%", "%#{message.created_at}%")
+    byebug
+  end
+
   
 end
