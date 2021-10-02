@@ -45,8 +45,12 @@ class MessagesController < ApplicationController
 
   def oldermessages
     message = Message.find(params[:id])
-    older_messages = Message.where("chatroom_id = ? AND created_at < ?", "%#{message.chatroom_id}%", "%#{message.created_at}%")
-    byebug
+    chatroom = Chatroom.find(message.chatroom_id)
+    older_messages = chatroom.messages.where("created_at < ?", "%#{message.created_at}%")
+    @ordered = older_messages.order(created_at: :asc).first(10)
+    # get messages that are older than this message in that chatroom
+    render json: {messages: ActiveModel::Serializer::CollectionSerializer.new(@ordered, each_serializer: MessageSerializer)}
+    # older_messages = Message.where("chatroom_id = ? AND created_at < ?", "%#{message.chatroom_id}%", "%#{message.created_at}%")
   end
 
   
