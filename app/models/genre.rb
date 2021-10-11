@@ -1,6 +1,5 @@
 class Genre < ApplicationRecord
     has_many :posts
-    has_many :bandposts
-    has_many :userdescposts
-    has_many :banddescposts
+    has_many :event_genres, dependent: :destroy
+    has_many :events, through: :event_genres
 end

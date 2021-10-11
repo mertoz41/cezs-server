@@ -12,6 +12,8 @@ class PostSerializer < ActiveModel::Serializer
   attribute :song_id, if: -> {object.song.present?}
   attribute :artist_name, if: -> {object.artist.present?}
   attribute :song_name, if: -> {object.song.present?}
+  attribute :songSpotifyId, if: -> {object.song.present?}
+  attribute :artistSpotifyId, if: -> {object.artist.present?}
   def clip
     url_for(object.clip)
   end
@@ -44,40 +46,41 @@ class PostSerializer < ActiveModel::Serializer
     return object.shares.size
   end
   def current_state
-    user = object.user
-    return user.location.city.split()[1]
+    return object.user.location.city.split()[1]
   end
 
   def bandname
-    band = Band.find(object.band_id)
-    return band.name
+    return object.band.name
   end
 
   def bandpicture
-    band = Band.find(object.band_id)
-    return url_for(band.picture)
+    return url_for(object.band.picture)
   end
-
-
 
   def username
-    user = User.find(object.user_id)
-    return user.username
+    return object.user.username
   end
+
   def useravatar
-    user = User.find(object.user_id)
-    return url_for(user.avatar)
+    return url_for(object.user.avatar)
   end
 
   def artist_name
-    artist = Artist.find(object.artist_id)
-    return artist.name
+    return object.artist.name
   end 
 
   def song_name
-    song = Song.find(object.song_id)
-    return song.name
+    return object.song.name
   end 
+
+  def songSpotifyId
+    return object.song.spotify_id
+  end
+
+  def artistSpotifyId
+    return object.artist.spotify_id
+  end
+
 
 
   
