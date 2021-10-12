@@ -67,5 +67,13 @@ class UsersController < ApplicationController
         end
         render json: {message: 'token added.'}
     end
+    
+    def filtersearch
+        
+        instrument_users = User.joins(:instruments).merge(Instrument.where(id: params[:instruments]))
+        genre_users = User.joins(:genres).merge(Genre.where(id: params[:genres]))
+        @users = instrument_users + genre_users
+        render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@users.uniq, each_serializer: SearchUserSerializer)}
+    end
 
 end

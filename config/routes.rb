@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   post '/artistunfollow', to: 'artistfollows#destroy'
   post '/eventbydate', to: 'userevents#bydate'
   post  '/deleteuserartist', to: 'userartists#delete'
+  post '/filtersearch', to: 'users#filtersearch'
   post '/deleteusersong', to: 'usersongs#delete'
   post '/deleteuseralbum', to: 'useralbums#delete'
   get '/albumcheck/:id', to: 'albums#albumcheck'
