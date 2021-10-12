@@ -78,6 +78,9 @@ class User < ApplicationRecord
     has_many :userinstruments, dependent: :destroy
     has_many :instruments, through: :userinstruments
 
+    has_many :usergenres, dependent: :destroy
+    has_many :genres, through: :usergenres
+
     has_many :followed_by, class_name: "Follow", foreign_key: :followed_id, dependent: :destroy
     has_many :followers, through: :followed_by, source: :follower
     has_many :follows, class_name: "Follow", foreign_key: :follower_id, dependent: :destroy

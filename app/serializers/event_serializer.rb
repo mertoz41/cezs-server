@@ -3,6 +3,7 @@ class EventSerializer < ActiveModel::Serializer
 
   attributes :id, :address, :description, :latitude, :longitude, :event_date, :event_time, :user, :band
   has_many :instruments
+  has_many :genres
   def user
     if object.user
       user = {}

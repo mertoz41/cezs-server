@@ -4,6 +4,7 @@ class UserSerializer < ActiveModel::Serializer
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   has_many :bands
+  has_many :genres
   has_many :influencers
   has_many :events
   has_many :event_notifications
