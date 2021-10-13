@@ -1,10 +1,11 @@
 class BandSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :name, :picture, :created_at, :location, :followers_count, :members, :songs, :view_count, :share_count
+  attributes :id, :name, :picture, :created_at, :location, :followers_count, :songs, :view_count, :share_count
   attribute :bandbio, if: -> {object.bandbio}
   has_many :posts
   has_many :events
+  has_many :members, serializer: ShortUserSerializer
   # has_many :bandposts
   # has_many :bandevents
   # has_many :banddescposts
@@ -19,17 +20,18 @@ class BandSerializer < ActiveModel::Serializer
     end
   end
 
-  def members
-    object.members.map do |member|
-    instruments = []
-      if member.instruments.length
-        member.instruments.each do |inst|
-        instruments.push(inst.id)
-        end
-      end
-      {username: member.username, avatar: url_for(member.avatar), id: member.id, instruments: instruments}
-    end
-  end
+  # def members
+  #   members = object.members
+  #   # object.members.map do |member|
+  #   # instruments = []
+  #   #   if member.instruments.length
+  #   #     member.instruments.each do |inst|
+  #   #     instruments.push(inst.id)
+  #   #     end
+  #   #   end
+  #   #   {username: member.username, avatar: url_for(member.avatar), id: member.id, instruments: instruments}
+  #   # end
+  # end
 
   def view_count
     views = 0
