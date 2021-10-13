@@ -5,4 +5,7 @@ class Genre < ApplicationRecord
 
     has_many :usergenres, dependent: :destroy
     has_many :users, through: :usergenres
+
+    has_many :bandgenres, dependent: :destroy
+    has_many :bands, through: :bandgenres
 end

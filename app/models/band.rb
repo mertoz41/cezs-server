@@ -24,5 +24,8 @@ class Band < ApplicationRecord
     has_many :events, dependent: :destroy
     has_many :banddescposts, dependent: :destroy
 
+    has_many :bandgenres, dependent: :destroy
+    has_many :genres, through: :bandgenres
+
 
 end
