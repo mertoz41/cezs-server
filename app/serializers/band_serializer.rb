@@ -7,9 +7,6 @@ class BandSerializer < ActiveModel::Serializer
   has_many :genres
   has_many :events
   has_many :members, serializer: ShortUserSerializer
-  # has_many :bandposts
-  # has_many :bandevents
-  # has_many :banddescposts
   
   def picture
     url_for(object.picture)
@@ -20,19 +17,6 @@ class BandSerializer < ActiveModel::Serializer
       {name: song.name, artist_name: song.artist.name, id: song.id, artist_id: song.artist.id}
     end
   end
-
-  # def members
-  #   members = object.members
-  #   # object.members.map do |member|
-  #   # instruments = []
-  #   #   if member.instruments.length
-  #   #     member.instruments.each do |inst|
-  #   #     instruments.push(inst.id)
-  #   #     end
-  #   #   end
-  #   #   {username: member.username, avatar: url_for(member.avatar), id: member.id, instruments: instruments}
-  #   # end
-  # end
 
   def view_count
     views = 0

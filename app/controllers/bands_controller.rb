@@ -38,4 +38,15 @@ class BandsController < ApplicationController
         render json: @band, serializer: BandSerializer
 
     end
+    def filtersearch
+        instrument_users = User.joins(:instruments).merge(Instrument.where(id: params[:instruments]))
+        bands = []
+        instrument_bands = instrument_users.each do |user|
+            bands = bands + user.bands
+        end
+        genre_bands = Band.joins(:genres).merge(Genre.where(id: params[:genres]))
+        @bands = bands + genre_bands
+        
+        render json: @bands.uniq, each_serializer: ShortBandSerializer
+    end
 end
