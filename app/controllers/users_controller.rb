@@ -53,7 +53,7 @@ class UsersController < ApplicationController
     def searching
         @users = User.where("username like?", "%#{params[:searching]}%")
         # partial string matching on a database object. not a very good solution
-        render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: SearchUserSerializer)}
+        render json: @users, each_serializer: ShortUserSerializer
         # serializer isnt very smart for this situation
 
     end
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
         instrument_users = User.joins(:instruments).merge(Instrument.where(id: params[:instruments]))
         genre_users = User.joins(:genres).merge(Genre.where(id: params[:genres]))
         @users = instrument_users + genre_users
-        render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@users.uniq, each_serializer: SearchUserSerializer)}
+        render json: @users.uniq, each_serializer: ShortUserSerializer
     end
 
 end
