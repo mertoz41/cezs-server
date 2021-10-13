@@ -20,7 +20,6 @@ Rails.application.routes.draw do
   resources :bandlocations
   resources :bandmembers
   resources :artistfollows
-  resources :usergenres
   resources :usersongs
   resources :userartists
   resources :useralbums
@@ -43,7 +42,10 @@ Rails.application.routes.draw do
   post '/deleteinfluence', to: 'userinfluences#delete'
   post '/instrumentsearch', to: 'instruments#searching'
   post '/deleteuserinstrument', to: 'userinstruments#delete'
-  post '/deleteusergenre', to: 'usergenres#delete'
+  post '/createusergenre', to: 'genres#createusergenre'
+  post '/deleteusergenre', to: 'genres#deleteusergenre'
+  post '/createbandgenre', to: 'genres#createbandgenre'
+  post '/deletebandgenre', to: 'genres#deletebandgenre'
   post '/artistcheck', to: 'artists#check'
   get '/getfollows/:id', to: 'follows#follows'
   get '/getfollowers/:id', to: 'follows#followers'
