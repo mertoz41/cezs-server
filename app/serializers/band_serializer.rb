@@ -1,7 +1,7 @@
 class BandSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :name, :picture, :created_at, :location, :followers_count, :songs, :view_count, :share_count
+  attributes :id, :name, :picture, :created_at, :instruments, :location, :followers_count, :songs, :view_count, :share_count
   attribute :bandbio, if: -> {object.bandbio}
   has_many :posts
   has_many :genres
@@ -24,6 +24,18 @@ class BandSerializer < ActiveModel::Serializer
       views += post.postviews.size
     end
     return views 
+  end
+
+  def instruments
+    insts = []
+    object.members.each do |member|
+      member.instruments.each do |inst|
+        if !insts.include?({id: inst.id, name: inst.name})
+          insts.push({id: inst.id, name: inst.name})
+        end
+      end
+    end
+    return insts
   end
 
   def share_count
