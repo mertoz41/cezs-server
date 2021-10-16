@@ -7,4 +7,7 @@ class Instrument < ApplicationRecord
     
     has_many :event_instruments
     has_many :events, through: :event_instruments
+
+    has_many :audition_instruments
+    has_many :auditions, through: :audition_instruments
 end

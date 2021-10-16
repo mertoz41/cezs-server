@@ -8,4 +8,7 @@ class Genre < ApplicationRecord
 
     has_many :bandgenres, dependent: :destroy
     has_many :bands, through: :bandgenres
+
+    has_many :audition_genres
+    has_many :auditions, through: :audition_genres
 end
