@@ -87,5 +87,7 @@ Rails.application.routes.draw do
   get '/seecommentnoti/:id', to: 'comments#seenotification'
   post '/bandunfollow', to: 'bandfollows#unfollow'
   get '/oldermessages/:id', to: 'messages#oldermessages'
+  post '/createuseraudition', to: 'auditions#createuseraudition'
+  post '/createbandaudition', to: 'auditions#createbandaudition'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

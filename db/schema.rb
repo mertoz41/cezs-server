@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_16_214739) do
+ActiveRecord::Schema.define(version: 2021_10_16_225711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,9 +67,9 @@ ActiveRecord::Schema.define(version: 2021_10_16_214739) do
 
   create_table "audition_genres", force: :cascade do |t|
     t.integer "audition_id"
-    t.integer "instrument_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "genre_id"
   end
 
   create_table "audition_instruments", force: :cascade do |t|

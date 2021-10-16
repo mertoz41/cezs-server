@@ -18,12 +18,15 @@ class EventsController < ApplicationController
         )
         if params[:instruments].length > 0
             params[:instruments].each do |inst|
-                EventInstrument.create(instrument_id: inst, event_id: @event.id)
+                instrument = Instrument.find_or_create_by(name: inst)
+                EventInstrument.create(instrument_id: instrument.id, event_id: @event.id)
             end
         end
         if params[:genres].length > 0
             params[:genres].each do |genr|
-                EventGenre.create(genre_id: genr, event_id: @event.id)
+                genre = Genre.find_or_create_by(name: genr)
+
+                EventGenre.create(genre_id: genre.id, event_id: @event.id)
             end
         end
         users_by_state = User.joins(:location).where('city like?', "%#{params[:address].split().last}%")
