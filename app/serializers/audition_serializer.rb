@@ -1,7 +1,7 @@
 class AuditionSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :description, :audition_date
+  attributes :id, :description, :audition_date, :created_at
   attribute :user_id, if: -> {object.user.present?}
   attribute :band_id, if: -> {object.band.present?}
   attribute :useravatar, if: -> {object.user.present?}

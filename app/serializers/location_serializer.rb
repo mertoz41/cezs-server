@@ -8,6 +8,8 @@ class LocationSerializer < ActiveModel::Serializer
   end
 
   def audition_count
-    return object.auditions.size
+
+    auditions_number = object.auditions.where('audition_date >= ?', Date.today).size
+    return auditions_number
   end
 end

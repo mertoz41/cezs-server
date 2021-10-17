@@ -1,7 +1,8 @@
 class AuditionsController < ApplicationController
     def locationauditions
-        @location = Location.find(params[:id])
-        render json: {auditions: ActiveModel::Serializer::CollectionSerializer.new(@location.auditions, each_serializer: AuditionSerializer)}
+        location = Location.find(params[:id])
+        @auditions = location.auditions.where('audition_date >= ?', Date.today)
+        render json: {auditions: ActiveModel::Serializer::CollectionSerializer.new(@auditions, each_serializer: AuditionSerializer)}
     end
     def createuseraudition
         @audition = Audition.create(
@@ -23,7 +24,8 @@ class AuditionsController < ApplicationController
             end
         end
         # handle notifications
-        render json: {message: 'audition created'}
+
+        render json: @audition.location, serializer: LocationSerializer
     end
 
     def createbandaudition
@@ -47,7 +49,7 @@ class AuditionsController < ApplicationController
             end
         end
         # handle notifications
-        render json: {message: 'audition created'}
+        render json: @audition.location, serializer: LocationSerializer
 
     end
     
