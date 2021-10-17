@@ -1,5 +1,8 @@
 class AuditionsController < ApplicationController
-
+    def locationauditions
+        @location = Location.find(params[:id])
+        render json: {auditions: ActiveModel::Serializer::CollectionSerializer.new(@location.auditions, each_serializer: AuditionSerializer)}
+    end
     def createuseraudition
         @audition = Audition.create(
             description: params[:description],
