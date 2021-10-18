@@ -25,7 +25,10 @@ class AuditionsController < ApplicationController
             end
         end
         # handle notifications
-        users_by_state = Location.find(params[:location_id]).users
+        all_state_users = Location.find(params[:location_id]).users
+        users_by_state = all_state_users.select do |user|
+            user.id != params[:user_id]
+        end
         client = Exponent::Push::Client.new
         messages = []
         users_by_state.each do |user|
@@ -64,6 +67,7 @@ class AuditionsController < ApplicationController
             end
         end
         messages = []
+        
         users_by_state = Location.find(params[:location_id]).users
         client = Exponent::Push::Client.new
         users_by_state.each do |user|

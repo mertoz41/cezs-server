@@ -70,7 +70,11 @@ class EventsController < ApplicationController
                 EventGenre.create(genre_id: genre.id, event_id: @event.id)
             end
         end
-        users_by_state = User.joins(:location).where('city like?', "%#{params[:address].split().last}%")
+        all_state_users = User.joins(:location).where('city like?', "%#{params[:address].split().last}%")
+
+        users_by_state = all_state_users.select do |user|
+            user.id != params[:user_id]
+        end
         messages = []
         client = Exponent::Push::Client.new
 
