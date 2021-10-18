@@ -1,7 +1,7 @@
 class EventNotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :event_id, :action_user_id, :performer_name, :performer_avatar, :message, :seen, :event_date, :created_at, :address, :latitude, :longitude
+  attributes :id, :event_id, :performer_name, :performer_avatar, :message, :seen, :event_date, :created_at, :address, :latitude, :longitude
   
   def performer_avatar
 
