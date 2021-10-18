@@ -7,6 +7,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :genres
   has_many :influencers
   has_many :events
+  has_many :auditions, serializer: AuditionSerializer
   has_many :event_notifications
   has_many :songs
   has_many :share_notifications
@@ -26,6 +27,7 @@ class UserSerializer < ActiveModel::Serializer
       return nil
     end
   end
+  
   def created_at
     object.created_at.to_date
   end
