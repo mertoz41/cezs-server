@@ -8,11 +8,15 @@ class UserSerializer < ActiveModel::Serializer
   has_many :influencers
   has_many :events
   has_many :auditions, serializer: AuditionSerializer
-  has_many :event_notifications
   has_many :songs
-  has_many :share_notifications
-  has_many :comment_notifications
-  has_many :follow_notifications
+
+  # has_many :event_notifications
+  # has_many :share_notifications
+  # has_many :comment_notifications
+  # has_many :follow_notifications
+  # has_many :audition_notifications
+
+
   has_many :posts
   has_many :shares
   has_many :favoritesongs

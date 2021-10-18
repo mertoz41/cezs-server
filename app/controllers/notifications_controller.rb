@@ -16,8 +16,10 @@ class NotificationsController < ApplicationController
             evnt = EventNotification.find(event)
             evnt.update(seen: true)
         end
+        params[:auditions].each do |audit|
+            audition = AuditionNotification.find(audit)
+            audition.update(seen: true)
+        end
         render json: {message: 'notifications seen.'}
     end
-
-    
 end

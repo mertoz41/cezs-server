@@ -19,6 +19,6 @@ class AuditionNotificationSerializer < ActiveModel::Serializer
   end
 
   def message
-    return ' is having an audition'
+    return 'has an upcoming audition.'
   end
 end

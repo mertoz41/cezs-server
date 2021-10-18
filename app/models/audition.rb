@@ -9,4 +9,6 @@ class Audition < ApplicationRecord
 
     has_many :audition_genres, dependent: :destroy
     has_many :genres, through: :audition_genres
+    
+    has_many :audition_notifications, dependent: :destroy
 end

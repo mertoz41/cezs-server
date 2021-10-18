@@ -19,7 +19,7 @@ class EventNotificationSerializer < ActiveModel::Serializer
     end
   end
   def message
-    return ' is performing'
+    return 'has an upcoming performance.'
   end
   def event_date
     # event = Event.find(object.event_id)
