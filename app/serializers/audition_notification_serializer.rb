@@ -1,7 +1,7 @@
 class AuditionNotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :audition_id, :performer_name, :performer_avatar, :message, :seen, :created_at
+  attributes :id, :audition_id, :performer_name, :performer_avatar, :message, :seen, :created_at, :audition_date
 
   def performer_avatar
     if object.auditing_user
@@ -16,6 +16,9 @@ class AuditionNotificationSerializer < ActiveModel::Serializer
     else
       return object.auditing_band.name
     end
+  end
+  def audition_date
+    return object.audition.audition_date
   end
 
   def message

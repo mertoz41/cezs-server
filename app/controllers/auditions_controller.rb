@@ -32,7 +32,7 @@ class AuditionsController < ApplicationController
             @new_noti = AuditionNotification.create(audition_id: @audition.id, action_user_id: params[:user_id], user_id: user.id, seen: false)
             if user.notification_token
                 obj = {to: user.notification_token.token,
-                        body: "#{User.find(params[:user_id].username)} has an upcoming audition!",
+                        body: "#{User.find(params[:user_id]).username} has an upcoming audition!",
                         data: AuditionNotificationSerializer.new(@new_noti)
                 }
                 messages.push(obj)
@@ -70,7 +70,7 @@ class AuditionsController < ApplicationController
             @new_noti = AuditionNotification.create(audition_id: @audition.id, action_band_id: params[:band_id], user_id: user.id, seen: false)
             if user.notification_token
                 obj = {to: user.notification_token.token,
-                        body: "#{Band.find(params[:band_id])} has an upcoming audition!",
+                        body: "#{Band.find(params[:band_id]).name} has an upcoming audition!",
                         data: AuditionNotificationSerializer.new(@new_noti)
                 }
                 messages.push(obj)
@@ -78,6 +78,11 @@ class AuditionsController < ApplicationController
         end
         handler = client.send_messages(messages)
         render json: @audition.location, serializer: LocationSerializer
+    end
+
+    def seenotification
+        event_noti = AuditionNotification.find(params[:id])
+        event_noti.update(seen: true)
     end
     
 end

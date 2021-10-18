@@ -9,14 +9,6 @@ class UserSerializer < ActiveModel::Serializer
   has_many :events
   has_many :auditions, serializer: AuditionSerializer
   has_many :songs
-
-  # has_many :event_notifications
-  # has_many :share_notifications
-  # has_many :comment_notifications
-  # has_many :follow_notifications
-  # has_many :audition_notifications
-
-
   has_many :posts
   has_many :shares
   has_many :favoritesongs
@@ -41,11 +33,7 @@ class UserSerializer < ActiveModel::Serializer
     object.posts.each do |post|
       shares += post.shares.size
     end
-    # object.userdescposts.each do |post|
-    #   shares += post.userdescpostshares.size
-    # end
     return shares
-
   end
 
   def instruments
@@ -58,9 +46,6 @@ class UserSerializer < ActiveModel::Serializer
     object.posts.each do |post|
       views += post.postviews.size
     end
-    # object.userdescposts.each do |post|
-    #   views += post.userdescpostviews.size
-    # end
     return views
   end
 
@@ -94,7 +79,6 @@ class UserSerializer < ActiveModel::Serializer
       object.followedartists.map do |artist|
       artist.spotify_id
     end
-
   end
   
   def avatar

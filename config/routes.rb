@@ -83,6 +83,7 @@ Rails.application.routes.draw do
   get '/events/:id', to: 'events#show'
   get '/seegignoti/:id', to: 'events#seenotification'
   get '/seefollownoti/:id', to: 'follows#seenotification'
+  get '/seeauditnoti/:id', to: 'auditions#seenotification'
   get '/seesharenoti/:id', to: 'shares#seenotification'
   get '/seecommentnoti/:id', to: 'comments#seenotification'
   post '/bandunfollow', to: 'bandfollows#unfollow'
