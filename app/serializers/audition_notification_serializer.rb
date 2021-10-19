@@ -1,8 +1,20 @@
 class AuditionNotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :audition_id, :performer_name, :performer_avatar, :message, :seen, :created_at, :audition_date
+  attributes :id, :audition_id, :performer_name, :performer_avatar, :message, :seen, :created_at, :audition_date, :location_id, :latitude, :longitude, :city
+  def location_id
+    return object.audition.location.id
+  end
+  def city
+    return object.audition.location.city
+  end
+  def latitude
+    return object.audition.location.latitude
+  end
 
+  def longitude
+    return object.audition.location.longitude
+  end
   def performer_avatar
     if object.auditing_user
       return url_for(object.auditing_user.avatar)
