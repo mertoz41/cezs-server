@@ -46,10 +46,15 @@ Rails.application.routes.draw do
   post '/deleteusergenre', to: 'genres#deleteusergenre'
   post '/createbandgenre', to: 'genres#createbandgenre'
   post '/deletebandgenre', to: 'genres#deletebandgenre'
+
+
   post '/artistcheck', to: 'artists#check'
+  get '/artistfollowers/:id', to: 'artists#artistfollowers'
+  get '/artistfavorites/:id', to: 'artists#artistfavorites'
+
   get '/getfollows/:id', to: 'follows#follows'
   get '/getfollowers/:id', to: 'follows#followers'
-  get '/influences/:id', to: 'artists#influences'
+  get '/artistinfluences/:id', to: 'artists#influences'
   post '/removemember', to: 'bandmembers#removemember'
   post '/artistunfollow', to: 'artistfollows#destroy'
   post '/eventbydate', to: 'userevents#bydate'
@@ -57,12 +62,18 @@ Rails.application.routes.draw do
   post '/userfiltersearch', to: 'users#filtersearch'
   post '/bandfiltersearch', to: 'bands#filtersearch'
   post '/deleteusersong', to: 'usersongs#delete'
+
+
+
   post '/deleteuseralbum', to: 'useralbums#delete'
   get '/albumcheck/:id', to: 'albums#albumcheck'
+  get '/albumsongs/:id', to: 'albums#albumsongs'
+  get '/albumfavorites/:id', to: 'albums#albumfavorites'
+
   get '/songcheck/:id', to: 'songs#check'
   post '/postviewcount', to: 'posts#createview'
   get '/filterlocations', to: 'locations#filterlocations'
-  
+
   post '/songfollow', to: 'songs#songfollow'
   get '/songfollowers/:id', to: 'songs#songfollowers'
   get '/songfavorites/:id', to: 'songs#songfavorites'
@@ -78,7 +89,6 @@ Rails.application.routes.draw do
   post '/userdescposts', to: 'posts#createuserdescpost'
   post '/bandposts', to: 'posts#createbandpost'
   post '/banddescposts', to: 'posts#createbanddescposts'
-  get '/albumsongs/:id', to: 'albums#albumsongs'
   post '/usertoken', to: 'users#usertoken'
   get '/experimentnotification', to: 'notifications#experiment'
   post '/unfollow', to: 'follows#unfollow'

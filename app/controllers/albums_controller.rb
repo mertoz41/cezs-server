@@ -12,4 +12,9 @@ class AlbumsController < ApplicationController
         album = Album.find(params[:id])
         render json: {songs: album.songs}
     end
+    def albumfavorites
+        album = Album.find(params[:id])
+        @users = album.favoriteusers
+        render json: @users, each_serializer: ShortUserSerializer
+    end
 end

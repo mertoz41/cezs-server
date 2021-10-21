@@ -11,9 +11,21 @@ class ArtistsController < ApplicationController
     end 
 
     def influences
-        @influences = Artist.find(params[:id]).users
-        render json: {influences: ActiveModel::Serializer::CollectionSerializer.new(@influences, each_serializer: UserSerializer)}
+        @influences = Artist.find(params[:id]).influencedusers
+        render json: @influences, each_serializer: ShortUserSerializer
     end 
+
+    def artistfollowers
+        artist = Artist.find(params[:id])
+        @users = artist.followingusers
+        render json: @users, each_serializer: ShortUserSerializer
+    end
+
+    def artistfavorites
+        artist = Artist.find(params[:id])
+        @users = artist.favoriteusers
+        render json: @users, each_serializer: ShortUserSerializer
+    end
 
     def check
         @artist = Artist.find_by(spotify_id: params[:spotify_id])
