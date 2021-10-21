@@ -64,11 +64,12 @@ Rails.application.routes.draw do
   post '/deleteusersong', to: 'usersongs#delete'
 
 
-
+  get '/albumfollowers/:id', to: 'albums#albumfollowers'
   post '/deleteuseralbum', to: 'useralbums#delete'
   get '/albumcheck/:id', to: 'albums#albumcheck'
   get '/albumsongs/:id', to: 'albums#albumsongs'
   get '/albumfavorites/:id', to: 'albums#albumfavorites'
+  post '/albumfollow', to: 'albums#albumfollow'
 
   get '/songcheck/:id', to: 'songs#check'
   post '/postviewcount', to: 'posts#createview'

@@ -7,6 +7,18 @@ class AlbumsController < ApplicationController
             render json: {message: 'album not found'}
         end
     end
+    def albumfollow 
+        # find artist instance first
+        artist = Artist.find_or_create_by(name: params[:artistName], spotify_id: params[:artistSpotifyId])
+        album = Album.find_or_create_by(name: params[:name], artist_id: artist.id, spotify_id: params[:albumSpotifyId])
+        album_follow = Albumfollow.create(user_id: params[:userId], album_id: album.id)
+        render json: {message: "now following #{album.name}.", album_id: album.id}
+    end
+    def albumfollowers
+        album = Album.find(params[:id])
+        @users = album.followingusers
+        render json: @users, each_serializer: ShortUserSerializer
+    end
 
     def albumsongs
         album = Album.find(params[:id])
