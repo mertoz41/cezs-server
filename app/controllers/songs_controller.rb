@@ -1,7 +1,6 @@
 class SongsController < ApplicationController
     def show
         @song = Song.find(params[:id])
-        
         render json: {song: SongSerializer.new(@song)}
     end
     
@@ -21,6 +20,16 @@ class SongsController < ApplicationController
         end
     end
 
+    def songfollowers
+        song = Song.find(params[:id])
+        @users = song.followingusers
+        render json: @users, each_serializer: ShortUserSerializer
+    end
+    def songfavorites
+        song = Song.find(params[:id])
+        @users = song.favoriteusers
+        render json: @users, each_serializer: ShortUserSerializer
+    end
     def songfollow
         user = User.find(params[:user_id])
         artist = Artist.find_by(name: params[:artist_name], spotify_id: params[:artistSpotifyId])

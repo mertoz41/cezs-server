@@ -62,8 +62,15 @@ Rails.application.routes.draw do
   get '/songcheck/:id', to: 'songs#check'
   post '/postviewcount', to: 'posts#createview'
   get '/filterlocations', to: 'locations#filterlocations'
+  
   post '/songfollow', to: 'songs#songfollow'
+  get '/songfollowers/:id', to: 'songs#songfollowers'
+  get '/songfavorites/:id', to: 'songs#songfavorites'
   post '/songunfollow', to: 'songs#songunfollow'
+
+
+
+
   post '/instrumentsearch', to: 'instruments#instrumentsearch'
   post '/genresearch', to: 'genres#genresearch'
   post '/timeline', to: 'timeline#user_timeline'
