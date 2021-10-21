@@ -70,6 +70,7 @@ Rails.application.routes.draw do
   get '/albumsongs/:id', to: 'albums#albumsongs'
   get '/albumfavorites/:id', to: 'albums#albumfavorites'
   post '/albumfollow', to: 'albums#albumfollow'
+  post '/albumunfollow', to: 'albums#albumunfollow'
 
   get '/songcheck/:id', to: 'songs#check'
   post '/postviewcount', to: 'posts#createview'

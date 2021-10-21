@@ -29,7 +29,8 @@ class FollowsController < ApplicationController
         @followed_bands = user.followedbands
         @followed_artists = user.followedartists
         @followed_songs = user.followedsongs
-        render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@followed_users, each_serializer: UserSerializer), bands: ActiveModel::Serializer::CollectionSerializer.new(@followed_bands, each_serializer: BandSerializer), artists: ActiveModel::Serializer::CollectionSerializer.new(@followed_artists, each_serializer: ArtistSerializer), songs: ActiveModel::Serializer::CollectionSerializer.new(@followed_songs, each_serializer: SongSerializer)}
+        @followed_albums = user.followedalbums
+        render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@followed_users, each_serializer: UserSerializer), bands: ActiveModel::Serializer::CollectionSerializer.new(@followed_bands, each_serializer: BandSerializer), artists: ActiveModel::Serializer::CollectionSerializer.new(@followed_artists, each_serializer: ArtistSerializer), songs: ActiveModel::Serializer::CollectionSerializer.new(@followed_songs, each_serializer: SongSerializer), albums: ActiveModel::Serializer::CollectionSerializer.new(@followed_albums, each_serializer: AlbumSerializer)}
         # render json: {follows: ActiveModel::Serializer::CollectionSerializer.new(@follows, each_serializer: FollowSerializer)}
     end 
     def followers

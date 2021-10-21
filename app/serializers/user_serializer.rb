@@ -66,7 +66,7 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def follows_count
-    object.follows.size + object.followedbands.size + object.followedartists.size + object.followedsongs.size
+    object.follows.size + object.followedbands.size + object.followedartists.size + object.followedsongs.size + object.followedalbums.size
   end
 
   def followed_users
