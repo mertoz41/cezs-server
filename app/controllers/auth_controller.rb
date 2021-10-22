@@ -6,7 +6,9 @@ class AuthController < ApplicationController
         if @user && @user.authenticate(params[:password])
             payload = {user_id: @user.id}
             token = encode(payload)
-            @timeline = @user.timeline
+            timeline_info = @user.timeline
+
+            @timeline = timeline_info[:timeline]
             @filtered_events = []
             @filtered_auditions = []
             @user.event_notifications.each do |noti|
@@ -34,8 +36,13 @@ class AuthController < ApplicationController
                 share_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.share_notifications, each_serializer: ShareNotificationSerializer),
                 comment_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.comment_notifications, each_serializer: CommentNotificationSerializer),
                 follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),
-                audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer)
-            }
+                audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer),
+                band_posts: timeline_info[:bandposts], 
+                user_posts: timeline_info[:userposts], 
+                artist_posts: timeline_info[:artistposts], 
+                album_posts: timeline_info[:albumposts],
+                song_posts: timeline_info[:songposts]
+                }
         else 
             render json: {message: 'Invalid username or password.'}
         end
@@ -44,7 +51,8 @@ class AuthController < ApplicationController
     def check
         token = request.headers["Authorization"].split(' ')[1]
         @user = User.find(decode(token)["user_id"])
-        @timeline = @user.timeline
+        timeline_info = @user.timeline
+        @timeline = timeline_info[:timeline]
         @filtered_events = []
         @filtered_auditions = []
             @user.event_notifications.each do |noti|
@@ -71,7 +79,12 @@ class AuthController < ApplicationController
             share_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.share_notifications, each_serializer: ShareNotificationSerializer),
             comment_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.comment_notifications, each_serializer: CommentNotificationSerializer),
             follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),
-            audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer)
+            audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer),
+            band_posts: timeline_info[:bandposts], 
+            user_posts: timeline_info[:userposts], 
+            artist_posts: timeline_info[:artistposts], 
+            album_posts: timeline_info[:albumposts],
+            song_posts: timeline_info[:songposts]
         }
     end
 

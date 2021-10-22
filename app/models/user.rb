@@ -92,7 +92,13 @@ class User < ApplicationRecord
 
 
     def timeline
+        bandposts = []
+        artistposts = []
+        songposts = []
+        albumposts = []
+        userposts = []
         arr = []
+        
         # users own posts
         self.posts.each do |post|
             arr.push(post)
@@ -107,31 +113,50 @@ class User < ApplicationRecord
         self.followeds.each do |user|
             user.posts.each do |post|
             arr.push(post)
+            userposts.push(post.id)
             end 
         end
         # followed bands posts
         self.followedbands.each do |band|
             band.posts.each do |bandpost|
                 arr.push(bandpost)
+                bandposts.push(bandpost.id)
             end
         end 
         # followed artists posts
         self.followedartists.each do |artist|
             artist.posts.each do |post|
+                artistposts.push(post.id)
                 if !arr.include?(post)
-                arr.push(post)
+                    arr.push(post)
                 end
             end
         end 
         # followed songs posts
         self.followedsongs.each do |song|
             song.posts.each do |post|
+                songposts.push(post.id)
                 if !arr.include?(post)
-                arr.push(post)
+                    arr.push(post)
                 end
             end
         end
-        return arr.sort_by(&:created_at).reverse.take(10)
+        # followed albums posts
+        self.followedalbums.each do |album|
+            album.posts.each do |post|
+                albumposts.push(post.id)
+                if (!arr.include?(post))
+                    arr.push(post)
+                end
+            end
+        end
+        return {
+            timeline: arr.sort_by(&:created_at).reverse.take(10), 
+            bandposts: bandposts, 
+            userposts: userposts, 
+            artistposts: artistposts, 
+            albumposts: albumposts,
+            songposts: songposts}
     end
 
     def timeline_refresh(date)
