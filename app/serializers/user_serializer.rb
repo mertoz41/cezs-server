@@ -61,7 +61,7 @@ class UserSerializer < ActiveModel::Serializer
 
   def followed_albums
     object.followedalbums.map do |album|
-      album.id
+      album.spotify_id
     end
   end
 

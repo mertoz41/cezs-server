@@ -21,4 +21,5 @@ class AlbumSerializer < ActiveModel::Serializer
   def artistSpotifyId
     return object.artist.spotify_id
   end
+  
 end
