@@ -1,8 +1,7 @@
 class Artist < ApplicationRecord
     has_many :songs, dependent: :destroy
     has_many :posts, dependent: :destroy
-    # has_many :requests, dependent: :destroy
-    has_many :bandposts
+    has_many :postviews, through: :posts
     has_many :albums, dependent: :destroy
     
     has_many :userinfluences

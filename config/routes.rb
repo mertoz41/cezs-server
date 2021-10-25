@@ -82,7 +82,7 @@ Rails.application.routes.draw do
   post '/songunfollow', to: 'songs#songunfollow'
 
 
-
+  get '/exploredata', to: 'search#exploredata'
 
   post '/instrumentsearch', to: 'instruments#instrumentsearch'
   post '/genresearch', to: 'genres#genresearch'
