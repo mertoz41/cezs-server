@@ -10,7 +10,7 @@ class AlbumsController < ApplicationController
     def albumfollow
         # find artist instance first
         artist = Artist.find_or_create_by(name: params[:artistName], spotify_id: params[:artistSpotifyId])
-        album = Album.find_or_create_by(name: params[:name], artist_id: artist.id, spotify_id: params[:albumSpotifyId])
+        album = Album.find_or_create_by(name: params[:name], artist_id: artist.id, spotify_id: params[:spotify_id])
         album_follow = Albumfollow.create(user_id: params[:userId], album_id: album.id)
         render json: {message: "now following #{album.name}.", album_id: album.id}
     end
