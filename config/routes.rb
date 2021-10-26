@@ -47,6 +47,8 @@ Rails.application.routes.draw do
   post '/createbandgenre', to: 'genres#createbandgenre'
   post '/deletebandgenre', to: 'genres#deletebandgenre'
 
+  get '/filters', to: 'search#filters'
+
 
   post '/artistcheck', to: 'artists#check'
   get '/artistfollowers/:id', to: 'artists#artistfollowers'
