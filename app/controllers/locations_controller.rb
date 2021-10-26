@@ -59,25 +59,25 @@ class LocationsController < ApplicationController
         end
     end 
 
-    def filterlocations
-        locations = Location.all
-        states = []
-        locations.each do |location|
-            location.users.each do |user|
-                if user.posts.size > 0 || user.userdescposts.size > 0 && !states.include?(location.city)
-                    states.push(location.city)
-                end
-            end
-            # location.bands.each do |band|
-            #     if !states.include?(location.city) && band.bandposts.size > 0 || band.banddescposts.size > 0 
-            #         states.push(location.city)
-            #     end
-            # end
-        end
-            # if !states.include?(location.city) && location.posts.size > 0 || location.bandposts
-            # end
+    # def filterlocations
+    #     locations = Location.all
+    #     states = []
+    #     locations.each do |location|
+    #         location.users.each do |user|
+    #             if user.posts.size > 0 || user.userdescposts.size > 0 && !states.include?(location.city)
+    #                 states.push(location.city)
+    #             end
+    #         end
+    #         # location.bands.each do |band|
+    #         #     if !states.include?(location.city) && band.bandposts.size > 0 || band.banddescposts.size > 0 
+    #         #         states.push(location.city)
+    #         #     end
+    #         # end
+    #     end
+    #         # if !states.include?(location.city) && location.posts.size > 0 || location.bandposts
+    #         # end
         
-        render json: {states: states}
-        # action to get all existing states in db
-    end
+    #     render json: {states: states}
+    #     # action to get all existing states in db
+    # end
 end

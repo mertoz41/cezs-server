@@ -1,7 +1,7 @@
 class InstrumentsController < ApplicationController
     def index
-        instruments = Instrument.all
-        render json: {instruments: instruments}
+        @instruments = Instrument.all
+        render json: {instruments: ActiveModel::Serializer::CollectionSerializer.new(@instruments, each_serializer: InstrumentSerializer)}
     end
     def searching
         instruments = Instrument.where('name like?', "%#{params[:searching]}%")

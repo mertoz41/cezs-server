@@ -1,7 +1,7 @@
 class GenresController < ApplicationController
     def index
-        genres = Genre.all
-        render json: {genres: genres}
+        @genres = Genre.all
+        render json: {genres: ActiveModel::Serializer::CollectionSerializer.new(@genres, each_serializer: GenreSerializer)}
     end 
 
     def genresearch
