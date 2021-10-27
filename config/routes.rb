@@ -84,6 +84,13 @@ Rails.application.routes.draw do
   post '/songunfollow', to: 'songs#songunfollow'
 
 
+  post '/postreport', to: 'reports#postreport'
+  post '/commentreport', to: 'reports#commentreport'
+  post '/userreport', to: 'reports#userreport'
+  post '/bandreport', to: 'reports#bandreport'
+
+
+
   get '/exploredata', to: 'search#exploredata'
 
   post '/instrumentsearch', to: 'instruments#instrumentsearch'

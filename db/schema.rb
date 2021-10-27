@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_21_051212) do
+ActiveRecord::Schema.define(version: 2021_10_27_184042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account_reports", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "band_id"
+    t.integer "action_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -185,6 +193,13 @@ ActiveRecord::Schema.define(version: 2021_10_21_051212) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "comment_reports", force: :cascade do |t|
+    t.integer "comment_id"
+    t.integer "action_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "comments", force: :cascade do |t|
     t.string "comment"
     t.string "user_id"
@@ -278,6 +293,13 @@ ActiveRecord::Schema.define(version: 2021_10_21_051212) do
   create_table "notification_tokens", force: :cascade do |t|
     t.string "token"
     t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "post_reports", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "action_user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
