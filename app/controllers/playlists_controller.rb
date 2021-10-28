@@ -8,4 +8,10 @@ class PlaylistsController < ApplicationController
         PlaylistPost.create(post_id: params[:post_id], playlist_id: params[:list_id])
         render json: {message: 'post added to'}
     end
+
+    def show
+        playlist = Playlist.find(params[:id])
+        @posts = playlist.posts
+        render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+    end
 end
