@@ -89,6 +89,7 @@ Rails.application.routes.draw do
   post '/userreport', to: 'reports#userreport'
   post '/bandreport', to: 'reports#bandreport'
 
+  post '/newplaylist', to: 'playlists#newplaylist'
 
 
   get '/exploredata', to: 'search#exploredata'
