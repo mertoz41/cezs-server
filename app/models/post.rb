@@ -17,5 +17,8 @@ class Post < ApplicationRecord
     has_many :postfeatures, dependent: :destroy
     has_many :featuredusers, through: :postfeatures
 
+    has_many :playlist_posts, dependent: :destroy
+    has_many :playlists, through: :playlist_posts
+
 
 end

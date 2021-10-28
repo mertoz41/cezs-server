@@ -4,8 +4,8 @@ class User < ApplicationRecord
     
     has_many :userinfluences
     has_many :influencers, through: :userinfluences
+    has_many :playlists, dependent: :destroy 
     
-    # has_and_belongs_to_many :chatrooms, dependent: :destroy
     has_many :messages, dependent: :destroy
     has_many :userchatrooms, dependent: :destroy
     has_many :chatrooms, through: :userchatrooms
