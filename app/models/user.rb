@@ -31,7 +31,7 @@ class User < ApplicationRecord
     has_many :albumfollows, dependent: :destroy
     has_many :followedalbums, through: :albumfollows
 
-
+    
     validates :username, uniqueness: { case_sensitive: false }
     # has_one :location
 
@@ -70,14 +70,7 @@ class User < ApplicationRecord
 
 
 
-    has_many :shares, dependent: :destroy
-    has_many :bandpostshares, dependent: :destroy
-    has_many :banddescpostshares, dependent: :destroy
-    has_many :userdescpostshares, dependent: :destroy
-
-    # has_many :requests, dependent: :destroy
-    # has_many :responses, dependent: :destroy
-    has_many :userdescposts, dependent: :destroy
+    has_many :applauds, dependent: :destroy
 
     has_many :userinstruments, dependent: :destroy
     has_many :instruments, through: :userinstruments

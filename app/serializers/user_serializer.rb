@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :share_count, :name, :last_name, :email, :notification_token
+  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :name, :last_name, :email, :notification_token, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   has_many :bands
@@ -10,7 +10,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :auditions, serializer: AuditionSerializer
   has_many :songs
   has_many :posts
-  has_many :shares
+  # has_many :shares
   has_many :favoritesongs
   has_many :favoriteartists
   has_many :favoritealbums
@@ -24,18 +24,23 @@ class UserSerializer < ActiveModel::Serializer
       return nil
     end
   end
+  def applauds
+    object.applauds.map do |appl|
+      appl.post_id
+    end
+  end
   
   def created_at
     object.created_at.to_date
   end
 
-  def share_count
-    shares = 0
-    object.posts.each do |post|
-      shares += post.shares.size
-    end
-    return shares
-  end
+  # def share_count
+  #   shares = 0
+  #   object.posts.each do |post|
+  #     shares += post.shares.size
+  #   end
+  #   return shares
+  # end
 
   def instruments
     object.instruments.map do |inst|
