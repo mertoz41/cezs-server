@@ -20,4 +20,9 @@ class PlaylistsController < ApplicationController
         plpost.destroy
         render json: {message: 'post removed.'}
     end
+    def deleteplaylist
+        playlist = Playlist.find_by(user_id: params[:user_id], id: params[:playlist_id])
+        playlist.destroy
+        render json: {message: 'playlist deleted.'}
+    end
 end
