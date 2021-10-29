@@ -14,4 +14,10 @@ class PlaylistsController < ApplicationController
         @posts = playlist.posts
         render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
     end
+
+    def removefromplaylist
+        plpost = PlaylistPost.find_by(post_id: params[:post_id], playlist_id: params[:playlist_id])
+        plpost.destroy
+        render json: {message: 'post removed.'}
+    end
 end

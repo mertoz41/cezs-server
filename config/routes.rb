@@ -92,7 +92,7 @@ Rails.application.routes.draw do
   post '/newplaylist', to: 'playlists#newplaylist'
   post '/addtoplaylist', to: 'playlists#addtoplaylist'
   get '/playlists/:id', to: 'playlists#show'
-
+  post '/removefromplaylist', to: 'playlists#removefromplaylist'
 
   get '/exploredata', to: 'search#exploredata'
 

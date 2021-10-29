@@ -11,6 +11,7 @@ class AuthController < ApplicationController
             @timeline = timeline_info[:timeline]
             @filtered_events = []
             @filtered_auditions = []
+            @playlists = @user.playlists
             @user.event_notifications.each do |noti|
                 event = Event.find(noti.event_id)
                 if event.event_date < Date.today
@@ -37,6 +38,7 @@ class AuthController < ApplicationController
                 comment_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.comment_notifications, each_serializer: CommentNotificationSerializer),
                 follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),
                 audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer),
+                playlists: ActiveModel::Serializer::CollectionSerializer.new(@playlists, each_serializer: PlaylistSerializer),
                 band_posts: timeline_info[:bandposts], 
                 user_posts: timeline_info[:userposts], 
                 artist_posts: timeline_info[:artistposts], 
@@ -52,6 +54,8 @@ class AuthController < ApplicationController
         token = request.headers["Authorization"].split(' ')[1]
         @user = User.find(decode(token)["user_id"])
         timeline_info = @user.timeline
+        @playlists = @user.playlists
+
         @timeline = timeline_info[:timeline]
         @filtered_events = []
         @filtered_auditions = []
@@ -80,6 +84,7 @@ class AuthController < ApplicationController
             comment_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.comment_notifications, each_serializer: CommentNotificationSerializer),
             follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),
             audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer),
+            playlists: ActiveModel::Serializer::CollectionSerializer.new(@playlists, each_serializer: PlaylistSerializer),
             band_posts: timeline_info[:bandposts], 
             user_posts: timeline_info[:userposts], 
             artist_posts: timeline_info[:artistposts], 
