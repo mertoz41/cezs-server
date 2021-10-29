@@ -15,7 +15,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :favoriteartists
   has_many :favoritealbums
   has_many :featuredposts
-  # has_many :playlists
+  has_many :playlists
   has_many :chatrooms 
   def notification_token
     if object.notification_token
