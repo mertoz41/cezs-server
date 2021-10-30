@@ -1,5 +1,5 @@
 class PlaylistSerializer < ActiveModel::Serializer
-  attributes :id, :name, :post_count, :posts
+  attributes :id, :name, :post_count, :posts, :user_id
 
   def post_count
     return object.posts.size
