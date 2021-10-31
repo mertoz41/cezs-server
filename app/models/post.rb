@@ -5,7 +5,6 @@ class Post < ApplicationRecord
     has_many :comment_notifications, dependent: :destroy
 
     has_many :applauds, dependent: :destroy
-    # has_many :shares, dependent: :destroy 
     # old version to be updated with optional
     belongs_to :user, optional: true
     belongs_to :band, optional: true

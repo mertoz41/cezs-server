@@ -357,23 +357,6 @@ ActiveRecord::Schema.define(version: 2021_10_29_185621) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "share_notifications", force: :cascade do |t|
-    t.integer "post_id"
-    t.integer "user_id"
-    t.integer "action_user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.boolean "seen"
-    t.integer "share_id"
-  end
-
-  create_table "shares", force: :cascade do |t|
-    t.integer "post_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id"
-  end
-
   create_table "songfollows", force: :cascade do |t|
     t.integer "song_id"
     t.integer "user_id"
