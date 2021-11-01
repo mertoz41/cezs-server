@@ -1,9 +1,13 @@
 class ApplaudNotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :action_username, :action_user_avatar, :action_user_id, :message, :applaud_id, :post_id, :created_at, :post_thumbnail
+  attributes :id, :action_username, :action_user_avatar, :action_user_id, :message, :applaud_id, :post_id, :created_at, :post_thumbnail, :seen, :applaud_noti
   def action_username
     return object.applauding_user.username
+  end
+
+  def applaud_noti
+    true
   end
 
   def action_user_id

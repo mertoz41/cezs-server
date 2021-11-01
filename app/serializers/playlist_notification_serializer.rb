@@ -1,7 +1,7 @@
 class PlaylistNotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :action_user_avatar, :action_username, :action_user_id, :message, :playlist_id, :playlist_name, :created_at
+  attributes :id, :action_user_avatar, :action_username, :action_user_id, :message, :playlist_id, :playlist_name, :created_at, :seen
   def action_username
     return object.playlist.playlist_user.username
   end
