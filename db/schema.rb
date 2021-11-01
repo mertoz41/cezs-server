@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_29_185621) do
+ActiveRecord::Schema.define(version: 2021_11_01_015415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(version: 2021_10_29_185621) do
     t.string "name"
     t.integer "artist_id"
     t.string "spotify_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "applaud_notifications", force: :cascade do |t|
+    t.integer "action_user_id"
+    t.integer "user_id"
+    t.integer "applaud_id"
+    t.boolean "seen"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -300,6 +309,15 @@ ActiveRecord::Schema.define(version: 2021_10_29_185621) do
   create_table "notification_tokens", force: :cascade do |t|
     t.string "token"
     t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "playlist_notifications", force: :cascade do |t|
+    t.integer "action_user_id"
+    t.integer "user_id"
+    t.integer "playlist_id"
+    t.boolean "seen"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
