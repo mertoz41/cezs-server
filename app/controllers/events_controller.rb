@@ -96,8 +96,5 @@ class EventsController < ApplicationController
         render json: {event: EventSerializer.new(@event)}
     end
 
-    def seenotification
-        event_noti = EventNotification.find(params[:id])
-        event_noti.update(seen: true)
-    end
+    
 end

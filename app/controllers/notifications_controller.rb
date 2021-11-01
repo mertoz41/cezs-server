@@ -22,4 +22,34 @@ class NotificationsController < ApplicationController
         end
         render json: {message: 'notifications seen.'}
     end
+    def seecommentnoti
+        noti = CommentNotification.find(params[:id])
+        @post = noti.post
+        noti.update(seen: true)
+        render json: @post, serializer: PostSerializer
+    end
+
+    def seeapplaudnoti
+        noti = ApplaudNotification.find(params[:id])
+        @post = noti.applaud.post
+        noti.update(seen: true)
+        render json: @post, serializer: PostSerializer
+
+    end
+    def seegignoti
+        event_noti = EventNotification.find(params[:id])
+        event_noti.update(seen: true)
+    end
+    def seefollownoti
+        noti = FollowNotification.find(params[:id])
+        noti.update(seen: true)
+    end
+    def seeauditnoti
+        event_noti = AuditionNotification.find(params[:id])
+        event_noti.update(seen: true)
+    end
+    def seeplaylistnoti
+        plnoti = PlaylistNotification.find(params[:id])
+        plnoti.update(seen: true)
+    end
 end

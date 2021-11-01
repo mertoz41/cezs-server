@@ -50,8 +50,5 @@ class CommentsController < ApplicationController
         comment.destroy
         render json: {message: 'comment deleted.'}
     end
-    def seenotification
-        noti = CommentNotification.find(params[:id])
-        noti.update(seen: true)
-    end
+    
 end

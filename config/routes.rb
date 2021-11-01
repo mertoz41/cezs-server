@@ -117,11 +117,16 @@ Rails.application.routes.draw do
   post '/bandevent', to: 'events#bandevent'
   get '/events', to: 'events#index'
   get '/events/:id', to: 'events#show'
-  get '/seegignoti/:id', to: 'events#seenotification'
-  get '/seefollownoti/:id', to: 'follows#seenotification'
-  get '/seeauditnoti/:id', to: 'auditions#seenotification'
-  get '/seesharenoti/:id', to: 'shares#seenotification'
-  get '/seecommentnoti/:id', to: 'comments#seenotification'
+
+
+  get '/seegignoti/:id', to: 'notifications#seegignoti'
+  get '/seefollownoti/:id', to: 'notifications#seefollowoti'
+  get '/seeauditnoti/:id', to: 'notifications#seeauditnoti'
+  get '/seeplaylistnoti/:id', to: 'notifications#seeplaylistnoti'
+  get '/seeapplaudnoti/:id', to: 'notifications#seeapplaudnoti'
+  get '/seecommentnoti/:id', to: 'notifications#seecommentnoti'
+
+
   post '/bandunfollow', to: 'bandfollows#unfollow'
   get '/oldermessages/:id', to: 'messages#oldermessages'
   post '/createuseraudition', to: 'auditions#createuseraudition'

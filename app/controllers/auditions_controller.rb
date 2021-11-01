@@ -84,9 +84,6 @@ class AuditionsController < ApplicationController
         render json: @audition.location, serializer: LocationSerializer
     end
 
-    def seenotification
-        event_noti = AuditionNotification.find(params[:id])
-        event_noti.update(seen: true)
-    end
+    
     
 end
