@@ -97,8 +97,8 @@ Rails.application.routes.draw do
 
   get '/exploredata', to: 'search#exploredata'
 
-  post '/applaudpost', to: 'posts#applaudpost'
-  post '/unapplaudpost', to: 'posts#unapplaudpost'
+  post '/applaudpost', to: 'applauds#applaudpost'
+  post '/unapplaudpost', to: 'applauds#unapplaudpost'
 
 
   post '/instrumentsearch', to: 'instruments#instrumentsearch'

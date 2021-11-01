@@ -96,15 +96,7 @@ class PostsController < ApplicationController
         @post = Post.find(params[:id])
         render json: @post, serializer: PostSerializer
     end
-    def applaudpost
-        applaud = Applaud.create(post_id: params[:post_id], user_id: params[:user_id])
-        render json: {message: 'post applauded.'}
-    end
-
-    def unapplaudpost
-        applaud = Applaud.find_by(user_id: params[:user_id], post_id: params[:post_id])
-        render json: {message: 'post unapplauded.'}
-    end
+    
 
 
     def filter
