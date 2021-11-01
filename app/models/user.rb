@@ -17,7 +17,7 @@ class User < ApplicationRecord
     has_many :follow_notifications, dependent: :destroy
     has_many :event_notifications, dependent: :destroy
     has_many :audition_notifications, dependent: :destroy
-    has_many :applaud_notifications, dependen: :destroy
+    has_many :applaud_notifications, dependent: :destroy
     has_many :playlist_notifications, dependent: :destroy
     
 
@@ -37,8 +37,8 @@ class User < ApplicationRecord
     validates :username, uniqueness: { case_sensitive: false }
     # has_one :location
 
-    has_many :userdescpostfeatures, dependent: :destroy
-    has_many :featureduserdescposts, through: :userdescpostfeatures
+    # has_many :userdescpostfeatures, dependent: :destroy
+    # has_many :featureduserdescposts, through: :userdescpostfeatures
 
     has_many :postfeatures, dependent: :destroy
     has_many :featuredposts, through: :postfeatures
