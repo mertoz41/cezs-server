@@ -2,8 +2,6 @@ class ArtistSerializer < ActiveModel::Serializer
   attributes :id, :name, :spotify_id, :influence_count, :song_count, :favoriteusers_count, :followingusers_count, :view_count, :instruments
   has_many :posts
   has_many :albums
-  # has_many :albums
-  # has_many :songs
   
   def influence_count
     return object.influencedusers.size

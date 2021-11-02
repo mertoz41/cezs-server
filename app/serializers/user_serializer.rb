@@ -10,7 +10,6 @@ class UserSerializer < ActiveModel::Serializer
   has_many :auditions, serializer: AuditionSerializer
   has_many :songs
   has_many :posts
-  # has_many :shares
   has_many :favoritesongs
   has_many :favoriteartists
   has_many :favoritealbums
@@ -34,13 +33,7 @@ class UserSerializer < ActiveModel::Serializer
     object.created_at.to_date
   end
 
-  # def share_count
-  #   shares = 0
-  #   object.posts.each do |post|
-  #     shares += post.shares.size
-  #   end
-  #   return shares
-  # end
+
 
   def instruments
     object.instruments.map do |inst|
