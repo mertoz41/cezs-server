@@ -1,13 +1,11 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :location, :bandposts, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :name, :last_name, :email, :notification_token, :applauds
+  attributes :id, :username, :created_at, :avatar, :location, :bandposts, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :name, :last_name, :email, :notification_token, :applauds, :upcoming_audition, :upcoming_event
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   has_many :bands
   has_many :genres
   has_many :influencers
-  has_many :events
-  has_many :auditions, serializer: AuditionSerializer
   has_many :songs
   has_many :posts
   has_many :favoritesongs
@@ -22,6 +20,14 @@ class UserSerializer < ActiveModel::Serializer
     else
       return nil
     end
+  end
+
+  def upcoming_audition
+    return AuditionSerializer.new(object.auditions.last).as_json
+  end
+  
+  def upcoming_event
+    return EventSerializer.new(object.events.last).as_json
   end
   def applauds
     object.applauds.map do |appl|
