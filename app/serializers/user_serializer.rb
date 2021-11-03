@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :name, :last_name, :email, :notification_token, :applauds
+  attributes :id, :username, :created_at, :avatar, :location, :bandposts, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :name, :last_name, :email, :notification_token, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   has_many :bands
@@ -27,6 +27,15 @@ class UserSerializer < ActiveModel::Serializer
     object.applauds.map do |appl|
       appl.post_id
     end
+  end
+
+  def bandposts
+    arr = []
+    object.bands.each do |band|
+      serialized = ActiveModel::Serializer::CollectionSerializer.new(band.posts, each_serializer: PostSerializer).as_json
+      arr = arr + serialized
+    end
+    return arr
   end
   
   def created_at
