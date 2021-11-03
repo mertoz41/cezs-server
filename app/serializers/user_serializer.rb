@@ -6,8 +6,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :bands
   has_many :genres
   has_many :influencers
-  has_many :songs
-  has_many :posts
+  has_many :posts, serializer: ShortPostSerializer
   has_many :favoritesongs
   has_many :favoriteartists
   has_many :favoritealbums
@@ -23,11 +22,11 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def upcoming_audition
-    return AuditionSerializer.new(object.auditions.last).as_json
+    return object.auditions.last
   end
   
   def upcoming_event
-    return EventSerializer.new(object.events.last).as_json
+      return object.events.last
   end
   def applauds
     object.applauds.map do |appl|
