@@ -10,6 +10,12 @@ class BandsController < ApplicationController
         render json: {band: BandSerializer.new(@band)}
     end
 
+    def bandposts
+        band = Band.find(params[:id])
+        @posts = band.posts
+        render json: @posts, each_serializer: PostSerializer
+    end
+
     def show
         @band = Band.find(params[:id])
         render json: {band: BandSerializer.new(@band)}
