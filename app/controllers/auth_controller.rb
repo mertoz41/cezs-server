@@ -7,7 +7,7 @@ class AuthController < ApplicationController
             payload = {user_id: @user.id}
             token = encode(payload)
             timeline_info = @user.timeline
-
+            @chatrooms = @user.chatrooms
             @timeline = timeline_info[:timeline]
             @filtered_events = []
             @filtered_auditions = []
@@ -58,6 +58,7 @@ class AuthController < ApplicationController
         @user = User.find(decode(token)["user_id"])
         timeline_info = @user.timeline
         @playlists = @user.playlists
+        @chatrooms = @user.chatrooms
 
         @timeline = timeline_info[:timeline]
         @filtered_events = []
@@ -91,6 +92,7 @@ class AuthController < ApplicationController
             playlist_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.playlist_notifications, each_serializer: PlaylistNotificationSerializer),
             audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer),
             playlists: ActiveModel::Serializer::CollectionSerializer.new(@playlists, each_serializer: PlaylistSerializer),
+            chatrooms: ActiveModel::Serializer::CollectionSerializer.new(@chatrooms, each_serializer: ChatroomSerializer),
             band_posts: timeline_info[:bandposts], 
             user_posts: timeline_info[:userposts], 
             artist_posts: timeline_info[:artistposts], 
