@@ -79,7 +79,7 @@ class AuthController < ApplicationController
                     @filtered_auditions.push(noti)
                 end
             end
-
+            # byebug
 
         # all notifications
         render json: {

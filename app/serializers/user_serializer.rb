@@ -1,8 +1,10 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :name, :last_name, :email, :notification_token, :applauds, :upcoming_audition, :upcoming_event
+  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :name, :last_name, :email, :notification_token, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
+  attribute :upcoming_event, if: -> {object.events.present?}
+  attribute :upcoming_audition, if: -> {object.auditions.present?}
   has_many :bands
   has_many :genres
   has_many :influencers
@@ -21,11 +23,13 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def upcoming_audition
-    return object.auditions.last
+    auditions = object.auditions.where("audition_date >= ?", Time.now.beginning_of_day)
+    return AuditionSerializer.new(auditions.first)
   end
   
   def upcoming_event
-      return object.events.last
+      events = object.events.where("event_date >= ?", Time.now.beginning_of_day)
+      return EventSerializer.new(events.first)
   end
   def applauds
     object.applauds.map do |appl|

@@ -43,7 +43,7 @@ class AuditionsController < ApplicationController
         end
         handler = client.send_messages(messages)
 
-        render json: @audition.location, serializer: LocationSerializer
+        render json: {location: LocationSerializer.new(@audition.location), audition: AuditionSerializer.new(@audition)}
     end
 
     def createbandaudition
