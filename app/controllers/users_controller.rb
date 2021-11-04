@@ -17,7 +17,7 @@ class UsersController < ApplicationController
         user = User.find(params[:id])
         bandposts = []
         user.bands.each do |band|
-            bandposts = bandposts + ActiveModel::Serializer::CollectionSerializer.new(band.posts, each_serializer: PostSerializer).as_json
+            bandposts = bandposts + band.posts
         end
         @posts = user.posts + bandposts
         render json: @posts, each_serializer: PostSerializer

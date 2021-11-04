@@ -35,12 +35,11 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def bandposts
-    arr = []
+    @arr = []
     object.bands.each do |band|
-      serialized = ActiveModel::Serializer::CollectionSerializer.new(band.posts, each_serializer: PostSerializer).as_json
-      arr = arr + serialized
+      @arr = @arr + band.posts
     end
-    return arr
+    return ActiveModel::Serializer::CollectionSerializer.new(@arr, each_serializer: ShortPostSerializer).as_json
   end
   
   def created_at

@@ -27,12 +27,4 @@ class SearchController < ApplicationController
         # songs with most posts
         # albums with most posts 
     end
-    def filters
-        @genres = Genre.all
-        @instruments = Instrument.all
-        render json: {
-            genres: ActiveModel::Serializer::CollectionSerializer.new(@genres, each_serializer: GenreSerializer),
-            instruments: ActiveModel::Serializer::CollectionSerializer.new(@instruments, each_serializer: InstrumentSerializer)
-        }
-    end
 end
