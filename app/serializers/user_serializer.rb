@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :location, :bandposts, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :name, :last_name, :email, :notification_token, :applauds, :upcoming_audition, :upcoming_event
+  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :name, :last_name, :email, :notification_token, :applauds, :upcoming_audition, :upcoming_event
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   has_many :bands
@@ -10,7 +10,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :favoritesongs
   has_many :favoriteartists
   has_many :favoritealbums
-  has_many :featuredposts
+  has_many :featuredposts, serializer: ShortPostSerializer
   has_many :playlists
   has_many :chatrooms 
   def notification_token
@@ -33,20 +33,10 @@ class UserSerializer < ActiveModel::Serializer
       appl.post_id
     end
   end
-
-  def bandposts
-    @arr = []
-    object.bands.each do |band|
-      @arr = @arr + band.posts
-    end
-    return ActiveModel::Serializer::CollectionSerializer.new(@arr, each_serializer: ShortPostSerializer).as_json
-  end
   
   def created_at
     object.created_at.to_date
   end
-
-
 
   def instruments
     object.instruments.map do |inst|

@@ -28,13 +28,14 @@ class AuthController < ApplicationController
                     @filtered_auditions.push(noti)
                 end
             end
+
+            
             
             render json: {
                 user: UserSerializer.new(@user), 
                 token: token, 
                 timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer),
                 event_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_events, each_serializer: EventNotificationSerializer),
-
                 comment_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.comment_notifications, each_serializer: CommentNotificationSerializer),
                 follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),
                 audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer),
@@ -77,13 +78,15 @@ class AuthController < ApplicationController
                     @filtered_auditions.push(noti)
                 end
             end
+
+
         # all notifications
         render json: {
             user: UserSerializer.new(@user), 
             timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer),
             event_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_events, each_serializer: EventNotificationSerializer),
             comment_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.comment_notifications, each_serializer: CommentNotificationSerializer),
-            follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),
+            follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),                
             applaud_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.applaud_notifications, each_serializer: ApplaudNotificationSerializer),
             playlist_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.playlist_notifications, each_serializer: PlaylistNotificationSerializer),
             audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer),

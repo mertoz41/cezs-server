@@ -8,8 +8,6 @@ class UsersController < ApplicationController
 
     def show
         @user = User.find(params[:id])
-        # @posts = @user.posts
-        # @shares = @user.shares
         render json: {user: UserSerializer.new(@user)}
     end 
 

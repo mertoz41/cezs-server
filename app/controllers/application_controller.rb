@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :authorized
+
     def encode(payload)
         JWT.encode(payload, 'experiment', 'HS256')
     end
