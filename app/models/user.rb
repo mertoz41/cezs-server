@@ -95,58 +95,49 @@ class User < ApplicationRecord
         arr = []
         
         # users own posts
-        self.posts.each do |post|
-            arr.push(post)
-        end 
-        # users bands posts
+        arr = arr + self.posts.last(5)
         self.bands.each do |band|
-            band.posts.each do |bandpost|
-                arr.push(bandpost)
-            end
+            arr = arr + band.posts.last(5)
         end
         # followed users posts
         self.followeds.each do |user|
-            user.posts.each do |post|
-            arr.push(post)
-            userposts.push(post.id)
-            end 
+            posts = user.posts.last(5)
+            arr = arr + posts
+            ids = posts.map { |post| post.id}
+            userposts = userposts + ids
         end
         # followed bands posts
         self.followedbands.each do |band|
-            band.posts.each do |bandpost|
-                arr.push(bandpost)
-                bandposts.push(bandpost.id)
-            end
+            posts = band.posts.last(5)
+            arr = arr + posts
+            ids = posts.map { |post| post.id}
+            bandposts = bandposts + ids
         end 
         # followed artists posts
         self.followedartists.each do |artist|
-            artist.posts.each do |post|
-                artistposts.push(post.id)
-                if !arr.include?(post)
-                    arr.push(post)
-                end
-            end
+            posts = artist.posts.last(5)
+            arr = arr + posts
+            ids = posts.map { |post| post.id}
+            artistposts = artistposts + ids
         end 
         # followed songs posts
         self.followedsongs.each do |song|
-            song.posts.each do |post|
-                songposts.push(post.id)
-                if !arr.include?(post)
-                    arr.push(post)
-                end
-            end
+            posts = song.posts.last(5)
+            arr = arr + posts
+            ids = posts.map { |post| post.id}
+            songposts = songposts + ids
         end
         # followed albums posts
         self.followedalbums.each do |album|
-            album.posts.each do |post|
-                albumposts.push(post.id)
-                if (!arr.include?(post))
-                    arr.push(post)
-                end
-            end
+            posts = album.posts.last(5)
+            arr = arr + posts
+            ids = posts.map { |post| post.id}
+            albumposts = albumposts + ids
         end
+        unique_arr = arr.uniq
+         
         return {
-            timeline: arr.sort_by(&:created_at).reverse.take(10), 
+            timeline: unique_arr.sort_by(&:created_at).reverse.take(10), 
             bandposts: bandposts, 
             userposts: userposts, 
             artistposts: artistposts, 
@@ -176,6 +167,11 @@ class User < ApplicationRecord
         self.followedsongs.each do |song|
             followedsongs = song.posts.where('created_at > ?', date)
             arr = arr + followedsongs
+        end
+        # followed albums posts
+        self.followedalbums.each do |album|
+            followedalbums = album.posts.where('created_at > ?', date)
+            arr = arr + followedalbums
         end
         return arr.sort_by(&:created_at).reverse.take(10)
     end
