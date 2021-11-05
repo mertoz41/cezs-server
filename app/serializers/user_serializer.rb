@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :view_count, :name, :last_name, :email, :notification_token, :applauds
+  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :name, :last_name, :email, :notification_token, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   attribute :upcoming_event, if: -> {object.events.present?}
@@ -46,13 +46,13 @@ class UserSerializer < ActiveModel::Serializer
       {id: inst.id, name: inst.name}
     end
   end
-  def view_count
-    views = 0
-    object.posts.each do |post|
-      views += post.postviews.size
-    end
-    return views
-  end
+  # def view_count
+  #   views = 0
+  #   object.posts.each do |post|
+  #     views += post.postviews.size
+  #   end
+  #   return views
+  # end
 
   def followers_count
     object.followers.size

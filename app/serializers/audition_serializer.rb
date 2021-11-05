@@ -30,8 +30,6 @@ class AuditionSerializer < ActiveModel::Serializer
       {id: inst.id, name: inst.name}
     end
   end
-
-
   def username
     return object.user.username
   end
