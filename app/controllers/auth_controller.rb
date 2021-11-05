@@ -9,28 +9,11 @@ class AuthController < ApplicationController
             timeline_info = @user.timeline
             @chatrooms = @user.chatrooms
             @timeline = timeline_info[:timeline]
-            @filtered_events = []
-            @filtered_auditions = []
             @playlists = @user.playlists
-            @user.event_notifications.each do |noti|
-                event = Event.find(noti.event_id)
-                if event.event_date < Date.today
-                    EventNotification.find(noti.id).destroy
-                else
-                    @filtered_events.push(noti)
-                end
-            end
-            @user.audition_notifications.each do |noti|
-                audition = Audition.find(noti.audition_id)
-                if audition.audition_date < Date.today
-                    AuditionNotification.find(noti.id).destroy
-                else
-                    @filtered_auditions.push(noti)
-                end
-            end
-
             
-            
+            @filtered_events = @user.event_notifications.joins(:event).where('event_date >= ?', Date.today)
+            @filtered_auditions = @user.audition_notifications.joins(:audition).where('audition_date >= ?', Date.today)
+ 
             render json: {
                 user: UserSerializer.new(@user), 
                 token: token, 
@@ -62,26 +45,8 @@ class AuthController < ApplicationController
         @chatrooms = @user.chatrooms
 
         @timeline = timeline_info[:timeline]
-        @filtered_events = []
-        @filtered_auditions = []
-            @user.event_notifications.each do |noti|
-                event = Event.find(noti.event_id)
-                if event.event_date < Date.today
-                    EventNotification.find(noti.id).destroy
-                else
-                    @filtered_events.push(noti)
-                end
-            end
-            @user.audition_notifications.each do |noti|
-                audition = Audition.find(noti.audition_id)
-                if audition.audition_date < Date.today
-                    AuditionNotification.find(noti.id).destroy
-                else
-                    @filtered_auditions.push(noti)
-                end
-            end
-            # byebug
-
+        @filtered_events = @user.event_notifications.joins(:event).where('event_date >= ?', Date.today)
+        @filtered_auditions = @user.audition_notifications.joins(:audition).where('audition_date >= ?', Date.today)
         # all notifications
         render json: {
             user: UserSerializer.new(@user), 
