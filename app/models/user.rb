@@ -90,88 +90,85 @@ class User < ApplicationRecord
         bandposts = []
         artistposts = []
         songposts = []
-        albumposts = []
+        albumpostids = []
         userposts = []
         arr = []
         
         # users own posts
         arr = arr + self.posts.last(5)
-        self.bands.each do |band|
-            arr = arr + band.posts.last(5)
+        # users bands posts
+        if (self.bands.size > 0)
+            lerr = self.bands.map(&:posts).flatten!
+            arr = arr + lerr
         end
+        
         # followed users posts
-        self.followeds.each do |user|
-            posts = user.posts.last(5)
-            arr = arr + posts
-            ids = posts.map { |post| post.id}
-            userposts = userposts + ids
+        if (self.followeds.size > 0)
+        usersposts = self.followeds.map(&:posts).flatten!.last(5)
+        arr = arr + usersposts
+        userpostids = usersposts.map {|post| post.id}
         end
+       
         # followed bands posts
-        self.followedbands.each do |band|
-            posts = band.posts.last(5)
-            arr = arr + posts
-            ids = posts.map { |post| post.id}
-            bandposts = bandposts + ids
-        end 
-        # followed artists posts
-        self.followedartists.each do |artist|
-            posts = artist.posts.last(5)
-            arr = arr + posts
-            ids = posts.map { |post| post.id}
-            artistposts = artistposts + ids
-        end 
-        # followed songs posts
-        self.followedsongs.each do |song|
-            posts = song.posts.last(5)
-            arr = arr + posts
-            ids = posts.map { |post| post.id}
-            songposts = songposts + ids
+        if (self.followedbands.size > 0)
+        bandsposts = self.followedbands.map(&:posts).flatten!.last(5)
+        arr = arr + bandsposts
+        bandpostids = bandsposts.map {|post| post.id}
         end
+
+        # followed artists posts
+        if (self.followedartists.size > 0)
+        artistsposts = self.followedartists.map(&:posts).flatten!.last(5)
+        arr = arr + artistsposts
+        artistpostids = artistsposts.map {|post| post.id}
+        end
+
+        # followed songs posts
+        if (self.followedsongs.size > 0)
+        songsposts = self.followedsongs.map(&:posts).flatten!.last(5)
+        arr = arr + songsposts
+        songpostids = songsposts.map {|post| post.id}
+        end
+
         # followed albums posts
-        self.followedalbums.each do |album|
-            posts = album.posts.last(5)
-            arr = arr + posts
-            ids = posts.map { |post| post.id}
-            albumposts = albumposts + ids
+        if (self.followedalbums.size > 0)
+        albumsposts = self.followedalbums.map(&:posts).flatten!.last(5)
+        arr = arr + albumsposts
+        albumpostids = albumsposts.map {|post| post.id}
         end
         unique_arr = arr.uniq
          
         return {
-            timeline: unique_arr.sort_by(&:created_at).reverse.take(10), 
-            bandposts: bandposts, 
-            userposts: userposts, 
-            artistposts: artistposts, 
-            albumposts: albumposts,
-            songposts: songposts}
+            timeline: unique_arr.sort_by(&:created_at).reverse, 
+            bandposts: bandpostids, 
+            userposts: userpostids, 
+            artistposts: artistpostids, 
+            albumposts: albumpostids,
+            songposts: songpostids}
     end
 
     def timeline_refresh(date)
         arr = []
          # followed users posts
-         self.followeds.each do |user|
-            followedposts = user.posts.where('created_at > ?', date)
-            arr = arr + followedposts
+        if (self.followeds.size > 0)
+            arr = arr + self.followeds.map(&:posts).flatten!.select {|post| post.created_at > date}
+        end
+         # followed bands posts
+        if (self.followedbands.size > 0)
+            arr = arr + self.followedbands.map(&:posts).flatten!.select {|post| post.created_at > date}
         end
 
-         # followed bands posts
-         self.followedbands.each do |band|
-            followedbandsposts = band.posts.where('created_at > ?', date)
-            arr = arr + followedbandsposts
+        # # followed artists posts
+        if (self.followedartists.size > 0)
+            arr = arr +  self.followedartists.map(&:posts).flatten!.select {|post| post.created_at > date}
         end
-        # followed artists posts
-        self.followedartists.each do |artist|
-            followedartists = artist.posts.where('created_at > ?', date)
-            arr = arr + followedartists
-        end 
-        # followed songs posts
-        self.followedsongs.each do |song|
-            followedsongs = song.posts.where('created_at > ?', date)
-            arr = arr + followedsongs
+        # # followed songs posts
+        if (self.followedsongs.size > 0)
+            arr = arr + self.followedsongs.map(&:posts).flatten!.select {|post| post.created_at > date}
         end
-        # followed albums posts
-        self.followedalbums.each do |album|
-            followedalbums = album.posts.where('created_at > ?', date)
-            arr = arr + followedalbums
+        # # followed albums posts
+        if (self.followedalbums.size > 0)
+            arr = arr + self.followedalbums.map(&:posts).flatten!.select {|post| post.created_at > date}
         end
         return arr.sort_by(&:created_at).reverse.take(10)
     end
