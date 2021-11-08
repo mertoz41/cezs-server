@@ -1,8 +1,9 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :location, :instruments, :post_count, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :name, :last_name, :email, :notification_token, :applauds
+  attributes :id, :username, :created_at, :avatar, :location, :instruments, :follows_count, :followed_users, :followed_artists, :followed_songs, :followed_bands, :followed_albums, :followers_count, :name, :last_name, :email, :notification_token, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
+  attribute :notification_token, if: -> {object.notification_token}
   attribute :upcoming_event, if: -> {object.events.present?}
   attribute :upcoming_audition, if: -> {object.auditions.present?}
   has_many :bands
@@ -15,11 +16,7 @@ class UserSerializer < ActiveModel::Serializer
   has_many :featuredposts, serializer: ShortPostSerializer
   has_many :playlists
   def notification_token
-    if object.notification_token
       return object.notification_token.token
-    else
-      return nil
-    end
   end
 
   def upcoming_audition
@@ -98,7 +95,5 @@ class UserSerializer < ActiveModel::Serializer
   def bio 
     return object.bio.description
   end
-  def post_count
-    return object.posts.length
-  end
+  
 end
