@@ -16,6 +16,8 @@ gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem "mini_magick"
+
 gem 'exponent-server-sdk'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -43,3 +45,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "jwt", "~> 2.2"
 
 gem "active_model_serializers", "~> 0.10.12"
+
+gem "streamio-ffmpeg", "~> 3.0"

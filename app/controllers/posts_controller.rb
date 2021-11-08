@@ -49,8 +49,10 @@ class PostsController < ApplicationController
         end
 
         @new_post.clip.attach(params[:clip])
+        ConvertVideoJob.perform_later(@new_post.id)
         @new_post.thumbnail.attach(params[:thumbnail])
-        render json: @new_post, serializer: PostSerializer
+        # render json: @new_post, serializer: PostSerializer
+        render json: {message: 'uploading'}
     end
 
     def createbandpost
