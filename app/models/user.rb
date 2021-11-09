@@ -95,7 +95,7 @@ class User < ApplicationRecord
         arr = []
         
         # users own posts
-        arr = arr + self.posts.last(5)
+        arr = arr + self.posts
         # users bands posts
         if (self.bands.size > 0)
             lerr = self.bands.map(&:posts).flatten!

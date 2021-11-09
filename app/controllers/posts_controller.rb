@@ -24,9 +24,13 @@ class PostsController < ApplicationController
             inst = Instrument.find_or_create_by(name: instrument)
             Postinstrument.create(instrument_id: inst.id, post_id: @post.id)
         end
-        @post.clip.attach(params[:clip])
+        @post.clip.attach(params[:clip])        
+        ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
+
         @post.thumbnail.attach(params[:thumbnail])
-        render json: @post, serializer: PostSerializer
+        render json: {message: 'uploading'}
+
+        # render json: @post, serializer: PostSerializer
     end
 
     def createuserdescpost
@@ -49,7 +53,7 @@ class PostsController < ApplicationController
         end
 
         @new_post.clip.attach(params[:clip])
-        ConvertVideoJob.perform_later(@new_post.id)
+        ConvertVideoJob.perform_later(@new_post.id, logged_in_user.id)
         @new_post.thumbnail.attach(params[:thumbnail])
         # render json: @new_post, serializer: PostSerializer
         render json: {message: 'uploading'}
@@ -75,8 +79,12 @@ class PostsController < ApplicationController
         end
        
         @post.clip.attach(params[:clip])
+        ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
+
         @post.thumbnail.attach(params[:thumbnail])
-        render json: @post, serializer: PostSerializer
+        render json: {message: 'uploading'}
+
+        # render json: @post, serializer: PostSerializer
     end
 
     def createbanddescposts
@@ -90,8 +98,11 @@ class PostsController < ApplicationController
             Postinstrument.create(post_id: @new_post.id, instrument_id: inst.id)
         end
         @new_post.clip.attach(params[:clip])
+        ConvertVideoJob.perform_later(@new_post.id, logged_in_user.id)
+
         @new_post.thumbnail.attach(params[:thumbnail])
-        render json: @new_post, serializer: PostSerializer
+        render json: {message: "uploading"}
+        # render json: @new_post, serializer: PostSerializer
     end
 
     def show
