@@ -43,7 +43,6 @@ class AuthController < ApplicationController
         timeline_info = @user.timeline
         @playlists = @user.playlists
         @chatrooms = @user.chatrooms
-
         @timeline = timeline_info[:timeline]
         @filtered_events = @user.event_notifications.joins(:event).where('event_date >= ?', Date.today)
         @filtered_auditions = @user.audition_notifications.joins(:audition).where('audition_date >= ?', Date.today)

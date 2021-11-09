@@ -21,5 +21,7 @@ class Post < ApplicationRecord
     has_many :playlist_posts, dependent: :destroy
     has_many :playlists, through: :playlist_posts
 
+    has_many :playlist_notifications, dependent: :destroy
+
 
 end

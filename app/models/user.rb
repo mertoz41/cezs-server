@@ -87,51 +87,51 @@ class User < ApplicationRecord
 
 
     def timeline
-        bandposts = []
-        artistposts = []
-        songposts = []
+        bandpostids = []
+        artistpostids = []
+        songpostids = []
         albumpostids = []
-        userposts = []
+        userpostids = []
         arr = []
         
         # users own posts
         arr = arr + self.posts
         # users bands posts
-        if (self.bands.size > 0)
+        if self.bands.size > 0
             lerr = self.bands.map(&:posts).flatten!
             arr = arr + lerr
         end
         
         # followed users posts
-        if (self.followeds.size > 0)
-        usersposts = self.followeds.map(&:posts).flatten!.last(5)
-        arr = arr + usersposts
-        userpostids = usersposts.map {|post| post.id}
+        if self.followeds.size > 0
+            usersposts = self.followeds.map(&:posts).flatten!.last(5)
+            arr = arr + usersposts
+            userpostids = usersposts.map {|post| post.id}
         end
        
         # followed bands posts
-        if (self.followedbands.size > 0)
-        bandsposts = self.followedbands.map(&:posts).flatten!.last(5)
-        arr = arr + bandsposts
-        bandpostids = bandsposts.map {|post| post.id}
+        if self.followedbands.size > 0
+            bandsposts = self.followedbands.map(&:posts).flatten!.last(5)  
+            arr = arr + bandsposts
+            bandpostids = bandsposts.map {|post| post.id}
         end
 
         # followed artists posts
-        if (self.followedartists.size > 0)
-        artistsposts = self.followedartists.map(&:posts).flatten!.last(5)
-        arr = arr + artistsposts
-        artistpostids = artistsposts.map {|post| post.id}
+        if self.followedartists.size > 0
+            artistsposts = self.followedartists.map(&:posts).flatten!.last(5)    
+            arr = arr + artistsposts
+            artistpostids = artistsposts.map {|post| post.id}
         end
 
         # followed songs posts
-        if (self.followedsongs.size > 0)
-        songsposts = self.followedsongs.map(&:posts).flatten!.last(5)
-        arr = arr + songsposts
-        songpostids = songsposts.map {|post| post.id}
+        if self.followedsongs.size > 0
+            songsposts = self.followedsongs.map(&:posts).flatten!.last(5)
+            arr = arr + songsposts
+            songpostids = songsposts.map {|post| post.id}
         end
 
         # followed albums posts
-        if (self.followedalbums.size > 0)
+        if self.followedalbums.size > 0
         albumsposts = self.followedalbums.map(&:posts).flatten!.last(5)
         arr = arr + albumsposts
         albumpostids = albumsposts.map {|post| post.id}
