@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :posts
   resources :instruments
   resources :genres
-  resources :follows
+  # resources :follows
   resources :comments
   resources :artists
   resources :users
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :bandbios
   resources :bandlocations
   resources :bandmembers
-  resources :artistfollows
+  # resources :artistfollows
   resources :usersongs
   resources :userartists
   resources :useralbums
@@ -56,9 +56,17 @@ Rails.application.routes.draw do
 
   get '/getfollows/:id', to: 'follows#follows'
   get '/getfollowers/:id', to: 'follows#followers'
+  delete '/unfollow/:id', to: 'follows#unfollow'
+  get '/follow/:id', to: 'follows#follow'
+
+
+
+
+  
+  delete '/artistunfollow/:id', to: 'artists#artistunfollow'
+  post '/artistfollow', to: 'artists#artistfollow'
   get '/artistinfluences/:id', to: 'artists#influences'
   post '/removemember', to: 'bandmembers#removemember'
-  post '/artistunfollow', to: 'artistfollows#destroy'
   post '/eventbydate', to: 'userevents#bydate'
   post  '/deleteuserartist', to: 'userartists#delete'
   post '/userfiltersearch', to: 'users#filtersearch'
@@ -72,16 +80,17 @@ Rails.application.routes.draw do
   get '/albumsongs/:id', to: 'albums#albumsongs'
   get '/albumfavorites/:id', to: 'albums#albumfavorites'
   post '/albumfollow', to: 'albums#albumfollow'
-  post '/albumunfollow', to: 'albums#albumunfollow'
+  delete '/albumunfollow/:id', to: 'albums#albumunfollow'
 
-  get '/songcheck/:id', to: 'songs#check'
   post '/postviewcount', to: 'posts#createview'
   get '/filterlocations', to: 'locations#filterlocations'
-
-  post '/songfollow', to: 'songs#songfollow'
+  
+  
+  get '/songcheck/:id', to: 'songs#check'
   get '/songfollowers/:id', to: 'songs#songfollowers'
   get '/songfavorites/:id', to: 'songs#songfavorites'
-  post '/songunfollow', to: 'songs#songunfollow'
+  post '/songfollow', to: 'songs#songfollow'
+  delete '/songunfollow/:id', to: 'songs#songunfollow'
 
 
   post '/postreport', to: 'reports#postreport'
@@ -104,13 +113,11 @@ Rails.application.routes.draw do
   post '/instrumentsearch', to: 'instruments#instrumentsearch'
   post '/genresearch', to: 'genres#genresearch'
   post '/timeline', to: 'timeline#user_timeline'
-  get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
   post '/userdescposts', to: 'posts#createuserdescpost'
   post '/bandposts', to: 'posts#createbandpost'
   post '/banddescposts', to: 'posts#createbanddescposts'
   post '/usertoken', to: 'users#usertoken'
   get '/experimentnotification', to: 'notifications#experiment'
-  post '/unfollow', to: 'follows#unfollow'
   post '/marknotifications', to: 'notifications#marknotifications'
   post '/seemessages', to: 'chatrooms#seemessages'
   post '/userevent', to: 'events#userevent'
@@ -127,7 +134,11 @@ Rails.application.routes.draw do
   get '/seecommentnoti/:id', to: 'notifications#seecommentnoti'
 
 
-  post '/bandunfollow', to: 'bandfollows#unfollow'
+  get '/bandunfollow/:id', to: 'bandfollows#unfollow'
+  get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
+  get '/bandfollow/:id', to: 'bandfollows#follow'
+
+
   get '/oldermessages/:id', to: 'messages#oldermessages'
   post '/createuseraudition', to: 'auditions#createuseraudition'
   post '/createbandaudition', to: 'auditions#createbandaudition'

@@ -35,4 +35,17 @@ class ArtistsController < ApplicationController
             render json: {message: 'Artist not found'}
         end
     end
+
+    def artistfollow
+        artist = Artist.find_or_create_by(name: params[:artist_name], spotify_id: params[:artistSpotifyId])
+        new_follow = Artistfollow.create(user_id: logged_in_user.id, artist_id: artist.id) 
+        render json: {new_follow: artist.id}
+    end
+
+    def artistunfollow
+        artis_follow = Artistfollow.find_by(user_id: logged_in_user.id, artist_id: params[:id])
+        artis_follow.destroy
+        render json: {message: 'succezs'}
+    end
+
 end

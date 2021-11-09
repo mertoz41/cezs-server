@@ -31,16 +31,15 @@ class SongsController < ApplicationController
         render json: @users, each_serializer: ShortUserSerializer
     end
     def songfollow
-        user = User.find(params[:user_id])
         artist = Artist.find_or_create_by(name: params[:artist_name], spotify_id: params[:artistSpotifyId])
         album = Album.find_or_create_by(name: params[:album_name], artist_id: artist.id, spotify_id: params[:albumSpotifyId])
         song = Song.find_or_create_by(name: params[:name], artist_id: artist.id, album_id: album.id, spotify_id: params[:spotify_id])
-        followed_song = Songfollow.create(song_id: song.id, user_id: user.id)
+        followed_song = Songfollow.create(song_id: song.id, user_id: logged_in_user.id)
         render json: {song_id: song.id}
     end
 
     def songunfollow
-        old_follow = Songfollow.find_by(user_id: params[:user_id], song_id: params[:song_id])
+        old_follow = Songfollow.find_by(user_id: logged_in_user.id, song_id: params[:id])
         old_follow.destroy
         render json: {message: 'song unfollowed.'}
     end
