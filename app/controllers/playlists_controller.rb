@@ -1,6 +1,6 @@
 class PlaylistsController < ApplicationController
     def newplaylist
-        @playlist = Playlist.create(user_id: params[:user_id], name: params[:name])
+        @playlist = Playlist.create(user_id: logged_in_user.id, name: params[:name])
         render json: @playlist, serializer: PlaylistSerializer
     end
 
@@ -57,7 +57,7 @@ class PlaylistsController < ApplicationController
         render json: {message: 'post removed.'}
     end
     def deleteplaylist
-        playlist = Playlist.find_by(user_id: params[:user_id], id: params[:playlist_id])
+        playlist = Playlist.find_by(user_id: logged_in_user.id, id: params[:playlist_id])
         playlist.destroy
         render json: {message: 'playlist deleted.'}
     end
