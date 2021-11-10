@@ -29,19 +29,17 @@ class AuditionsController < ApplicationController
         users_by_state = all_state_users.select do |user|
             user.id != params[:user_id]
         end
-        client = Exponent::Push::Client.new
-        messages = []
+
         users_by_state.each do |user|
             @new_noti = AuditionNotification.create(audition_id: @audition.id, action_user_id: params[:user_id], user_id: user.id, seen: false)
             if user.notification_token
-                obj = {to: user.notification_token.token,
-                        body: "#{User.find(params[:user_id]).username} has an upcoming audition!",
-                        data: AuditionNotificationSerializer.new(@new_noti)
-                }
-                messages.push(obj)
+                SendNotificationJob.perform_later(
+                    user.notification_token.token,
+                    "#{User.find(params[:user_id]).username} has an upcoming audition!",
+                    AuditionNotificationSerializer.new(@new_noti).as_json
+                )
             end
         end
-        handler = client.send_messages(messages)
 
         render json: {location: LocationSerializer.new(@audition.location), audition: AuditionSerializer.new(@audition)}
     end
@@ -65,22 +63,19 @@ class AuditionsController < ApplicationController
                 genre = Genre.find_or_create_by(name: genr)
                 AuditionGenre.create(genre_id: genre.id, audition_id: @audition.id)
             end
-        end
-        messages = []
-        
+        end        
         users_by_state = Location.find(params[:location_id]).users
-        client = Exponent::Push::Client.new
         users_by_state.each do |user|
             @new_noti = AuditionNotification.create(audition_id: @audition.id, action_band_id: params[:band_id], user_id: user.id, seen: false)
             if user.notification_token
-                obj = {to: user.notification_token.token,
-                        body: "#{Band.find(params[:band_id]).name} has an upcoming audition!",
-                        data: AuditionNotificationSerializer.new(@new_noti)
-                }
-                messages.push(obj)
+                SendNotificationJob.perform_later(
+                    user.notification_token.token,
+                    "#{Band.find(params[:band_id]).name} has an upcoming audition!",
+                    AuditionNotificationSerializer.new(@new_noti).as_json
+                )
+   
             end
         end
-        handler = client.send_messages(messages)
         render json: @audition.location, serializer: LocationSerializer
     end
 

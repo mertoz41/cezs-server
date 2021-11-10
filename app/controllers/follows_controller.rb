@@ -5,18 +5,16 @@ class FollowsController < ApplicationController
         followed_user = User.find(params[:id])
         new_follow = Follow.create(follower_id: following_user.id, followed_id: followed_user.id)
         @new_notification = FollowNotification.create(user_id: followed_user.id, action_user_id: following_user.id, seen: false)
-        client = Exponent::Push::Client.new
-        
         if followed_user.notification_token
-            messages = [{
-                to: followed_user.notification_token.token,
-                body: "#{following_user.username} is now following you.",
-                data: FollowNotificationSerializer.new(@new_notification)
-            }]
-            handler = client.send_messages(messages)
+            SendNotificationJob.perform_later(
+                followed_user.notification_token.token,
+                "#{following_user.username} is now following you.",
+                FollowNotificationSerializer.new(@new_notification).as_json
+            )
         end
         render json: {message: 'is followed.'}
     end
+
     def unfollow
         follow = Follow.find_by(follower_id: logged_in_user.id, followed_id: params[:id])
         follow.destroy

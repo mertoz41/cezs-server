@@ -9,14 +9,11 @@ class MessagesController < ApplicationController
     end
     
     if other_user[0].notification_token
-      client = Exponent::Push::Client.new
-      messages = [{
-        to: other_user[0].notification_token.token,
-        body: "#{user.username} sent you a message!",
-        data: ChatroomSerializer.new(@chatroom)
-      }]
-      handler = client.send_messages(messages)
-
+      SendNotificationJob.perform_later(
+        other_user[0].notification_token.token,
+        "#{user.username} sent you a message!",
+        ChatroomSerializer.new(@chatroom).as_json
+      )
     end
 
     # find other user that is outside this user,

@@ -2,21 +2,18 @@ class BandfollowsController < ApplicationController
     include Rails.application.routes.url_helpers
 
     def follow
-       
         band = Band.find(params[:id])
         new_follow = Bandfollow.create(user_id: logged_in_user.id, band_id: band.id)
-        client = Exponent::Push::Client.new
-        messages = []
         band.members.each do |member|
             @new_notification = FollowNotification.create(user_id: member.id, band_id: band.id, action_user_id: user.id, seen: false)
             if member.notification_token
-                obj = {to: member.notification_token.token,
-                        body: "#{user.username} is following #{band.name}!",
-                        data: FollowNotificationSerializer.new(@new_notification)}
-                messages.push(obj)
+                SendNotificationJob.perform_later(
+                    member.notification_token.token,
+                    "#{user.username} is following #{band.name}!",
+                    FollowNotificationSerializer.new(@new_notification).as_json
+                )
             end
         end
-        handler = client.send_messages(messages)
         render json: {message: 'is followed.'}
     end 
     

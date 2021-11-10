@@ -7,41 +7,31 @@ class PlaylistsController < ApplicationController
     def addtoplaylist
         # user_id needed for action_user_id
         playlist = Playlist.find(params[:list_id])
-
         plpost = PlaylistPost.create(post_id: params[:post_id], playlist_id: playlist.id)
         # post owner will be notified DUHHHH
-
-        client = Exponent::Push::Client.new
-        messages = []
-
         if plpost.post.user
             # if post is userpost
             @new_notification = PlaylistNotification.create(post_id: plpost.post.id, playlist_id: playlist.id, user_id: plpost.post.user.id, action_user_id: playlist.user.id, seen: false)
             if plpost.post.user.notification_token
-                obj = {
-                    to: plpost.post.user.notification_token.token,
-                    body: "#{playlist.user.username} added your post to #{playlist.name}.",
-                    data: PlaylistNotificationSerializer.new(@new_notification)
-                }
-                messages.push(obj)
+                SendNotificationJob.perform_later(
+                    plpost.post.user.notification_token.token,
+                    "#{playlist.user.username} added your post to #{playlist.name}.",
+                    PlaylistNotificationSerializer.new(@new_notification).as_json
+                )
             end
         else
             # if post is a bandpost
             plpost.post.band.members.each do |member|
                 @new_notification = PlaylistNotification.create(post_id: plpost.post.id, playlist_id: playlist.id, user_id: member.id, action_user_id: playlist.user.id, seen: false)
                 if member.notification_token
-                    obj = {to: member.notification_token.token,
-                                body: "#{playlist.user.username} added #{plpost.band.name}#{plpost.band.name.last == 's' ? "'" : "'s"} post to #{playlist.name}.",
-                                data: PlaylistNotificationSerializer.new(@new_notification)
-                    }
-                    messages.push(obj)
+                    SendNotificationJob.perform_later(
+                    member.notification_token.token,
+                    "#{playlist.user.username} added #{plpost.band.name}#{plpost.band.name.last == 's' ? "'" : "'s"} post to #{playlist.name}.",
+                    PlaylistNotificationSerializer.new(@new_notification).as_json
+                )
                 end
             end
-
-
         end
-
-        handler = client.send_messages(messages)
         render json: {message: 'post added to'}
     end
 

@@ -32,20 +32,16 @@ class EventsController < ApplicationController
         users_by_state = User.joins(:location).where('city like?', "%#{params[:address].split().last}%")
 
         band = Band.find(params[:band_id])
-        messages = []
-        client = Exponent::Push::Client.new
-
         users_by_state.each do |user|
             @new_noti = EventNotification.create(event_id: @event.id, action_band_id: params[:band_id], user_id: user.id, seen: false)
             if user.notification_token
-                obj = {to: user.notification_token.token,
-                        body: "#{band.name} has an upcoming gig!",
-                        data: EventNotificationSerializer.new(@new_noti)
-                }
-                messages.push(obj)
+                SendNotificationJob.perform_later(
+                    user.notification_token.token,
+                    "#{band.name} has an upcoming gig!",
+                    EventNotificationSerializer.new(@new_noti).as_json
+                )
             end
         end
-        handler = client.send_messages(messages)
         render json: {event: EventSerializer.new(@event)}
     end
 
@@ -75,20 +71,18 @@ class EventsController < ApplicationController
         users_by_state = all_state_users.select do |user|
             user.id != params[:user_id]
         end
-        messages = []
-        client = Exponent::Push::Client.new
-
+       
         users_by_state.each do |user|
             @new_noti = EventNotification.create(event_id: @event.id, action_user_id: params[:user_id], user_id: user.id, seen: false)
             if user.notification_token
-                obj = {to: user.notification_token.token,
-                        body: "#{@event.user.username} has an upcoming gig!",
-                        data: EventNotificationSerializer.new(@new_noti)
-                }
-                messages.push(obj)
+                SendNotificationJob.perform_later(
+                    user.notification_token.token,
+                    "#{@event.user.username} has an upcoming gig!",
+                    EventNotificationSerializer.new(@new_noti).as_json
+                )
+              
             end
         end
-        handler = client.send_messages(messages)
 
         # find location from the end of params[:address]
         # get users that are in that location
