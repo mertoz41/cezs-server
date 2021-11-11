@@ -1,6 +1,6 @@
 class ShortUserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :avatar, :location, :instruments, :genres
+  attributes :id, :username, :avatar, :location, :instruments, :genres, :name, :last_name
   def instruments
     object.instruments.map do |inst|
       {id: inst.id, name: inst.name}
@@ -14,4 +14,5 @@ class ShortUserSerializer < ActiveModel::Serializer
   def avatar
     return url_for(object.avatar)
   end
+
 end

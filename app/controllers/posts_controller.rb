@@ -142,6 +142,10 @@ class PostsController < ApplicationController
         end
         render json: @posts, each_serializer: ShortPostSerializer
     end
+    def musicposts
+        @posts = Post.where(id: params[:posts])
+        render json: @posts, each_serializer: PostSerializer
+    end
 
     def createview
         user = User.find(params[:user_id])
