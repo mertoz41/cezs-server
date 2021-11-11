@@ -20,6 +20,12 @@ class SongsController < ApplicationController
         end
     end
 
+    def songposts
+        song = Song.find(params[:id])
+        @posts = song.posts
+        render json: @posts, each_serializer: PostSerializer
+    end
+
     def songfollowers
         song = Song.find(params[:id])
         @users = song.followingusers

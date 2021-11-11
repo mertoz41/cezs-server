@@ -20,6 +20,12 @@ class ArtistsController < ApplicationController
         @users = artist.followingusers
         render json: @users, each_serializer: ShortUserSerializer
     end
+    def artistposts
+        artist = Artist.find(params[:id])
+        @posts = artist.posts
+        render json: @posts, each_serializer: PostSerializer
+
+    end
 
     def artistfavorites
         artist = Artist.find(params[:id])

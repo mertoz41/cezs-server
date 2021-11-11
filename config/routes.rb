@@ -49,6 +49,8 @@ Rails.application.routes.draw do
 
   get '/userposts/:id', to: 'users#userposts'
   get '/bandposts/:id', to: 'bands#bandposts'
+  get '/songposts/:id', to: 'songs#songposts'
+  get '/artistposts/:id', to: 'artists#artistposts'
 
   post '/artistcheck', to: 'artists#check'
   get '/artistfollowers/:id', to: 'artists#artistfollowers'
