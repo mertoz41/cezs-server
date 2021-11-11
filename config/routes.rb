@@ -10,16 +10,13 @@ Rails.application.routes.draw do
   resources :posts
   resources :instruments
   resources :genres
-  # resources :follows
   resources :comments
   resources :artists
   resources :users
   resources :bands
-  resources :bandfollows
   resources :bandbios
   resources :bandlocations
   resources :bandmembers
-  # resources :artistfollows
   resources :usersongs
   resources :userartists
   resources :useralbums
