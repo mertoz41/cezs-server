@@ -115,7 +115,6 @@ class PostsController < ApplicationController
     def filter
         instruments = params[:selected_instruments]
         genres = params[:selected_genres]
-        states = params[:selected_states]
         @posts = []
 
         if instruments.length > 0
@@ -141,37 +140,7 @@ class PostsController < ApplicationController
                 
             end
         end
-
-
-        if states.length > 0
-            states.each do |state|
-                users = User.joins(:location).merge(Location.where("city like?", "%#{state}%"))
-                bands = Band.joins(:location).merge(Location.where("city like?", "%#{state}%"))
-                users.each do |user|
-
-                    user.posts.each do |post|
-                        if !@posts.include?(post)
-                            @posts.push(post)
-                        end
-                    end
-
-                    
-
-                end
-
-                bands.each do |band|
-                    band.posts.each do |post|
-                        if !@posts.include?(post)
-                            @posts.push(post)
-                        end
-                    end
-                end
-            end
-
-                
-
-        end
-        render json: {posts: ActiveModel::Serializer::CollectionSerializer.new(@posts, each_serializer: PostSerializer)}
+        render json: @posts, each_serializer: ShortPostSerializer
     end
 
     def createview
