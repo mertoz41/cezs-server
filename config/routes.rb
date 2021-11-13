@@ -59,8 +59,8 @@ Rails.application.routes.draw do
   get '/follow/:id', to: 'follows#follow'
 
 
-
-
+  post '/passwordcheck', to: 'users#passwordcheck'
+  post '/changepassword', to: 'users#changepassword'
   
   delete '/artistunfollow/:id', to: 'artists#artistunfollow'
   post '/artistfollow', to: 'artists#artistfollow'

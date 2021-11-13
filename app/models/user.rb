@@ -35,9 +35,9 @@ class User < ApplicationRecord
 
     validates :username, :password, :email, presence: true
     validates :username, uniqueness: {message: 'already taken'}
+    validates :password, length: {minimum: 8}
+    validates :password, length: {maximum: 16}
    
-    
-
     has_many :postfeatures, dependent: :destroy
     has_many :featuredposts, through: :postfeatures
 

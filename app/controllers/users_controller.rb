@@ -16,6 +16,24 @@ class UsersController < ApplicationController
         render json: {user: UserSerializer.new(@user)}
     end 
 
+    def passwordcheck
+        if logged_in_user.authenticate(params[:password])
+            render json: {confirmed: true}
+        else
+            render json: {confirmed: false}
+        end
+    end
+
+    def changepassword
+        user = logged_in_user
+        user.update(password: params[:password]) 
+        if user.valid?
+            render json: {message: 'password changed'}
+        else
+            render json: {errors: user.errors.full_messages}
+        end
+    end
+
     def userposts
         user = User.find(params[:id])
         bandposts = []
