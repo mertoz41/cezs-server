@@ -2,8 +2,13 @@ class UsersController < ApplicationController
     skip_before_action :authorized, only: [:create]
 
     def create
-        user = User.create(username: params[:username], password: params[:password])
-        render json: {message: "Success!"}
+        user = User.new(username: params[:username], password: params[:password], email: params[:email])
+        if user.valid?
+            user.save
+            render json: {message: "Success!"}
+        else
+            render json: {errors: user.errors.full_messages}
+        end
     end
 
     def show
@@ -36,7 +41,6 @@ class UsersController < ApplicationController
 
         if params[:username]
             found = User.find_by(username: params[:username])
-            # byebug
             if found
                 render json: {error: 'this name is being used.'}
             else
@@ -47,7 +51,6 @@ class UsersController < ApplicationController
             render json: {message: 'somethings changed'}
         end
 
-        # render json: {username: user.username}
     end
 
     def avatar
