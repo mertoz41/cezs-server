@@ -46,27 +46,26 @@ class UsersController < ApplicationController
 
     def update
         user = User.find(params[:id])
-
         if params[:name]
-            user.update(name: params[:name])
+            user.update_column 'name', params[:name]
         end
         if params[:last_name]
-            user.update(last_name: params[:last_name])
+            user.update_column 'last_name', params[:last_name]
         end
         if params[:email]
-            user.update(email: params[:email])
+            user.update_column 'email', params[:email]
         end
-
+        # validations are keeping me from updating only the username
         if params[:username]
             found = User.find_by(username: params[:username])
             if found
-                render json: {error: 'this name is being used.'}
+                render json: {error: 'this name is taken.'}
             else
-                user.update(username: params[:username])
-                render json: {username: user.username}
+                user.update_column 'username', params[:username]
+                render json: {username: user.username, message: 'info updated'}
             end
         else 
-            render json: {message: 'somethings changed'}
+            render json: {message: 'info updated'}
         end
 
     end
