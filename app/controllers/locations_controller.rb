@@ -9,7 +9,7 @@ class LocationsController < ApplicationController
     def show
         @users = Location.find(params[:id]).users
         @bands = Location.find(params[:id]).bands
-        render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: UserSerializer), bands: ActiveModel::Serializer::CollectionSerializer.new(@bands, each_serializer: BandSerializer)}
+        render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: ShortUserSerializer), bands: ActiveModel::Serializer::CollectionSerializer.new(@bands, each_serializer: BandSerializer)}
     end
     def create
         # incoming location to be checked whether it exists
