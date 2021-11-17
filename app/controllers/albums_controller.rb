@@ -6,6 +6,9 @@ class AlbumsController < ApplicationController
         else
             render json: {message: 'album not found'}
         end
+
+
+
         
     end
     def albumfollow
