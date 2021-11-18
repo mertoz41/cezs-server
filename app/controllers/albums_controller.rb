@@ -7,9 +7,11 @@ class AlbumsController < ApplicationController
             render json: {message: 'album not found'}
         end
 
-        
+
 
   
+
+        
 
 
     end
