@@ -8,8 +8,9 @@ class AlbumsController < ApplicationController
         end
 
 
-
+  
         
+
     end
     def albumfollow
         # find artist instance first
