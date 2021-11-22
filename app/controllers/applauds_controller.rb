@@ -30,7 +30,7 @@ class ApplaudsController < ApplicationController
     end
 
     def unapplaudpost
-        applaud = Applaud.find_by(user_id: logged_in_user.id, post_id: params[:post_id])
+        applaud = Applaud.find_by(user_id: logged_in_user.id, post_id: params[:id])
         applaud.destroy
         render json: {message: 'post unapplauded.'}
     end
