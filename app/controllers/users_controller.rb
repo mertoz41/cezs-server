@@ -71,11 +71,10 @@ class UsersController < ApplicationController
     end
 
     def avatar
-        @user = User.find(params[:user_id])
-        byebug
-        @user.avatar.attach(params[:avatar])
+        user = User.find(logged_in_user.id)
+        user.avatar.attach(params[:avatar])
         # @posts = @user.posts
-        render json: {message: 'avatar changed.'}
+        render json: {message: 'picture changed.'}
     end
 
     def searching
