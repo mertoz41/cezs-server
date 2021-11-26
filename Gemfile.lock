@@ -69,6 +69,9 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     bcrypt (3.1.16)
     bcrypt (3.1.16-java)
+    bcrypt_pbkdf (1.1.0)
+    bcrypt_pbkdf (1.1.0-x64-mingw32)
+    bcrypt_pbkdf (1.1.0-x86-mingw32)
     bootsnap (1.9.1)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -92,6 +95,8 @@ GEM
       activesupport
     concurrent-ruby (1.1.9)
     crass (1.0.6)
+    ed25519 (1.2.4)
+    ed25519 (1.2.4-java)
     erubi (1.10.0)
     ethon (0.15.0)
       ffi (>= 1.15.0)
@@ -223,16 +228,19 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10.12)
   bcrypt (~> 3.1.7)
+  bcrypt_pbkdf (>= 1.0, < 2.0)
   bootsnap (>= 1.4.4)
   byebug
   capistrano (~> 3.11)
   capistrano-passenger (~> 0.2.0)
   capistrano-rails (~> 1.4)
   capistrano-rbenv (~> 2.1, >= 2.1.4)
+  ed25519 (>= 1.2, < 2.0)
   exponent-server-sdk
   jwt (~> 2.2)
   listen (~> 3.3)
   mini_magick
+  net-ssh (>= 6.0.2)
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors
