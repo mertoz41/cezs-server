@@ -4,7 +4,7 @@ lock "~> 3.16.0"
 set :application, "cezs"
 set :user, 'deploy'
 set :repo_url, "git@github.com:mertoz41/server.git"
-set :branch, 'main'
+set :branch, 'master'
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
