@@ -84,5 +84,5 @@ production:
   database: defaultdb
   username: doadmin
   # password: <%= ENV['SERVER_DATABASE_PASSWORD'] %>
-  password: <%= 'i8R7LxfUvL7N5WNn' %>
+  password: i8R7LxfUvL7N5WNn
 
