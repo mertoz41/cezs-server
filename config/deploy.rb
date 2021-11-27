@@ -17,10 +17,10 @@ set :branch, 'master'
 # You can configure the Airbrussh format using :format_options.
 # These are the defaults.
 # set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
-# set :default_env, {
-#   "RAILS_ENV" => "production",
-#   "RAILS_MASTER_KEY" => ENV["RAILS_MASTER_KEY"]
-# }
+set :default_env, {
+  "RAILS_ENV" => "production",
+  "RAILS_MASTER_KEY" => ENV["RAILS_MASTER_KEY"]
+}
 # Default value for :pty is false
 # set :pty, true
 
