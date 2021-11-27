@@ -10,7 +10,7 @@ set :branch, 'master'
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, "/var/www/my_app_name"
-set :deploy_to, "/home/deploy/#{fetch :application}"
+# set :deploy_to, "/home/deploy/#{fetch :application}"
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 
@@ -25,7 +25,7 @@ set :deploy_to, "/home/deploy/#{fetch :application}"
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/master.key}
+# set :linked_files, %w{config/master.key}
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
