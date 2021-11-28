@@ -83,6 +83,7 @@ production:
   <<: *default
   database: defaultdb
   username: doadmin
+  host: db-postgresql-nyc1-49423-do-user-10256173-0.b.db.ondigitalocean.com
   # password: <%= ENV['SERVER_DATABASE_PASSWORD'] %>
   password: i8R7LxfUvL7N5WNn
 
