@@ -115,14 +115,14 @@ class PostsController < ApplicationController
     def filter
         instruments = params[:selected_instruments]
         genres = params[:selected_genres]
-        @posts = []
+        all_posts = []
 
         if instruments.length > 0
             instruments.each do |inst|
                 instrument = Instrument.find(inst)
                 instrument.posts.each do |post|
-                    if !@posts.include?(post)
-                        @posts.push(post)
+                    if !all_posts.include?(post)
+                        all_posts.push(post)
                     end
                 end
                 
@@ -133,13 +133,15 @@ class PostsController < ApplicationController
             genres.each do |genr|
                 genre = Genre.find(genr)
                 genre.posts.each do |post|
-                    if !@posts.include?(post)
-                        @posts.push(post)
+                    if !all_posts.include?(post)
+                        all_posts.push(post)
                     end
                 end
                 
             end
         end
+        blocked_ids = logged_in_user.blocked_users.map {|user| user.id}
+        @posts = all_posts.select {|post| !blocked_ids.include?(post.user_id)}
         render json: @posts, each_serializer: ShortPostSerializer
     end
     def musicposts

@@ -9,62 +9,65 @@ class UserSerializer < ActiveModel::Serializer
   has_many :bands
   has_many :genres
   has_many :influencers
-  has_many :posts, serializer: ShortPostSerializer
+  has_many :posts, each_serializer: ShortPostSerializer
   has_many :favoritesongs
   has_many :favoriteartists
   has_many :favoritealbums
-  has_many :featuredposts, serializer: ShortPostSerializer
+  has_many :featuredposts, each_serializer: ShortPostSerializer
   has_many :playlists
+  
   def notification_token
-      return object.notification_token.token
+    return object.notification_token.token
+    
   end
 
   def upcoming_audition
     auditions = object.auditions.where("audition_date >= ?", Time.now.beginning_of_day)
+    
     return AuditionSerializer.new(auditions.first)
   end
   
   def upcoming_event
       events = object.events.where("event_date >= ?", Time.now.beginning_of_day)
+      
       return EventSerializer.new(events.first)
   end
   def applauds
     object.applauds.map do |appl|
       appl.post_id
     end
+    
   end
   
   def created_at
     object.created_at.to_date
+    
   end
 
   def instruments
     object.instruments.map do |inst|
       {id: inst.id, name: inst.name}
     end
+    
   end
-  # def view_count
-  #   views = 0
-  #   object.posts.each do |post|
-  #     views += post.postviews.size
-  #   end
-  #   return views
-  # end
 
   def followers_count
     object.followers.size
+    
   end
 
   def followed_bands
     object.followedbands.map do |band|
       band.id
     end
+    
   end
 
   def followed_albums
     object.followedalbums.map do |album|
       album.spotify_id
     end
+    
   end
 
   def follows_count
@@ -102,5 +105,6 @@ class UserSerializer < ActiveModel::Serializer
   def bio 
     return object.bio.description
   end
+  
   
 end

@@ -7,8 +7,11 @@ class LocationsController < ApplicationController
         # how can all locations except current users be shown so that loggedin users location isnt filtered out post process.
     end
     def show
-        @users = Location.find(params[:id]).users
+        all_users = Location.find(params[:id]).users
         @bands = Location.find(params[:id]).bands
+        blocked_ids = logged_in_user.blocked_users.map {|user| user.id}
+
+        @users = all_users.select {|user| !blocked_ids.include?(user.id)}
         render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: ShortUserSerializer), bands: ActiveModel::Serializer::CollectionSerializer.new(@bands, each_serializer: BandSerializer)}
     end
     def create
