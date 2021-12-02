@@ -77,6 +77,11 @@ class User < ApplicationRecord
     has_many :followeds, through: :follows, source: :followed
 
 
+    has_many :blocked_by, class_name: 'UserBlock', foreign_key: :blocking_id, dependent: :destroy
+    has_many :blocking_users, through: :blocked_by, source: :blockinguser
+    has_many :blocked, class_name: 'UserBlock', foreign_key: :blocked_id, dependent: :destroy
+    has_many :blocked_users, through: :blocked, source: :blockeduser
+
     def timeline
         bandpostids = []
         artistpostids = []

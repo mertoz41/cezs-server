@@ -143,5 +143,8 @@ Rails.application.routes.draw do
   post '/createuseraudition', to: 'auditions#createuseraudition'
   post '/createbandaudition', to: 'auditions#createbandaudition'
   get '/locationauditions/:id', to: 'auditions#locationauditions'
+
+  post '/blockuser', to: 'userblocks#create'
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
