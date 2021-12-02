@@ -78,11 +78,12 @@ class UsersController < ApplicationController
     end
 
     def searching
-        @users = User.where("username like?", "%#{params[:searching]}%")
+        searched_users = User.where("username like?", "%#{params[:searching]}%")
+        blocked_ids = logged_in_user.blocked_users.map {|user| user.id}
+        @users = searched_users.select {|user| !blocked_ids.include?(user.id)}
         # partial string matching on a database object. not a very good solution
         render json: @users, each_serializer: ShortUserSerializer
         # serializer isnt very smart for this situation
-
     end
     def usertoken
         user = User.find(params[:user_id])

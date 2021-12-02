@@ -79,7 +79,7 @@ class UserSerializer < ActiveModel::Serializer
 
   def blocked_users
     object.blocked_users.map do |user|
-      user.blocked_id
+      user.id
     end
   end
 
