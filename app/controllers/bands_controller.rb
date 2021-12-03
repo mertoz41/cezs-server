@@ -1,7 +1,8 @@
 class BandsController < ApplicationController
 
     def searching
-        @bands = Band.where("name like?", "%#{params[:searching]}%")
+        all_bands = Band.where("name like?", "%#{params[:searching]}%")
+        @bands = all_bands.select {|band| !band_blokes.include?(band.id)}
         render json: {bands: ActiveModel::Serializer::CollectionSerializer.new(@bands, each_serializer: BandSerializer)}
     end
     def picture

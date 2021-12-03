@@ -140,8 +140,7 @@ class PostsController < ApplicationController
                 
             end
         end
-        blocked_ids = logged_in_user.blocked_users.map {|user| user.id}
-        @posts = all_posts.select {|post| !blocked_ids.include?(post.user_id)}
+        @posts = all_posts.select {|post| !blokes.include?(post.user_id)}.select{|post| !band_blokes.include?(post.band_id)}
         render json: @posts, each_serializer: ShortPostSerializer
     end
     def musicposts

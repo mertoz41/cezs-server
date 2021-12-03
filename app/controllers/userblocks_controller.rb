@@ -4,13 +4,22 @@ class UserblocksController < ApplicationController
         # check if user follows blocked user, if so delete follow
         render json: {message: 'user blocked.'}
     end
-    def blockedusers
+    def blockedaccounts
         @users = logged_in_user.blocked_users
-        render json: @users, each_serializer: ShortUserSerializer
+        @bands = logged_in_user.blocked_bands
+        render json: { users: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: ShortUserSerializer),
+        bands: ActiveModel::Serializer::CollectionSerializer.new(@bands, each_serializer: ShortBandSerializer)
+        }
     end
     def unblockuser
         userblock = UserBlock.find_by(blocked_id: params[:id], blocking_id: logged_in_user.id)
         userblock.destroy
         render json: {message: 'user unblocked'}
     end
+
+    def blockband
+        new_block = BandBlock.create(band_id: params[:band_id], user_id: logged_in_user.id)
+        render json: {message: 'band blocked.'}
+    end
+    
 end

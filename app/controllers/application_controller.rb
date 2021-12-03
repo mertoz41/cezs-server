@@ -34,6 +34,11 @@ class ApplicationController < ActionController::API
       return blokes
     end
 
+    def band_blokes
+      blocked_ids = logged_in_user.blocked_bands.map {|band| band.id}
+      return blocked_ids
+    end
+
 
 
     def logged_in_user

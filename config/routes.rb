@@ -145,7 +145,9 @@ Rails.application.routes.draw do
   get '/locationauditions/:id', to: 'auditions#locationauditions'
 
   post '/blockuser', to: 'userblocks#create'
-  get '/blockedusers', to: 'userblocks#blockedusers'
+  get '/blockedaccounts', to: 'userblocks#blockedaccounts'
   delete '/unblockuser/:id', to: 'userblocks#unblockuser'
+
+  post '/blockband', to: 'userblocks#blockband'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
