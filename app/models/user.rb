@@ -10,6 +10,9 @@ class User < ApplicationRecord
     has_many :userchatrooms, dependent: :destroy
     has_many :chatrooms, through: :userchatrooms
 
+    has_many :band_blocks, dependent: :destroy
+    has_many :blocked_bands, through: :band_blocks
+
     has_many :events, dependent: :destroy
     has_many :auditions, dependent: :destroy
 
