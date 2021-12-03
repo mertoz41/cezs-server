@@ -1,8 +1,10 @@
 class EventsController < ApplicationController
     def index
-        @events = Event.where('event_date >= ?', Date.today)
+        all_events = Event.where('event_date >= ?', Date.today)
+        @events = all_events.select{|gig| !blokes.include?(gig.user_id)}
         render json: {events: ActiveModel::Serializer::CollectionSerializer.new(@events, each_serializer: EventSerializer)}
     end
+    
     def show
         @event = Event.find(params[:id])
         render json: @event, serializer: EventSerializer

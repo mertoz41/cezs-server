@@ -27,6 +27,13 @@ class ApplicationController < ActionController::API
         end
     end
 
+    def blokes
+      blocked_ids = logged_in_user.blocked_users.map {|user| user.id}
+      blocking_ids = logged_in_user.blocking_users.map {|user| user.id}
+      blokes = blocked_ids.concat(blocking_ids)
+      return blokes
+    end
+
 
 
     def logged_in_user

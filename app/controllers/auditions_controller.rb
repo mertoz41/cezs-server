@@ -1,7 +1,8 @@
 class AuditionsController < ApplicationController
     def locationauditions
         location = Location.find(params[:id])
-        @auditions = location.auditions.where('audition_date >= ?', Date.today)
+        all_auditions = location.auditions.where('audition_date >= ?', Date.today)
+        @auditions = all_auditions.select {|audit| !blokes.include?(audit.user_id)}
         render json: {auditions: ActiveModel::Serializer::CollectionSerializer.new(@auditions, each_serializer: AuditionSerializer)}
     end
 
