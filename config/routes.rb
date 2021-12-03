@@ -149,5 +149,6 @@ Rails.application.routes.draw do
   delete '/unblockuser/:id', to: 'userblocks#unblockuser'
 
   post '/blockband', to: 'userblocks#blockband'
+  delete '/unblockband/:id', to: 'userblocks#unblockband'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -14,12 +14,17 @@ class UserblocksController < ApplicationController
     def unblockuser
         userblock = UserBlock.find_by(blocked_id: params[:id], blocking_id: logged_in_user.id)
         userblock.destroy
-        render json: {message: 'user unblocked'}
+        render json: {message: 'user unblocked.'}
     end
 
     def blockband
         new_block = BandBlock.create(band_id: params[:band_id], user_id: logged_in_user.id)
         render json: {message: 'band blocked.'}
+    end
+    def unblockband
+        bandblock = BandBlock.find_by(band_id: params[:id], user_id: logged_in_user.id)
+        bandblock.destroy
+        render json: {message: 'band unblocked.'}
     end
     
 end

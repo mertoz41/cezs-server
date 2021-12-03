@@ -9,11 +9,11 @@ class UserSerializer < ActiveModel::Serializer
   has_many :bands
   has_many :genres
   has_many :influencers
-  has_many :posts, each_serializer: ShortPostSerializer
+  has_many :posts, serializer: ShortPostSerializer
   has_many :favoritesongs
   has_many :favoriteartists
   has_many :favoritealbums
-  has_many :featuredposts, each_serializer: ShortPostSerializer
+  has_many :featuredposts, serializer: ShortPostSerializer
   has_many :playlists
   
   def notification_token
