@@ -9,6 +9,7 @@ class AuthController < ApplicationController
             timeline_info = @user.timeline
             @chatrooms = @user.chatrooms
             @timeline = timeline_info[:timeline]
+            # .select {|post| !blokes.include?(post.user_id)}.select{|post| !band_blokes.include?(post.band_id)}
             @playlists = @user.playlists
             
             @filtered_events = @user.event_notifications.joins(:event).where('event_date >= ?', Date.today)

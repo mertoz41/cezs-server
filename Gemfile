@@ -19,6 +19,8 @@ gem 'sprockets', '~>3.0'
 gem "figaro"
 gem "mini_magick"
 
+gem 'dotenv-rails'
+
 gem 'exponent-server-sdk'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
