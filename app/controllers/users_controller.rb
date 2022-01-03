@@ -13,7 +13,6 @@ class UsersController < ApplicationController
 
     def show
         @user = User.find(params[:id])
-        
         render json: {user: UserSerializer.new(@user)}
     end 
 
@@ -74,6 +73,8 @@ class UsersController < ApplicationController
     def avatar
         user = User.find(logged_in_user.id)
         user.avatar.attach(params[:avatar])
+        # user.avatar = params[:avatar]
+        # byebug
         # @posts = @user.posts
         render json: {message: 'picture changed.'}
     end

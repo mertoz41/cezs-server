@@ -36,10 +36,10 @@ class User < ApplicationRecord
     has_many :albumfollows, dependent: :destroy
     has_many :followedalbums, through: :albumfollows
 
-    validates :username, :password, :email, presence: true
-    validates :username, uniqueness: {message: 'already taken'}
-    validates :password, length: {minimum: 8}
-    validates :password, length: {maximum: 16}
+    # validates :username, :password, :email, presence: true
+    # validates :username, uniqueness: {message: 'already taken'}
+    # validates :password, length: {minimum: 8}
+    # validates :password, length: {maximum: 16}
    
     has_many :postfeatures, dependent: :destroy
     has_many :featuredposts, through: :postfeatures
@@ -146,6 +146,8 @@ class User < ApplicationRecord
             albumposts: albumpostids,
             songposts: songpostids}
     end
+
+ 
 
     def timeline_refresh(date)
         arr = []

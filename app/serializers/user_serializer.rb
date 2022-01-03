@@ -4,16 +4,16 @@ class UserSerializer < ActiveModel::Serializer
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   attribute :notification_token, if: -> {object.notification_token}
-  attribute :upcoming_event, if: -> {object.events.present?}
-  attribute :upcoming_audition, if: -> {object.auditions.present?}
+  # attribute :upcoming_event, if: -> {object.events.present?}
+  # attribute :upcoming_audition, if: -> {object.auditions.present?}
   has_many :bands
   has_many :genres
   has_many :influencers
-  has_many :posts, serializer: ShortPostSerializer
+  has_many :posts, each_serializer: ShortPostSerializer
   has_many :favoritesongs
   has_many :favoriteartists
   has_many :favoritealbums
-  has_many :featuredposts, serializer: ShortPostSerializer
+  has_many :featuredposts, each_serializer: ShortPostSerializer
   has_many :playlists
   
   def notification_token

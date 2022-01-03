@@ -14,7 +14,7 @@ class AuthController < ApplicationController
             
             @filtered_events = @user.event_notifications.joins(:event).where('event_date >= ?', Date.today)
             @filtered_auditions = @user.audition_notifications.joins(:audition).where('audition_date >= ?', Date.today)
- 
+            # byebug
             render json: {
                 user: UserSerializer.new(@user), 
                 token: token, 
