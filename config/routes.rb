@@ -49,7 +49,6 @@ Rails.application.routes.draw do
   get '/songposts/:id', to: 'songs#songposts'
   get '/artistposts/:id', to: 'artists#artistposts'
 
-  post '/artistcheck', to: 'artists#check'
   get '/artistfollowers/:id', to: 'artists#artistfollowers'
   get '/artistfavorites/:id', to: 'artists#artistfavorites'
 

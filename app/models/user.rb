@@ -30,6 +30,8 @@ class User < ApplicationRecord
     has_many :artistfollows, dependent: :destroy
     has_many :followedartists, through: :artistfollows
 
+    has_many :account_reports, dependent: :destroy
+
     has_many :songfollows, dependent: :destroy
     has_many :followedsongs, through: :songfollows
 

@@ -3,9 +3,9 @@ class BandSerializer < ActiveModel::Serializer
 
   attributes :id, :name, :picture, :created_at, :location, :followers_count, :songs, :upcoming_audition, :upcoming_event, :instruments
   attribute :bandbio, if: -> {object.bandbio}
-  has_many :posts, each_serializer: ShortPostSerializer
+  has_many :posts, serializer: ShortPostSerializer
   has_many :genres
-  has_many :members, each_serializer: ShortUserSerializer
+  has_many :members, serializer: ShortUserSerializer
   
   def picture
     url_for(object.picture)

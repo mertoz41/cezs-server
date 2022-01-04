@@ -6,8 +6,12 @@ class ArtistsController < ApplicationController
         # serializer isnt very smart for this situation
     end
     def show
-        @artist = Artist.find(params[:id])
-        render json: {artist: ArtistSerializer.new(@artist)}
+        @artist = Artist.find_by(spotify_id: params[:id])
+        if @artist
+            render json: {artist: ArtistSerializer.new(@artist)}
+        else
+            render json: {message: 'Artist not found'}
+        end
     end 
 
     def influences
@@ -31,15 +35,6 @@ class ArtistsController < ApplicationController
         artist = Artist.find(params[:id])
         @users = artist.favoriteusers
         render json: @users, each_serializer: ShortUserSerializer
-    end
-
-    def check
-        @artist = Artist.find_by(spotify_id: params[:spotify_id])
-        if @artist
-            render json: {artist: ArtistSerializer.new(@artist)}
-        else
-            render json: {message: 'Artist not found'}
-        end
     end
 
     def artistfollow
