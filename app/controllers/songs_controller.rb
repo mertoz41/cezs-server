@@ -1,7 +1,13 @@
 class SongsController < ApplicationController
     def show
-        @song = Song.find(params[:id])
-        render json: {song: SongSerializer.new(@song)}
+        @song = Song.find_by(spotify_id: params[:id])
+        if @song
+            render json: {song: SongSerializer.new(@song)}
+        else
+            render json: {message: 'song not found'}
+        end
+        # @song = Song.find(params[:id])
+        # render json: {song: SongSerializer.new(@song)}
     end
     
     def searching
@@ -11,14 +17,9 @@ class SongsController < ApplicationController
         # serializer isnt very smart for this situation
     end
 
-    def check
-        @song = Song.find_by(spotify_id: params[:id])
-        if @song
-            render json: {song: SongSerializer.new(@song)}
-        else
-            render json: {message: 'song not found'}
-        end
-    end
+    # def check
+        
+    # end
 
     def songposts
         song = Song.find(params[:id])

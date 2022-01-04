@@ -85,7 +85,6 @@ Rails.application.routes.draw do
   get '/filterlocations', to: 'locations#filterlocations'
   
   
-  get '/songcheck/:id', to: 'songs#check'
   get '/songfollowers/:id', to: 'songs#songfollowers'
   get '/songfavorites/:id', to: 'songs#songfavorites'
   post '/songfollow', to: 'songs#songfollow'
