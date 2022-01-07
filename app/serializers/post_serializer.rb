@@ -14,8 +14,12 @@ class PostSerializer < ActiveModel::Serializer
   attribute :song_name, if: -> {object.song.present?}
   attribute :songSpotifyId, if: -> {object.song.present?}
   attribute :artistSpotifyId, if: -> {object.artist.present?}
+  attribute :albumSpotifyId, if: -> {object.song.present?}
   def clip
     url_for(object.clip)
+  end
+  def albumSpotifyId
+    return object.song.album.spotify_id
   end
 
   def instruments

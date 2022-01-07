@@ -1,8 +1,12 @@
 class TimelineController < ApplicationController
     def user_timeline
-        user = User.find(params[:user_id])
         post = Post.find(params[:last_post])
-        @timeline = user.timeline_refresh(post.created_at)
+        new_follow_posts = params[:newPostIds].map {|id| Post.find(id)}
+        new_posts = logged_in_user.timeline_refresh(post.created_at)
+        mixed_timeline = new_follow_posts + new_posts
+        byebug
+        @timeline = mixed_timeline.sort_by(&:created_at).reverse.uniq
+        
         # if params[:post_id]
         #     new_posts = Post.where('created_at > ?', Post.find(params[:post_id]).created_at)
         #     @timeline + new_posts
