@@ -1,7 +1,9 @@
 class AlbumSerializer < ActiveModel::Serializer
-  attributes :id, :name, :spotify_id, :artist_name, :artist_id, :favoriteusers_count, :post_count, :artistSpotifyId, :song_count, :followingusers_count
+  attributes :id, :name, :spotify_id, :artist_name, :artist_id, :favoriteusers_count, :post_count, :artistSpotifyId, :song_count, :followingusers_count, :posts
   has_many :songs
-
+  def posts
+    return object.posts.map {|post| post.id}
+  end
   def song_count
     return object.songs.size
   end
