@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
 
     def postreport
-        PostReport.create(post_id: params[:post_id], action_user_id: params[:action_user_id])
+        PostReport.create(post_id: params[:id], action_user_id: logged_in_user.id)
         render json: {message: 'post reported.'}
     end
 

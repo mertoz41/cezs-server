@@ -91,7 +91,7 @@ Rails.application.routes.draw do
   delete '/songunfollow/:id', to: 'songs#songunfollow'
 
 
-  post '/postreport', to: 'reports#postreport'
+  post '/postreport/:id', to: 'reports#postreport'
   post '/commentreport', to: 'reports#commentreport'
   post '/userreport', to: 'reports#userreport'
   post '/bandreport', to: 'reports#bandreport'
@@ -132,7 +132,7 @@ Rails.application.routes.draw do
   get '/seecommentnoti/:id', to: 'notifications#seecommentnoti'
 
 
-  get '/bandunfollow/:id', to: 'bandfollows#unfollow'
+  delete '/bandunfollow/:id', to: 'bandfollows#unfollow'
   get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
   get '/bandfollow/:id', to: 'bandfollows#follow'
 

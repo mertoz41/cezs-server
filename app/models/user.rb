@@ -138,7 +138,8 @@ class User < ApplicationRecord
         arr = arr + albumsposts
         albumpostids = albumsposts.map {|post| post.id}
         end
-        unique_arr = arr.uniq
+        filtered = arr.select {|post| post.post_reports.size == 0}
+        unique_arr = filtered.uniq
          
         return {
             timeline: unique_arr.sort_by(&:created_at).reverse, 
@@ -174,6 +175,7 @@ class User < ApplicationRecord
         if (self.followedalbums.size > 0)
             arr = arr + self.followedalbums.map(&:posts).flatten!.select {|post| post.created_at > date}
         end
-        return arr.sort_by(&:created_at).reverse.take(10)
+        filtered = arr.select {|post| post.post_reports.size == 0}
+        return filtered.sort_by(&:created_at).reverse.take(10)
     end
 end
