@@ -10,9 +10,6 @@ class Song < ApplicationRecord
 
     has_many :bands, through: :posts
 
-    has_many :requests, dependent: :destroy
-
-
     has_many :usersongs, dependent: :destroy
     has_many :favoriteusers, through: :usersongs
 
