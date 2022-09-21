@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :usersongs
   resources :userartists
   resources :useralbums
+  resources :events
   
 
   mount ActionCable.server => '/cable'
@@ -65,7 +66,6 @@ Rails.application.routes.draw do
   post '/artistfollow', to: 'artists#artistfollow'
   get '/artistinfluences/:id', to: 'artists#influences'
   post '/removemember', to: 'bandmembers#removemember'
-  post '/eventbydate', to: 'userevents#bydate'
   post  '/deleteuserartist', to: 'userartists#delete'
   post '/userfiltersearch', to: 'users#filtersearch'
   post '/bandfiltersearch', to: 'bands#filtersearch'
@@ -118,11 +118,6 @@ Rails.application.routes.draw do
   get '/experimentnotification', to: 'notifications#experiment'
   post '/marknotifications', to: 'notifications#marknotifications'
   post '/seemessages', to: 'chatrooms#seemessages'
-  post '/userevent', to: 'events#userevent'
-  post '/bandevent', to: 'events#bandevent'
-  get '/events', to: 'events#index'
-  get '/events/:id', to: 'events#show'
-
 
   get '/seegignoti/:id', to: 'notifications#seegignoti'
   get '/seefollownoti/:id', to: 'notifications#seefollowoti'
