@@ -13,8 +13,6 @@ class AuthController < ApplicationController
             @playlists = @user.playlists
             
             @filtered_events = @user.event_notifications.joins(:event).where('event_date >= ?', Date.today)
-            @filtered_auditions = @user.audition_notifications.joins(:audition).where('audition_date >= ?', Date.today)
-            # byebug
             render json: {
                 user: UserSerializer.new(@user), 
                 token: token, 
@@ -23,7 +21,6 @@ class AuthController < ApplicationController
                 event_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_events, each_serializer: EventNotificationSerializer),
                 comment_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.comment_notifications, each_serializer: CommentNotificationSerializer),
                 follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),
-                audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer),
                 applaud_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.applaud_notifications, each_serializer: ApplaudNotificationSerializer),
                 playlist_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.playlist_notifications, each_serializer: PlaylistNotificationSerializer),
                 playlists: ActiveModel::Serializer::CollectionSerializer.new(@playlists, each_serializer: PlaylistSerializer),
@@ -46,7 +43,6 @@ class AuthController < ApplicationController
         @chatrooms = @user.chatrooms
         @timeline = timeline_info[:timeline]
         @filtered_events = @user.event_notifications.joins(:event).where('event_date >= ?', Date.today)
-        @filtered_auditions = @user.audition_notifications.joins(:audition).where('audition_date >= ?', Date.today)
         # all notifications
         render json: {
             user: UserSerializer.new(@user), 
@@ -56,7 +52,6 @@ class AuthController < ApplicationController
             follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),                
             applaud_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.applaud_notifications, each_serializer: ApplaudNotificationSerializer),
             playlist_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.playlist_notifications, each_serializer: PlaylistNotificationSerializer),
-            audition_notifications: ActiveModel::Serializer::CollectionSerializer.new(@filtered_auditions, each_serializer: AuditionNotificationSerializer),
             playlists: ActiveModel::Serializer::CollectionSerializer.new(@playlists, each_serializer: PlaylistSerializer),
             chatrooms: ActiveModel::Serializer::CollectionSerializer.new(@chatrooms, each_serializer: ChatroomSerializer),
             band_posts: timeline_info[:bandposts], 

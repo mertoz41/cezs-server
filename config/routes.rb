@@ -136,11 +136,7 @@ Rails.application.routes.draw do
   get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
   get '/bandfollow/:id', to: 'bandfollows#follow'
 
-
   get '/oldermessages/:id', to: 'messages#oldermessages'
-  post '/createuseraudition', to: 'auditions#createuseraudition'
-  post '/createbandaudition', to: 'auditions#createbandaudition'
-  get '/locationauditions/:id', to: 'auditions#locationauditions'
 
   post '/blockuser', to: 'userblocks#create'
   get '/blockedaccounts', to: 'userblocks#blockedaccounts'

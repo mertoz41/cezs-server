@@ -4,8 +4,6 @@ class UserSerializer < ActiveModel::Serializer
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   attribute :notification_token, if: -> {object.notification_token}
-  # attribute :upcoming_event, if: -> {object.events.present?}
-  # attribute :upcoming_audition, if: -> {object.auditions.present?}
   has_many :bands
   has_many :genres
   has_many :influencers
@@ -19,12 +17,6 @@ class UserSerializer < ActiveModel::Serializer
   def notification_token
     return object.notification_token.token
     
-  end
-
-  def upcoming_audition
-    auditions = object.auditions.where("audition_date >= ?", Time.now.beginning_of_day)
-    
-    return AuditionSerializer.new(auditions.first)
   end
   
   def upcoming_event

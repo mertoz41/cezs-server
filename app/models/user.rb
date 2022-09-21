@@ -14,12 +14,10 @@ class User < ApplicationRecord
     has_many :blocked_bands, through: :band_blocks
 
     has_many :events, dependent: :destroy
-    has_many :auditions, dependent: :destroy
 
     has_many :comment_notifications, dependent: :destroy
     has_many :follow_notifications, dependent: :destroy
     has_many :event_notifications, dependent: :destroy
-    has_many :audition_notifications, dependent: :destroy
     has_many :applaud_notifications, dependent: :destroy
     has_many :playlist_notifications, dependent: :destroy
     
