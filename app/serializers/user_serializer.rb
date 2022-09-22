@@ -6,7 +6,6 @@ class UserSerializer < ActiveModel::Serializer
   attribute :notification_token, if: -> {object.notification_token}
   has_many :bands
   has_many :genres
-  has_many :influencers
   has_many :posts, serializer: ShortPostSerializer
   has_many :favoritesongs
   has_many :favoriteartists

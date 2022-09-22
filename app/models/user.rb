@@ -2,8 +2,6 @@ class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
     
-    has_many :userinfluences
-    has_many :influencers, through: :userinfluences
     has_many :playlists, dependent: :destroy 
     
     has_many :messages, dependent: :destroy

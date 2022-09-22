@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   resources :bios
   resources :locations
   resources :userinstruments
-  resources :userinfluences
   resources :songs
   resources :shares
   resources :posts
@@ -37,7 +36,6 @@ Rails.application.routes.draw do
   post '/bandsearch', to: 'bands#searching'
   post '/filter', to: 'posts#filter'
   post '/instrumentfilter', to: 'instruments#filter'
-  post '/deleteinfluence', to: 'userinfluences#delete'
   post '/instrumentsearch', to: 'instruments#searching'
   post '/deleteuserinstrument', to: 'userinstruments#delete'
   post '/createusergenre', to: 'genres#createusergenre'

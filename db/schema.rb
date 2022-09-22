@@ -384,13 +384,6 @@ ActiveRecord::Schema.define(version: 2022_09_21_111517) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "userinfluences", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "artist_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "userinstruments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "instrument_id"
