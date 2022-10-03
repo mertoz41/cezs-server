@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     skip_before_action :authorized, only: [:create]
+    include Rails.application.routes.url_helpers
 
     def create
         user = User.new(username: params[:username], password: params[:password], email: params[:email])
@@ -45,16 +46,26 @@ class UsersController < ApplicationController
     end
 
     def update
-        user = User.find(params[:id])
+        @user = User.find(params[:id])
         if params[:name]
-            user.update_column 'name', params[:name]
+            @user.update_column 'name', params[:name]
         end
         if params[:last_name]
-            user.update_column 'last_name', params[:last_name]
+            @user.update_column 'last_name', params[:last_name]
         end
         if params[:email]
-            user.update_column 'email', params[:email]
+            @user.update_column 'email', params[:email]
         end
+        if params[:bio]
+            user_bio = @user.bio
+            user_bio.update_column 'description', params[:bio]
+        end
+        if params[:location]
+            location = Location.find_or_create_by(city: params[:location]["city"], latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
+            user_location = Userlocation.find_by(user_id: @user.id, location_id: @user.location.id)
+            user_location.update(location_id: location.id)
+        end
+
         # validations are keeping me from updating only the username
         if params[:username]
             found = User.find_by(username: params[:username])
@@ -62,10 +73,10 @@ class UsersController < ApplicationController
                 render json: {error: 'this name is taken.'}
             else
                 user.update_column 'username', params[:username]
-                render json: {username: user.username, message: 'info updated'}
+                render json: {username: @user.username, message: 'info updated'}
             end
         else 
-            render json: {message: 'info updated'}
+            render json: {user: UserSerializer.new(@user)}
         end
 
     end
@@ -76,7 +87,7 @@ class UsersController < ApplicationController
         # user.avatar = params[:avatar]
         # byebug
         # @posts = @user.posts
-        render json: {message: 'picture changed.'}
+        render json: {message: 'picture changed.', avatar: url_for(user.avatar)}
     end
 
     def searching
