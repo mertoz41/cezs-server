@@ -66,6 +66,20 @@ class UsersController < ApplicationController
             user_location.update(location_id: location.id)
         end
 
+        if params[:instruments]
+            params[:instruments].each do |inst|
+                instrument = Instrument.find_or_create_by(name: inst)
+                user_instrument = Userinstrument.create(user_id: @user.id, instrument_id: instrument.id)
+            end
+        end
+
+        if params[:genres]
+            params[:genres].each do |genr|
+                genre = Genre.find_or_create_by(name: genr)
+                user_genre = Usergenre.create(user_id: @user.id, genre_id: genre.id)
+            end
+        end
+    
         # validations are keeping me from updating only the username
         if params[:username]
             found = User.find_by(username: params[:username])

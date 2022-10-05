@@ -6,7 +6,7 @@ class GenresController < ApplicationController
 
     def genresearch
         genres = Genre.where("name like?", "%#{params[:searching]}%")
-        render json: {genres: genres}
+        render json: {genres: genres.as_json(:except => [:created_at, :updated_at])}
     end
 
     def createusergenre
