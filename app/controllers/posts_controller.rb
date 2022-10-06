@@ -1,25 +1,29 @@
 class PostsController < ApplicationController
 
     def create
-        user_id = params[:user_id].to_i
-        artist_name = params[:artist_name]
-        artist_spotify_id = params[:artist_spotify_id]
-        song_spotify_id = params[:song_spotify_id]
-        song_name = params[:song_name]
-        album_name = params[:album_name]
-        album_spotify_id = params[:album_spotify_id]
-        features = JSON.parse params[:features]
-        instruments = JSON.parse params[:instruments]
-        artist = Artist.find_or_create_by(name: artist_name, spotify_id: artist_spotify_id)
-        album = Album.find_or_create_by(name: album_name, spotify_id: album_spotify_id, artist_id: artist.id)
-        song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id, album_id: album.id)
         genre = Genre.find_or_create_by(name: params[:genre])
-        @post = Post.create(user_id: user_id, artist_id: artist.id, song_id: song.id, genre_id: genre.id, description: params[:description])
-        if features.length > 0
-            features.each do |id|
-                Postfeature.create(user_id: id, post_id: @post.id)
-            end
+        @post = Post.create(genre_id: genre.id, description: params[:description])
+        if params[:user_id]
+            @post.update_column "user_id", params[:user_id].to_i
+        else
+            @post.update_column "band_id", params[:band_id].to_i
         end
+
+        if params[:artist_name]
+            artist_name = params[:artist_name]
+            artist_spotify_id = params[:artist_spotify_id]
+            song_spotify_id = params[:song_spotify_id]
+            song_name = params[:song_name]
+            album_name = params[:album_name]
+            album_spotify_id = params[:album_spotify_id]
+            artist = Artist.find_or_create_by(name: artist_name, spotify_id: artist_spotify_id)
+            album = Album.find_or_create_by(name: album_name, spotify_id: album_spotify_id, artist_id: artist.id)
+            song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id, album_id: album.id)
+            @post.update_column "artist_id", artist.id
+            @post.update_column "song_id", song.id
+        end
+        
+        instruments = JSON.parse params[:instruments]
         instruments.each do |instrument|
             inst = Instrument.find_or_create_by(name: instrument)
             Postinstrument.create(instrument_id: inst.id, post_id: @post.id)
@@ -28,9 +32,9 @@ class PostsController < ApplicationController
         ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
 
         @post.thumbnail.attach(params[:thumbnail])
-        render json: {message: 'uploading'}
+        # render json: {message: 'uploading'}
 
-        # render json: @post, serializer: PostSerializer
+        render json: @post, serializer: PostSerializer
     end
 
     def createuserdescpost
@@ -79,7 +83,7 @@ class PostsController < ApplicationController
         end
        
         @post.clip.attach(params[:clip])
-        ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
+        # ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
 
         @post.thumbnail.attach(params[:thumbnail])
         render json: {message: 'uploading'}

@@ -105,7 +105,7 @@ class UsersController < ApplicationController
     end
 
     def searching
-        searched_users = User.where("username like?", "%#{params[:searching]}%")
+        searched_users= User.where("username like?", "%#{params[:searching]}%")
         @users = searched_users.select {|user| !blokes.include?(user.id)}
 
         # partial string matching on a database object. not a very good solution
