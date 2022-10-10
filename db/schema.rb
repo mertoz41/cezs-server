@@ -270,40 +270,9 @@ ActiveRecord::Schema.define(version: 2022_09_21_111517) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "playlist_notifications", force: :cascade do |t|
-    t.integer "action_user_id"
-    t.integer "user_id"
-    t.integer "playlist_id"
-    t.boolean "seen"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "post_id"
-  end
-
-  create_table "playlist_posts", force: :cascade do |t|
-    t.integer "post_id"
-    t.integer "playlist_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "playlists", force: :cascade do |t|
-    t.string "name"
-    t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "post_reports", force: :cascade do |t|
     t.integer "post_id"
     t.integer "action_user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "postfeatures", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "post_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

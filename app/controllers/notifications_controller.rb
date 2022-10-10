@@ -17,10 +17,6 @@ class NotificationsController < ApplicationController
             audition = AuditionNotification.find(audit)
             audition.update(seen: true)
         end
-        params[:playlists].each do |plist|
-            playlist = PlaylistNotification.find(plist)
-            playlist.update(seen: true)
-        end
         params[:applauds].each do |appld|
             applaud = ApplaudNotification.find(appld)
             applaud.update(seen: true)
@@ -57,8 +53,4 @@ class NotificationsController < ApplicationController
         event_noti.update(seen: true)
     end
 
-    def seeplaylistnoti
-        plnoti = PlaylistNotification.find(params[:id])
-        plnoti.update(seen: true)
-    end
 end

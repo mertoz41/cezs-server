@@ -94,12 +94,6 @@ Rails.application.routes.draw do
   post '/userreport', to: 'reports#userreport'
   post '/bandreport', to: 'reports#bandreport'
 
-  post '/newplaylist', to: 'playlists#newplaylist'
-  post '/addtoplaylist', to: 'playlists#addtoplaylist'
-  get '/playlists/:id', to: 'playlists#show'
-  post '/removefromplaylist', to: 'playlists#removefromplaylist'
-  delete '/deleteplaylist/:id', to: 'playlists#deleteplaylist'
-
   get '/exploredata', to: 'search#exploredata'
 
   post '/applaudpost', to: 'applauds#applaudpost'
@@ -120,7 +114,6 @@ Rails.application.routes.draw do
   get '/seegignoti/:id', to: 'notifications#seegignoti'
   get '/seefollownoti/:id', to: 'notifications#seefollowoti'
   get '/seeauditnoti/:id', to: 'notifications#seeauditnoti'
-  get '/seeplaylistnoti/:id', to: 'notifications#seeplaylistnoti'
   get '/seeapplaudnoti/:id', to: 'notifications#seeapplaudnoti'
   get '/seecommentnoti/:id', to: 'notifications#seecommentnoti'
 

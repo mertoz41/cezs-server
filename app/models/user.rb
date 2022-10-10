@@ -2,7 +2,6 @@ class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
     
-    has_many :playlists, dependent: :destroy 
     
     has_many :messages, dependent: :destroy
     has_many :userchatrooms, dependent: :destroy
@@ -17,7 +16,6 @@ class User < ApplicationRecord
     has_many :follow_notifications, dependent: :destroy
     has_many :event_notifications, dependent: :destroy
     has_many :applaud_notifications, dependent: :destroy
-    has_many :playlist_notifications, dependent: :destroy
     
 
     has_many :bandfollows, dependent: :destroy

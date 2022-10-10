@@ -15,13 +15,7 @@ class Post < ApplicationRecord
     belongs_to :artist, optional: true
     belongs_to :song, optional: true
     has_many :postviews, dependent: :destroy
-    has_many :postfeatures, dependent: :destroy
-    has_many :featuredusers, through: :postfeatures
 
-    has_many :playlist_posts, dependent: :destroy
-    has_many :playlists, through: :playlist_posts
-
-    has_many :playlist_notifications, dependent: :destroy
 
     has_many :post_reports, dependent: :destroy
 

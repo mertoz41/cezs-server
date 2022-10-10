@@ -10,8 +10,6 @@ class UserSerializer < ActiveModel::Serializer
   has_many :favoritesongs
   has_many :favoriteartists
   has_many :favoritealbums
-  has_many :featuredposts, serializer: ShortPostSerializer
-  has_many :playlists
   
   def notification_token
     return object.notification_token.token

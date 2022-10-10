@@ -10,7 +10,6 @@ class AuthController < ApplicationController
             @chatrooms = @user.chatrooms
             @timeline = timeline_info[:timeline]
             # .select {|post| !blokes.include?(post.user_id)}.select{|post| !band_blokes.include?(post.band_id)}
-            @playlists = @user.playlists
             
             @filtered_events = @user.event_notifications.joins(:event).where('event_date >= ?', Date.today)
             render json: {
@@ -22,8 +21,6 @@ class AuthController < ApplicationController
                 comment_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.comment_notifications, each_serializer: CommentNotificationSerializer),
                 follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),
                 applaud_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.applaud_notifications, each_serializer: ApplaudNotificationSerializer),
-                playlist_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.playlist_notifications, each_serializer: PlaylistNotificationSerializer),
-                playlists: ActiveModel::Serializer::CollectionSerializer.new(@playlists, each_serializer: PlaylistSerializer),
                 band_posts: timeline_info[:bandposts], 
                 user_posts: timeline_info[:userposts], 
                 artist_posts: timeline_info[:artistposts], 
@@ -39,7 +36,7 @@ class AuthController < ApplicationController
         token = request.headers["Authorization"].split(' ')[1]
         @user = User.find(decode(token)["user_id"])
         timeline_info = @user.timeline
-        @playlists = @user.playlists
+        
         @chatrooms = @user.chatrooms
         @timeline = timeline_info[:timeline]
         @filtered_events = @user.event_notifications.joins(:event).where('event_date >= ?', Date.today)
@@ -51,8 +48,6 @@ class AuthController < ApplicationController
             comment_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.comment_notifications, each_serializer: CommentNotificationSerializer),
             follow_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.follow_notifications, each_serializer: FollowNotificationSerializer),                
             applaud_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.applaud_notifications, each_serializer: ApplaudNotificationSerializer),
-            playlist_notifications: ActiveModel::Serializer::CollectionSerializer.new(@user.playlist_notifications, each_serializer: PlaylistNotificationSerializer),
-            playlists: ActiveModel::Serializer::CollectionSerializer.new(@playlists, each_serializer: PlaylistSerializer),
             chatrooms: ActiveModel::Serializer::CollectionSerializer.new(@chatrooms, each_serializer: ChatroomSerializer),
             band_posts: timeline_info[:bandposts], 
             user_posts: timeline_info[:userposts], 
