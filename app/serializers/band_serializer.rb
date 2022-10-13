@@ -1,14 +1,21 @@
 class BandSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :name, :picture, :created_at, :location, :followers_count, :songs, :upcoming_event, :instruments
-  attribute :bandbio, if: -> {object.bandbio}
+  attributes :id, :name, :picture, :created_at, :bio, :location, :followers_count, :songs, :upcoming_event, :instruments
   has_many :posts, serializer: ShortPostSerializer
   has_many :genres
   has_many :members, serializer: ShortUserSerializer
   
   def picture
     url_for(object.picture)
+  end
+
+  def bio
+    if !object.bio
+      return ""
+    else
+      object.bio
+    end
   end
 
   def songs
@@ -27,9 +34,7 @@ class BandSerializer < ActiveModel::Serializer
   def created_at
     object.created_at.to_date
   end
-  def bandbio
-    return object.bandbio.description
-  end
+
   def followers_count
     object.followers.size
   end

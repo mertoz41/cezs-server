@@ -45,6 +45,34 @@ class BandsController < ApplicationController
         render json: @band, serializer: BandSerializer
 
     end
+    
+    def update
+        @band = Band.find(params[:id])
+        if params[:name]
+            @band.update_column 'name', params[:name]
+        end
+        if params[:bio]
+            @band.update_column 'bio', params[:bio]
+        end
+        if params[:location]
+            location = Location.find_or_create_by(city: params[:location]["city"], latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
+            band_location = Bandlocation.find_by(band_id: @band.id, location_id: @band.location.id)
+            band_location.update(location_id: location.id)
+        end
+        if params[:members]
+            params[:members].each do |member|
+                Bandmember.create({user_id: member, band_id: @band.id})
+            end
+        end
+        if params[:removedMembers]
+            params[:removedMembers].each do |member|
+            instance = Bandmember.find_by(user_id: member, band_id: @band.id)
+            instance.destroy
+            end
+        end
+        render json: {band: BandSerializer.new(@band)}
+    end
+
     def filtersearch
         instrument_users = User.joins(:instruments).merge(Instrument.where(id: params[:instruments]))
         bands = []
