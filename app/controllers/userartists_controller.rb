@@ -1,9 +1,9 @@
 class UserartistsController < ApplicationController
     def create
         user = User.find(params[:user_id])
-        artist = Artist.find_by(spotify_id: params[:spotify_id])
-        user_artist = Userartist.create(user_id: user.id, artist_id: artist.id)
-        render json: {artist_id: artist.id}
+        @artist = Artist.find_or_create_by(spotify_id: params[:spotify_id], name: params[:artist_name])
+        user_artist = Userartist.create(user_id: user.id, artist_id: @artist.id)
+        render json: {artist: ArtistSerializer.new(@artist)}
     end
 
     def delete

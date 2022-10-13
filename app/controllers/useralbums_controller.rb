@@ -1,12 +1,11 @@
 class UseralbumsController < ApplicationController
     def create
         user = User.find(params[:user_id])
-        artist = Artist.find_or_create_by(name: params[:artist_name], spotify_id: params[:artistSpotifyId])
-        album = Album.find_or_create_by(name: params[:name], artist_id: artist.id, spotify_id: params[:spotify_id])
-        user_album = Useralbum.create(user_id: user.id, album_id: album.id)
-        render json: {album_id: album.id}
+        artist = Artist.find_or_create_by(name: params[:artist_name], spotify_id: params[:artist_spotify_id])
+        @album = Album.find_or_create_by(name: params[:name], artist_id: artist.id, spotify_id: params[:spotify_id])
+        user_album = Useralbum.create(user_id: user.id, album_id: @album.id)
+        render json: {album: AlbumSerializer.new(@album)}
     end
-
 
 
     def delete
