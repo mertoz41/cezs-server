@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :userartists
   resources :useralbums
   resources :events
-  
+  resources :albums
 
   mount ActionCable.server => '/cable'
 
@@ -71,7 +71,6 @@ Rails.application.routes.draw do
 
   get '/albumfollowers/:id', to: 'albums#albumfollowers'
   post '/deleteuseralbum', to: 'useralbums#delete'
-  get '/albumcheck/:id', to: 'albums#albumcheck'
   get '/albumsongs/:id', to: 'albums#albumsongs'
   get '/albumfavorites/:id', to: 'albums#albumfavorites'
   post '/albumfollow', to: 'albums#albumfollow'

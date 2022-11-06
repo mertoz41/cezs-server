@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :location, :blocked_bands, :instruments, :follows_count, :followed_users, :followed_artists, :blocked_users, :followed_songs, :followed_bands, :followed_albums, :followers_count, :name, :last_name, :email, :notification_token, :applauds
+  attributes :id, :username, :created_at, :avatar, :location, :upcoming_event, :blocked_bands, :instruments, :follows_count, :followed_users, :followed_artists, :blocked_users, :followed_songs, :followed_bands, :followed_albums, :followers_count, :name, :last_name, :email, :notification_token, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   attribute :notification_token, if: -> {object.notification_token}
@@ -17,9 +17,8 @@ class UserSerializer < ActiveModel::Serializer
   end
   
   def upcoming_event
-      events = object.events.where("event_date >= ?", Time.now.beginning_of_day)
-      
-      return EventSerializer.new(events.first)
+      events = object.events.where("event_date >= ?", Time.now)
+      # return EventSerializer.new(events.last)
   end
   def applauds
     object.applauds.map do |appl|

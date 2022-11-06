@@ -1,13 +1,14 @@
 class AlbumsController < ApplicationController
-    def albumcheck
+    def show 
         @album = Album.find_by(spotify_id: params[:id])
         if @album
             render json: {album: AlbumSerializer.new(@album)}
         else
-            render json: {message: 'album not found'}
+            render json: {message: 'Album not found'}
         end
         
     end
+
     def albumfollow
         # find artist instance first
         artist = Artist.find_or_create_by(name: params[:artistName], spotify_id: params[:artistSpotifyId])
