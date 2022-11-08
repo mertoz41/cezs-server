@@ -38,9 +38,9 @@ class ArtistsController < ApplicationController
     end
 
     def artistfollow
-        artist = Artist.find_or_create_by(name: params[:artist_name], spotify_id: params[:artistSpotifyId])
-        new_follow = Artistfollow.create(user_id: logged_in_user.id, artist_id: artist.id) 
-        render json: {new_follow: artist.id}
+        @artist = Artist.find_or_create_by(name: params[:artist_name], spotify_id: params[:spotify_id])
+        new_follow = Artistfollow.create(user_id: logged_in_user.id, artist_id: @artist.id) 
+        render json: {artist: ArtistSerializer.new(@artist)}
     end
 
     def artistunfollow

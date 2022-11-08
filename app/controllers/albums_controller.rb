@@ -12,9 +12,9 @@ class AlbumsController < ApplicationController
     def albumfollow
         # find artist instance first
         artist = Artist.find_or_create_by(name: params[:artist_name], spotify_id: params[:artist_spotify_id])
-        album = Album.find_or_create_by(name: params[:name], artist_id: artist.id, spotify_id: params[:spotify_id])
-        album_follow = Albumfollow.create(user_id: logged_in_user.id, album_id: album.id)
-        render json: {message: "now following #{album.name}.", album_id: album.id}
+        @album = Album.find_or_create_by(name: params[:name], artist_id: artist.id, spotify_id: params[:spotify_id])
+        album_follow = Albumfollow.create(user_id: logged_in_user.id, album_id: @album.id)
+        render json: {album: AlbumSerializer.new(@album)}
     end
     def albumunfollow
         album_follow = Albumfollow.find_by(user_id: logged_in_user.id, album_id: params[:id])
