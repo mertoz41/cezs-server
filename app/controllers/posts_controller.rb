@@ -31,82 +31,10 @@ class PostsController < ApplicationController
         @post.clip.attach(params[:clip])        
         ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
 
-        @post.thumbnail.attach(params[:thumbnail])
+        # @post.thumbnail.attach(params[:thumbnail])
         # render json: {message: 'uploading'}
 
         render json: @post, serializer: PostSerializer
-    end
-
-    def createuserdescpost
-        user_id = params[:user_id].to_i
-        description = params[:description]
-        features = JSON.parse params[:features]
-        instruments = JSON.parse params[:instruments]
-        genre = Genre.find_or_create_by(name: params[:genre])
-
-        @new_post = Post.create(user_id: user_id, description: description, genre_id: genre.id)
-        if features.length > 0
-            features.each do |id|
-                Postfeature.create(user_id: id, post_id: @new_post.id)
-            end
-        end
-        
-        instruments.each do |instrument|
-            inst = Instrument.find_or_create_by(name: instrument)
-            Postinstrument.create(instrument_id: inst.id, post_id: @new_post.id)
-        end
-
-        @new_post.clip.attach(params[:clip])
-        ConvertVideoJob.perform_later(@new_post.id, logged_in_user.id)
-        @new_post.thumbnail.attach(params[:thumbnail])
-        # render json: @new_post, serializer: PostSerializer
-        render json: {message: 'uploading'}
-    end
-
-    def createbandpost
-        band_id = params[:band_id].to_i
-        artist_name = params[:artist_name]
-        artist_spotify_id = params[:artist_spotify_id]
-        song_spotify_id = params[:song_spotify_id]
-        song_name = params[:song_name]
-        album_name = params[:album_name]
-        album_spotify_id = params[:album_spotify_id]
-        instruments = JSON.parse params[:instruments]
-        artist = Artist.find_or_create_by(name: artist_name, spotify_id: artist_spotify_id)
-        album = Album.find_or_create_by(name: album_name, artist_id: artist.id, spotify_id: album_spotify_id)
-        song = Song.find_or_create_by(name: song_name, artist_id: artist.id, album_id: album.id, spotify_id: song_spotify_id)
-        genre = Genre.find_or_create_by(name: params[:genre])
-        @post = Post.create(band_id: band_id, artist_id: artist.id, song_id: song.id, genre_id: genre.id)
-        instruments.each do |instrument| 
-            inst = Instrument.find_or_create_by(name: instrument)
-            Postinstrument.create(post_id: @post.id, instrument_id: inst.id)
-        end
-       
-        @post.clip.attach(params[:clip])
-        # ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
-
-        @post.thumbnail.attach(params[:thumbnail])
-        render json: {message: 'uploading'}
-
-        # render json: @post, serializer: PostSerializer
-    end
-
-    def createbanddescposts
-        band_id = params[:band_id].to_i
-        description = params[:description]
-        genre = Genre.find_or_create_by(name: params[:genre])
-        instruments = JSON.parse params[:instruments]
-        @new_post = Post.create(band_id: band_id, description: description, genre_id: genre.id)
-        instruments.each do |instrument|
-            inst = Instrument.find_or_create_by(name: instrument)
-            Postinstrument.create(post_id: @new_post.id, instrument_id: inst.id)
-        end
-        @new_post.clip.attach(params[:clip])
-        ConvertVideoJob.perform_later(@new_post.id, logged_in_user.id)
-
-        @new_post.thumbnail.attach(params[:thumbnail])
-        render json: {message: "uploading"}
-        # render json: @new_post, serializer: PostSerializer
     end
 
     def show
@@ -114,8 +42,6 @@ class PostsController < ApplicationController
         render json: @post, serializer: PostSerializer
     end
     
-
-
     def filter
         instruments = params[:selected_instruments]
         genres = params[:selected_genres]

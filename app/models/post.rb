@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
     has_one_attached :clip
-    has_one_attached :thumbnail
+    # has_one_attached :thumbnail
     has_many :comments, dependent: :destroy
     has_many :comment_notifications, dependent: :destroy
 
