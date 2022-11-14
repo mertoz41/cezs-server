@@ -1,7 +1,7 @@
 class ApplaudNotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :action_username, :action_user_avatar, :action_user_id, :message, :applaud_id, :post_id, :created_at, :post_thumbnail, :seen, :applaud_noti
+  attributes :id, :action_username, :action_user_avatar, :action_user_id, :message, :applaud_id, :post_id, :created_at, :seen, :applaud_noti
   def action_username
     return object.applauding_user.username
   end
@@ -30,8 +30,6 @@ class ApplaudNotificationSerializer < ActiveModel::Serializer
     end
 
   end
-  def post_thumbnail
-    return url_for(object.applaud.post.thumbnail)
-  end
+
 
 end

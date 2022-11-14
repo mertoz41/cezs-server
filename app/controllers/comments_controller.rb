@@ -4,7 +4,8 @@ class CommentsController < ApplicationController
     def show
         post = Post.find(params[:id])
         @comments = post.comments
-        render json: {comments: ActiveModel::Serializer::CollectionSerializer.new(@comments, each_serializer: CommentSerializer)}
+        @users = post.applauding_users
+        render json: {comments: ActiveModel::Serializer::CollectionSerializer.new(@comments, each_serializer: CommentSerializer), applauders: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: ShortUserSerializer)}
 
     end
 
