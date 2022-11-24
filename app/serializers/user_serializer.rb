@@ -18,6 +18,7 @@ class UserSerializer < ActiveModel::Serializer
   
   def upcoming_event
       events = object.events.where("event_date >= ?", Time.now)
+      return events.last
       # return EventSerializer.new(events.last)
   end
   def applauds

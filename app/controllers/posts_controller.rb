@@ -79,9 +79,7 @@ class PostsController < ApplicationController
     end
 
     def createview
-        user = User.find(params[:user_id])
-        post = Post.find(params[:post_id])
-        Postview.create(user_id: user.id, post_id: post.id)
+        Postview.create(user_id: logged_in_user.id, post_id: params[:id].to_i)
         render json: {message: 'view counted'}
     end
 

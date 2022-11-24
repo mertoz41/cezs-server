@@ -29,7 +29,11 @@ class BandSerializer < ActiveModel::Serializer
   end
 
   def instruments
-    object.members.map(&:instruments).flatten!.uniq
+    uniqInsts = object.members.map(&:instruments).flatten!.uniq
+      return uniqInsts.map do |inst|
+        {id: inst.id, name: inst.name}
+      end
+      
   end
   def created_at
     object.created_at.to_date

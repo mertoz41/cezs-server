@@ -76,7 +76,7 @@ Rails.application.routes.draw do
   post '/albumfollow', to: 'albums#albumfollow'
   delete '/albumunfollow/:id', to: 'albums#albumunfollow'
 
-  post '/postviewcount', to: 'posts#createview'
+  post '/countview/:id', to: 'posts#createview'
   post '/musicposts', to: 'posts#musicposts'
   get '/filterlocations', to: 'locations#filterlocations'
   
