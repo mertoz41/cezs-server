@@ -4,6 +4,7 @@ class UserSerializer < ActiveModel::Serializer
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :bio, if: -> {object.bio}
   attribute :notification_token, if: -> {object.notification_token}
+  has_many :notifications
   has_many :bands
   has_many :genres
   has_many :posts, serializer: ShortPostSerializer

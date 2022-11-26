@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_13_193305) do
+ActiveRecord::Schema.define(version: 2022_11_24_220019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -260,6 +260,17 @@ ActiveRecord::Schema.define(version: 2022_10_13_193305) do
   create_table "notification_tokens", force: :cascade do |t|
     t.string "token"
     t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "action_user_id"
+    t.boolean "seen"
+    t.integer "applaud_id"
+    t.integer "comment_id"
+    t.integer "event_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -2,7 +2,7 @@ class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
     
-    
+    has_many :notifications
     has_many :messages, dependent: :destroy
     has_many :userchatrooms, dependent: :destroy
     has_many :chatrooms, through: :userchatrooms
@@ -12,10 +12,10 @@ class User < ApplicationRecord
 
     has_many :events, dependent: :destroy
 
-    has_many :comment_notifications, dependent: :destroy
-    has_many :follow_notifications, dependent: :destroy
-    has_many :event_notifications, dependent: :destroy
-    has_many :applaud_notifications, dependent: :destroy
+    # has_many :comment_notifications, dependent: :destroy
+    # has_many :follow_notifications, dependent: :destroy
+    # has_many :event_notifications, dependent: :destroy
+    # has_many :applaud_notifications, dependent: :destroy
     
 
     has_many :bandfollows, dependent: :destroy
@@ -102,21 +102,21 @@ class User < ApplicationRecord
         if self.followeds.size > 0
             usersposts = self.followeds.map(&:posts).flatten!.last(5)
             arr = arr + usersposts
-            userpostids = usersposts.map {|post| post.id}
+            # userpostids = usersposts.map {|post| post.id}
         end
        
         # followed bands posts
         if self.followedbands.size > 0
             bandsposts = self.followedbands.map(&:posts).flatten!.last(5)  
             arr = arr + bandsposts
-            bandpostids = bandsposts.map {|post| post.id}
+            # bandpostids = bandsposts.map {|post| post.id}
         end
 
         # followed artists posts
         if self.followedartists.size > 0
             artistsposts = self.followedartists.map(&:posts).flatten!.last(5)    
             arr = arr + artistsposts
-            artistpostids = artistsposts.map {|post| post.id}
+            # artistpostids = artistsposts.map {|post| post.id}
         end
 
         # followed songs posts
@@ -128,20 +128,14 @@ class User < ApplicationRecord
 
         # followed albums posts
         if self.followedalbums.size > 0
-        albumsposts = self.followedalbums.map(&:posts).flatten!.last(5)
-        arr = arr + albumsposts
-        albumpostids = albumsposts.map {|post| post.id}
+            albumsposts = self.followedalbums.map(&:posts).flatten!.last(5)
+            arr = arr + albumsposts
+            # albumpostids = albumsposts.map {|post| post.id}
         end
         filtered = arr.select {|post| post.post_reports.size == 0}
         unique_arr = filtered.uniq
          
-        return {
-            timeline: unique_arr.sort_by(&:created_at).reverse, 
-            bandposts: bandpostids, 
-            userposts: userpostids, 
-            artistposts: artistpostids, 
-            albumposts: albumpostids,
-            songposts: songpostids}
+        return unique_arr.sort_by(&:created_at).reverse
     end
 
  

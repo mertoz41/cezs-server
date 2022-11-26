@@ -11,29 +11,29 @@ class CommentsController < ApplicationController
 
     def create
         post = Post.find(params[:post_id])
-        user = User.find(params[:user_id])
-        @comment = Comment.create(comment: params[:comment], user_id: user.id, post_id: post.id)
+        @comment = Comment.create(comment: params[:comment], user_id: logged_in_user.id, post_id: post.id)
         if post.user
-            @new_notification = CommentNotification.create(user_id: post.user.id, post_id: post.id, action_user_id: user.id, seen: false)
-            if post.user.notification_token
-                SendNotificationJob.perform_later(
-                    post.user.notification_token.token,
-                    "#{user.username} commented on your post!",
-                    CommentNotificationSerializer.new(@new_notification).as_json
-                )
+            @new_notification = Notification.create(action_user_id: logged_in_user.id, user_id: post.user.id, comment_id: @comment.id, seen: false)
+            # @new_notification = CommentNotification.create(user_id: post.user.id, post_id: post.id, action_user_id: user.id, seen: false)
+            # if post.user.notification_token
+            #     SendNotificationJob.perform_later(
+            #         post.user.notification_token.token,
+            #         "#{user.username} commented on your post!",
+            #         CommentNotificationSerializer.new(@new_notification).as_json
+            #     )
 
-            end
+            # end
         else
             # notifications for band members if post is a band post
             post.band.members.each do |member|
-                @new_notification = CommentNotification.create(user_id: member.id, post_id: post.id, action_user_id: user.id, seen: false)
-                if member.notification_token
-                    SendNotificationJob.perform_later(
-                    member.notification_token.token,
-                    "#{user.username} commented on your post!",
-                    CommentNotificationSerializer.new(@new_notification).as_json
-                )
-                end
+                @new_notification = Notification.create(user_id: member.id, post_id: post.id, action_user_id: logged_in_user.id, seen: false, comment_id: @comment_id)
+                # if member.notification_token
+                #     SendNotificationJob.perform_later(
+                #     member.notification_token.token,
+                #     "#{user.username} commented on your post!",
+                #     CommentNotificationSerializer.new(@new_notification).as_json
+                # )
+                # end
             end
         end
 
