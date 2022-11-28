@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_24_220019) do
+ActiveRecord::Schema.define(version: 2022_11_28_041536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,15 +62,6 @@ ActiveRecord::Schema.define(version: 2022_11_24_220019) do
     t.string "name"
     t.integer "artist_id"
     t.string "spotify_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "applaud_notifications", force: :cascade do |t|
-    t.integer "action_user_id"
-    t.integer "user_id"
-    t.integer "applaud_id"
-    t.boolean "seen"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -150,15 +141,6 @@ ActiveRecord::Schema.define(version: 2022_11_24_220019) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "comment_notifications", force: :cascade do |t|
-    t.integer "post_id"
-    t.integer "user_id"
-    t.integer "action_user_id"
-    t.boolean "seen"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "comment_reports", force: :cascade do |t|
     t.integer "comment_id"
     t.integer "action_user_id"
@@ -188,16 +170,6 @@ ActiveRecord::Schema.define(version: 2022_11_24_220019) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "event_notifications", force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "action_user_id"
-    t.integer "user_id"
-    t.boolean "seen"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "action_band_id"
-  end
-
   create_table "events", force: :cascade do |t|
     t.string "address"
     t.string "description"
@@ -210,15 +182,6 @@ ActiveRecord::Schema.define(version: 2022_11_24_220019) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "event_date"
     t.boolean "is_audition"
-  end
-
-  create_table "follow_notifications", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "action_user_id"
-    t.integer "band_id"
-    t.boolean "seen"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "follows", force: :cascade do |t|
@@ -273,6 +236,7 @@ ActiveRecord::Schema.define(version: 2022_11_24_220019) do
     t.integer "event_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "post_id"
   end
 
   create_table "post_reports", force: :cascade do |t|

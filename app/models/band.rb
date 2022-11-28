@@ -1,17 +1,12 @@
 class Band < ApplicationRecord
     has_one_attached :picture
-    has_many :share_notifications, dependent: :destroy
+    # has_many :share_notifications, dependent: :destroy
     has_many :bandmembers, dependent: :destroy
     has_many :members, through: :bandmembers
 
     has_many :band_blocks, dependent: :destroy
     has_many :blocking_users, through: :band_blocks
-    # has_many :share_notifications, dependent: :destroy
-    # has_many :comment_notifications, dependent: :destroy
-    has_many :follow_notifications, dependent: :destroy
-    has_many :event_notifications, dependent: :destroy
-
-
+ 
     has_one :bandlocation, dependent: :destroy
     has_one :location, through: :bandlocation
 

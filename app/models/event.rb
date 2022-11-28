@@ -8,5 +8,5 @@ class Event < ApplicationRecord
     has_many :event_genres, dependent: :destroy
     has_many :genres, through: :event_genres
 
-    has_many :event_notifications, dependent: :destroy
+    has_many :notifications, dependent: :destroy
 end

@@ -1,26 +1,25 @@
 class NotificationsController < ApplicationController
     def marknotifications
-        params[:comments].each do |comment|
-            commnt = CommentNotification.find(comment)
-            commnt.update(seen: true)
+        params[:notifications].each do |noti|
+            notification = Notification.find(noti)
+            notification.update(seen: true)
         end
-        params[:follows].each do |follow|
-            follw = FollowNotification.find(follow)
-            follw.update(seen: true)
-        end
+        # params[:follows].each do |follow|
+        #     follw = FollowNotification.find(follow)
+        #     follw.update(seen: true)
+        # end
     
-        params[:events].each do |event|
-            evnt = EventNotification.find(event)
-            evnt.update(seen: true)
-        end
-        params[:auditions].each do |audit|
-            audition = AuditionNotification.find(audit)
-            audition.update(seen: true)
-        end
-        params[:applauds].each do |appld|
-            applaud = ApplaudNotification.find(appld)
-            applaud.update(seen: true)
-        end
+        # params[:events].each do |event|
+        #     evnt = EventNotification.find(event)
+        #     evnt.update(seen: true)
+        # end
+        # params[:auditions].each do |audit|
+        #     audition = AuditionNotification.find(audit)
+        #     audition.update(seen: true)
+        # end
+        # params[:applauds].each do |appld|
+        #     applaud = ApplaudNotification.find(appld)
+        #     applaud.update(seen: true)
         render json: {message: 'notifications seen.'}
     end
 

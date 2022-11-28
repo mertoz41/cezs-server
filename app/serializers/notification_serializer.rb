@@ -2,7 +2,7 @@ class NotificationSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
   attributes :id, :user_id, :action_user_id, :seen, :created_at, :message
-  attribute :avatar, if: -> {!object.comment_id && !object.applaud_id && !object.event_id}
+  attribute :avatar, if: -> {object.action_user.avatar.attached?}
   attribute :post_id, if: -> {object.comment_id || object.applaud_id}
   attribute :clip, if: -> {object.comment_id || object.applaud_id}
 

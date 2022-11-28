@@ -1,8 +1,7 @@
 class Post < ApplicationRecord
     has_one_attached :clip
-    # has_one_attached :thumbnail
+    has_one_attached :thumbnail
     has_many :comments, dependent: :destroy
-    has_many :comment_notifications, dependent: :destroy
 
     has_many :applauds, dependent: :destroy
     has_many :applauding_users, through: :applauds
@@ -17,7 +16,7 @@ class Post < ApplicationRecord
     belongs_to :song, optional: true
     has_many :postviews, dependent: :destroy
 
-
+    has_many :notifications, dependent: :destroy
     has_many :post_reports, dependent: :destroy
 
 

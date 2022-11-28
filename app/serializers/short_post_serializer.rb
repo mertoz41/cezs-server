@@ -1,13 +1,10 @@
 class ShortPostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :user_id, :created_at, :clip, :instruments, :genre, :view_count, :band_id
+  attributes :id, :user_id, :created_at, :thumbnail, :instruments, :genre, :view_count, :band_id
   attribute :song_name, if: -> {object.song.present?}
   attribute :artist_name, if: -> {object.artist.present?}
-  
-  def clip
-    url_for(object.clip)
-  end
+
   def thumbnail
     url_for(object.thumbnail)
   end
