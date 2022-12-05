@@ -43,7 +43,6 @@ class User < ApplicationRecord
     has_many :usersongs, dependent: :destroy
     has_many :favoritesongs, through: :usersongs
     
-    has_one :bio, dependent: :destroy
     has_one :userlocation, dependent: :destroy
     has_one :location, through: :userlocation
     has_one :notification_token, dependent: :destroy

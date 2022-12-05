@@ -57,13 +57,19 @@ class UsersController < ApplicationController
             @user.update_column 'email', params[:email]
         end
         if params[:bio]
-            user_bio = @user.bio
-            user_bio.update_column 'description', params[:bio]
+            @user.update_column 'bio', params[:bio]
         end
         if params[:location]
-            location = Location.find_or_create_by(city: params[:location]["city"], latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
-            user_location = Userlocation.find_by(user_id: @user.id, location_id: @user.location.id)
-            user_location.update(location_id: location.id)
+            location = Location.find_by(city: params[:location]["city"])
+            if !location
+                location = Location.create(city: params[:location]["city"], latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
+            end
+            if @user.location
+                user_location = Userlocation.find_by(user_id: @user.id, location_id: @user.location.id)
+                user_location.update(location_id: location.id)
+            else
+                new_user_location = Userlocation.create(user_id: logged_in_user.id, location_id: location.id)
+            end
         end
 
         if params[:instruments]
