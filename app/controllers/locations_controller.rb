@@ -18,18 +18,15 @@ class LocationsController < ApplicationController
         # incoming location to be checked whether it exists
         # if it exists, create Userlocation model with that locations id and users id
         # if it doesnt exist, create location, then create userlocation model with locations id and user id.
-
-        @user = User.find(params[:user_id])
-
-       
+    
         # if @user.location.users.size == 1
         location = Location.find_by(city: params[:city])
         if location
             # if location exists
-            user_location = Userlocation.create(user_id: @user.id, location_id: location.id)
+            user_location = Userlocation.create(user_id: logged_in_user.id, location_id: location.id)
         else
             new_location = Location.create(city: params[:city], latitude: params[:latitude], longitude: params[:longitude])
-            new_user_location = Userlocation.create(user_id: @user.id, location_id: new_location.id)
+            new_user_location = Userlocation.create(user_id: logged_in_user.id, location_id: new_location.id)
             # if its a new location create location first
             # then create user_location
         end

@@ -1,11 +1,12 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :bio, :location, :upcoming_event, :blocked_bands, :instruments, :follows_count, :followed_users, :followed_artists, :blocked_users, :followed_songs, :followed_bands, :followed_albums, :followers_count, :name, :last_name, :email, :notification_token, :applauds
+  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :blocked_bands, :instruments, :follows_count, :followed_users, :followed_artists, :blocked_users, :followed_songs, :followed_bands, :followed_albums, :followers_count, :name, :email, :notification_token, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :notification_token, if: -> {object.notification_token}
   has_many :notifications
   has_many :bands
   has_many :genres
+  has_one :location
   has_many :posts, serializer: ShortPostSerializer
   has_many :favoritesongs
   has_many :favoriteartists

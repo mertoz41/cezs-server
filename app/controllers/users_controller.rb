@@ -47,11 +47,19 @@ class UsersController < ApplicationController
 
     def update
         @user = User.find(params[:id])
+
+        if params[:username]
+            found = User.find_by(username: params[:username])
+            if found
+                render json: {error: 'this name is taken.'}
+            else
+                @user.update_column 'username', params[:username]
+            end
+        end
+
+
         if params[:name]
             @user.update_column 'name', params[:name]
-        end
-        if params[:last_name]
-            @user.update_column 'last_name', params[:last_name]
         end
         if params[:email]
             @user.update_column 'email', params[:email]
@@ -59,16 +67,18 @@ class UsersController < ApplicationController
         if params[:bio]
             @user.update_column 'bio', params[:bio]
         end
+
         if params[:location]
-            location = Location.find_by(city: params[:location]["city"])
-            if !location
-                location = Location.create(city: params[:location]["city"], latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
+            if @user.userlocation
+                old_location = @user.userlocation
+                old_location.destroy
             end
-            if @user.location
-                user_location = Userlocation.find_by(user_id: @user.id, location_id: @user.location.id)
-                user_location.update(location_id: location.id)
+            location = Location.find_by(city: params[:location]["city"])
+            if location
+                new_user_location = Userlocation.create(user_id: @user.id, location_id: location.id)
             else
-                new_user_location = Userlocation.create(user_id: logged_in_user.id, location_id: location.id)
+                new_location = Location.create(city: params[:location]["city"], latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
+                new_user_location = Userlocation.create(user_id: @user.id, location_id: new_location.id)
             end
         end
 
@@ -87,18 +97,8 @@ class UsersController < ApplicationController
         end
     
         # validations are keeping me from updating only the username
-        if params[:username]
-            found = User.find_by(username: params[:username])
-            if found
-                render json: {error: 'this name is taken.'}
-            else
-                user.update_column 'username', params[:username]
-                render json: {username: @user.username, message: 'info updated'}
-            end
-        else 
-            render json: {user: UserSerializer.new(@user)}
-        end
-
+        
+        render json: {user: UserSerializer.new(@user)}
     end
 
     def avatar
