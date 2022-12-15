@@ -18,8 +18,9 @@ class BandsController < ApplicationController
     end
 
     def show
-        @band = Band.find(params[:id])
-        render json: {band: BandSerializer.new(@band)}
+        band = Band.find(params[:id])
+        follows = logged_in_user.bandfollows.find_by(band_id: band.id) ? true : false
+        render json: {band: BandSerializer.new(band), follows: follows}
     end
     
     def create

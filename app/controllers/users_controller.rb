@@ -13,8 +13,9 @@ class UsersController < ApplicationController
     end
 
     def show
-        @user = User.find(params[:id])
-        render json: {user: UserSerializer.new(@user)}
+        user = User.find(params[:id])
+        follows = logged_in_user.follows.find_by(followed_id: user.id) ? true : false
+        render json: {user: UserSerializer.new(user), follows: follows }
     end 
 
     def passwordcheck

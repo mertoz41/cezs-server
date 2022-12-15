@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :blocked_bands, :instruments, :follows_count, :followed_users, :followed_artists, :blocked_users, :followed_songs, :followed_bands, :followed_albums, :followers_count, :name, :email, :notification_token, :applauds
+  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :blocked_bands, :instruments, :follows_count, :blocked_users, :followers_count, :name, :email, :notification_token, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :notification_token, if: -> {object.notification_token}
   has_many :notifications
@@ -20,7 +20,6 @@ class UserSerializer < ActiveModel::Serializer
   def upcoming_event
       events = object.events.where("event_date >= ?", Time.now)
       return events.last
-      # return EventSerializer.new(events.last)
   end
   def applauds
     object.applauds.map do |appl|
@@ -46,28 +45,8 @@ class UserSerializer < ActiveModel::Serializer
     
   end
 
-  def followed_bands
-    object.followedbands.map do |band|
-      band.id
-    end
-    
-  end
-
-  def followed_albums
-    object.followedalbums.map do |album|
-      album.spotify_id
-    end
-    
-  end
-
   def follows_count
     object.follows.size + object.followedbands.size + object.followedartists.size + object.followedsongs.size + object.followedalbums.size
-  end
-
-  def followed_users
-    object.followeds.map do |user|
-      user.id
-    end
   end
 
   def blocked_users
@@ -83,17 +62,7 @@ class UserSerializer < ActiveModel::Serializer
   end
 
 
-  def followed_songs
-    object.followedsongs.map do |song|
-      song.spotify_id
-    end
-  end
 
-  def followed_artists
-      object.followedartists.map do |artist|
-      artist.spotify_id
-    end
-  end
   
   def avatar
     return url_for(object.avatar)

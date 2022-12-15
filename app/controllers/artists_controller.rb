@@ -6,9 +6,10 @@ class ArtistsController < ApplicationController
         # serializer isnt very smart for this situation
     end
     def show
-        @artist = Artist.find_by(spotify_id: params[:id])
-        if @artist
-            render json: {artist: ArtistSerializer.new(@artist)}
+        artist = Artist.find_by(spotify_id: params[:id])
+        if artist
+            follows = logged_in_user.artistfollows.find_by(artist_id: artist.id) ? true : false
+            render json: {artist: ArtistSerializer.new(artist), follows: follows}
         else
             render json: {message: 'Artist not found'}
         end

@@ -1,8 +1,9 @@
 class SongsController < ApplicationController
     def show
-        @song = Song.find_by(spotify_id: params[:id])
-        if @song
-            render json: {song: SongSerializer.new(@song)}
+        song = Song.find_by(spotify_id: params[:id])
+        if song
+            follows = logged_in_user.songfollows.find_by(song_id: song.id) ? true : false
+            render json: {song: SongSerializer.new(song), follows: follows}
         else
             render json: {message: 'song not found'}
         end
