@@ -86,12 +86,6 @@ Rails.application.routes.draw do
   post '/songfollow', to: 'songs#songfollow'
   delete '/songunfollow/:id', to: 'songs#songunfollow'
 
-
-  post '/postreport/:id', to: 'reports#postreport'
-  post '/commentreport', to: 'reports#commentreport'
-  post '/userreport', to: 'reports#userreport'
-  post '/bandreport', to: 'reports#bandreport'
-
   get '/exploredata', to: 'search#exploredata'
 
   post '/applaudpost', to: 'applauds#applaudpost'

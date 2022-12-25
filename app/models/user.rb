@@ -18,8 +18,6 @@ class User < ApplicationRecord
     has_many :artistfollows, dependent: :destroy
     has_many :followedartists, through: :artistfollows
 
-    has_many :account_reports, dependent: :destroy
-
     has_many :songfollows, dependent: :destroy
     has_many :followedsongs, through: :songfollows
 
@@ -118,8 +116,8 @@ class User < ApplicationRecord
             arr = arr + albumsposts
             # albumpostids = albumsposts.map {|post| post.id}
         end
-        filtered = arr.select {|post| post.post_reports.size == 0}
-        unique_arr = filtered.uniq
+        # filtered = arr.select {|post| post.post_reports.size == 0}
+        unique_arr = arr.uniq
          
         return unique_arr.sort_by(&:created_at).reverse
     end
@@ -149,7 +147,7 @@ class User < ApplicationRecord
         if (self.followedalbums.size > 0)
             arr = arr + self.followedalbums.map(&:posts).flatten!.select {|post| post.created_at > date}
         end
-        filtered = arr.select {|post| post.post_reports.size == 0}
-        return filtered.sort_by(&:created_at).reverse.take(10)
+        # filtered = arr.select {|post| post.post_reports.size == 0}
+        return arr.sort_by(&:created_at).reverse.take(10)
     end
 end

@@ -17,7 +17,6 @@ class Post < ApplicationRecord
     has_many :postviews, dependent: :destroy
 
     has_many :notifications, dependent: :destroy
-    has_many :post_reports, dependent: :destroy
 
 
 end

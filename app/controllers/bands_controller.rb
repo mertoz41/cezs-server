@@ -24,27 +24,18 @@ class BandsController < ApplicationController
     end
     
     def create
-        # create the band first with name description and picture
-
-        @band = Band.create(name: params[:name])
-        bio = Bandbio.create(description: params[:description], band_id: @band.id)
+        @band = Band.create(name: params[:name], bio: params[:bio])
         @band.picture.attach(params[:picture])
-        
-        # create bandmember instance for each user
+    
         members = JSON.parse params[:members]
-        # byebug
         members.each do |id|
             Bandmember.create(user_id: id, band_id: @band.id)
         end
 
-        # find location object
         location = Location.find(params[:location_id])
-
-        # create bandlocation object
         Bandlocation.create(band_id: @band.id, location_id: location.id)
 
         render json: @band, serializer: BandSerializer
-
     end
     
     def update

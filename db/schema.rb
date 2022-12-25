@@ -15,14 +15,6 @@ ActiveRecord::Schema.define(version: 2022_12_13_032428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "account_reports", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "band_id"
-    t.integer "action_user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -134,13 +126,6 @@ ActiveRecord::Schema.define(version: 2022_12_13_032428) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "comment_reports", force: :cascade do |t|
-    t.integer "comment_id"
-    t.integer "action_user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "comments", force: :cascade do |t|
     t.string "comment"
     t.string "user_id"
@@ -230,13 +215,6 @@ ActiveRecord::Schema.define(version: 2022_12_13_032428) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "post_id"
-  end
-
-  create_table "post_reports", force: :cascade do |t|
-    t.integer "post_id"
-    t.integer "action_user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "postinstruments", force: :cascade do |t|
