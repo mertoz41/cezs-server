@@ -18,5 +18,5 @@ class Post < ApplicationRecord
 
     has_many :notifications, dependent: :destroy
 
-
+    has_many :reports, dependent: :destroy
 end

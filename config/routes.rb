@@ -24,8 +24,6 @@ Rails.application.routes.draw do
 
   mount ActionCable.server => '/cable'
 
-  # post '/experiment', to: 'users#experiment'
-  get '/experiment', to: 'users#experiment'
   post '/login', to: 'auth#create'
   get '/check', to: 'auth#check'
   post '/avatar', to: 'users#avatar'
@@ -68,7 +66,6 @@ Rails.application.routes.draw do
   post '/bandfiltersearch', to: 'bands#filtersearch'
   post '/deleteusersong', to: 'usersongs#delete'
 
-
   get '/albumfollowers/:id', to: 'albums#albumfollowers'
   post '/deleteuseralbum', to: 'useralbums#delete'
   get '/albumsongs/:id', to: 'albums#albumsongs'
@@ -80,7 +77,12 @@ Rails.application.routes.draw do
   post '/musicposts', to: 'posts#musicposts'
   get '/filterlocations', to: 'locations#filterlocations'
   
-  
+  post '/reportpost', to: 'reports#post_report'
+  post '/reportuser', to: 'reports#user_report'
+  post '/reportband', to: 'reports#band_report'
+  post '/reportcomment', to: 'reports#comment_report'
+  post '/reportevent', to: 'reports#event_report'
+
   get '/songfollowers/:id', to: 'songs#songfollowers'
   get '/songfavorites/:id', to: 'songs#songfavorites'
   post '/songfollow', to: 'songs#songfollow'
@@ -90,7 +92,6 @@ Rails.application.routes.draw do
 
   post '/applaudpost', to: 'applauds#applaudpost'
   delete '/unapplaudpost/:id', to: 'applauds#unapplaudpost'
-
 
   post '/instrumentsearch', to: 'instruments#instrumentsearch'
   post '/genresearch', to: 'genres#genresearch'
@@ -105,7 +106,6 @@ Rails.application.routes.draw do
   get '/seeauditnoti/:id', to: 'notifications#seeauditnoti'
   get '/seeapplaudnoti/:id', to: 'notifications#seeapplaudnoti'
   get '/seecommentnoti/:id', to: 'notifications#seecommentnoti'
-
 
   delete '/bandunfollow/:id', to: 'bandfollows#unfollow'
   get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
