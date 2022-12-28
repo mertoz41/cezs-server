@@ -77,11 +77,11 @@ Rails.application.routes.draw do
   post '/musicposts', to: 'posts#musicposts'
   get '/filterlocations', to: 'locations#filterlocations'
   
-  post '/reportpost', to: 'reports#post_report'
-  post '/reportuser', to: 'reports#user_report'
-  post '/reportband', to: 'reports#band_report'
-  post '/reportcomment', to: 'reports#comment_report'
-  post '/reportevent', to: 'reports#event_report'
+  post '/reportpost/:id', to: 'reports#post_report'
+  post '/reportuser/:id', to: 'reports#user_report'
+  post '/reportband/:id', to: 'reports#band_report'
+  post '/reportcomment/:id', to: 'reports#comment_report'
+  post '/reportevent/:id', to: 'reports#event_report'
 
   get '/songfollowers/:id', to: 'songs#songfollowers'
   get '/songfavorites/:id', to: 'songs#songfavorites'

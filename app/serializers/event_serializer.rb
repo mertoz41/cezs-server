@@ -1,7 +1,7 @@
 class EventSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :address, :description, :latitude, :longitude, :event_date, :event_time, :user, :band, :is_audition
+  attributes :id, :address, :description, :latitude, :longitude, :event_date, :event_time, :user_id, :user, :band, :is_audition
   has_many :instruments
   has_many :genres
   def user

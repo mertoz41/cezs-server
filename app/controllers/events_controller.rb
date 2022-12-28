@@ -57,5 +57,11 @@ class EventsController < ApplicationController
         render json: {event: EventSerializer.new(@event)}
     end
 
+    def destroy 
+        event = Event.find(params[:id])
+        event.destroy
+        render json: {message: "event deleted."}
+    end
+
     
 end
