@@ -7,9 +7,24 @@ class User < ApplicationRecord
     has_many :userchatrooms, dependent: :destroy
     has_many :chatrooms, through: :userchatrooms
 
-    has_many :band_blocks, dependent: :destroy
-    has_many :blocked_bands, through: :band_blocks
+    # has_many :blocked_users, class_name: "BlockedAccount", foreign_key: "blocked_user_id",  dependent: :destroy
+    # has_many :blocked_bands, class_name: "BlockedAccount", foreign_key: "blocked_band_id",  dependent: :destroy
 
+    # has_many :band_blocks, dependent: :destroy
+    # has_many :blocked_bands, through: :band_blocks
+
+
+    # has_many :blocked_by, class_name: 'UserBlock', foreign_key: :blocked_id, dependent: :destroy
+    # has_many :blocking_users, through: :blocked_by, source: :blockinguser
+    # has_many :blocked, class_name: 'BlockedAccount', foreign_key: :blocked_user_id, dependent: :destroy
+    # has_many :blocked_users, through: :blocked, source: :blocked_user
+    # has_many :block_users, class_name: "BlockedAccount", foreign_key: :blocked_user_id, dependent: :destroy
+    has_many :userblock, class_name: "BlockedAccount", foreign_key: :blocking_user_id, dependent: :destroy
+    has_many :blocked_users, through: :userblock, source: :blocked_user
+
+    has_many :bandblock, class_name: "BlockedAccount", foreign_key: :blocking_user_id, dependent: :destroy
+    has_many :blocked_bands, through: :bandblock, source: :blocked_band
+    
     has_many :events, dependent: :destroy
     has_many :reports, dependent: :destroy
     has_many :bandfollows, dependent: :destroy
@@ -59,11 +74,6 @@ class User < ApplicationRecord
     has_many :follows, class_name: "Follow", foreign_key: :follower_id, dependent: :destroy
     has_many :followeds, through: :follows, source: :followed
 
-
-    has_many :blocked_by, class_name: 'UserBlock', foreign_key: :blocked_id, dependent: :destroy
-    has_many :blocking_users, through: :blocked_by, source: :blockinguser
-    has_many :blocked, class_name: 'UserBlock', foreign_key: :blocking_id, dependent: :destroy
-    has_many :blocked_users, through: :blocked, source: :blockeduser
 
 
     def timeline

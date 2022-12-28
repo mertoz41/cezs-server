@@ -1,6 +1,7 @@
 class UserblocksController < ApplicationController
     def create
-        new_block = UserBlock.create(blocked_id: params[:user_id], blocking_id: logged_in_user.id)
+        byebug
+        new_block = BlockedAccount.create(blocked_user_id: params[:blocked_user_id], blocked_band_id: params[:blocked_band_id], blocking_user_id: logged_in_user.id)
         # follow = Follow.find_by()
         # check if user follows blocked user, if so delete follow
         render json: {message: 'user blocked.'}
@@ -13,7 +14,7 @@ class UserblocksController < ApplicationController
         }
     end
     def unblockuser
-        userblock = UserBlock.find_by(blocked_id: params[:id], blocking_id: logged_in_user.id)
+        userblock = BlockedAccount.find_by(blocked_id: params[:id], blocking_id: logged_in_user.id)
         userblock.destroy
         render json: {message: 'user unblocked.'}
     end

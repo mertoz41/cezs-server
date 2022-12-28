@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :blocked_bands, :instruments, :follows_count, :blocked_users, :followers_count, :name, :email, :notification_token, :applauds
+  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :instruments, :follows_count, :blocked_account_count, :followers_count, :name, :email, :notification_token, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :notification_token, if: -> {object.notification_token}
   has_many :notifications
@@ -49,21 +49,10 @@ class UserSerializer < ActiveModel::Serializer
     object.follows.size + object.followedbands.size + object.followedartists.size + object.followedsongs.size + object.followedalbums.size
   end
 
-  def blocked_users
-    object.blocked_users.map do |user|
-      user.id
-    end
+  def blocked_account_count
+    count = object.blocked_users.size + object.blocked_bands.size
   end
 
-  def blocked_bands
-    object.blocked_bands.map do |band|
-      band.id
-    end
-  end
-
-
-
-  
   def avatar
     return url_for(object.avatar)
   end

@@ -4,8 +4,8 @@ class Band < ApplicationRecord
     has_many :bandmembers, dependent: :destroy
     has_many :members, through: :bandmembers
 
-    has_many :band_blocks, dependent: :destroy
-    has_many :blocking_users, through: :band_blocks
+    # has_many :band_blocks, dependent: :destroy
+    # has_many :blocking_users, through: :band_blocks
  
     has_one :bandlocation, dependent: :destroy
     has_one :location, through: :bandlocation

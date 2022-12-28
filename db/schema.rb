@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_26_022937) do
+ActiveRecord::Schema.define(version: 2022_12_28_040049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,13 +79,6 @@ ActiveRecord::Schema.define(version: 2022_12_26_022937) do
     t.string "spotify_id"
   end
 
-  create_table "band_blocks", force: :cascade do |t|
-    t.integer "band_id"
-    t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "bandfollows", force: :cascade do |t|
     t.integer "band_id"
     t.integer "user_id"
@@ -119,6 +112,14 @@ ActiveRecord::Schema.define(version: 2022_12_26_022937) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "bio"
+  end
+
+  create_table "blocked_accounts", force: :cascade do |t|
+    t.integer "blocked_user_id"
+    t.integer "blocked_band_id"
+    t.integer "blocking_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "chatrooms", force: :cascade do |t|
@@ -268,13 +269,6 @@ ActiveRecord::Schema.define(version: 2022_12_26_022937) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "spotify_id"
     t.integer "album_id"
-  end
-
-  create_table "user_blocks", force: :cascade do |t|
-    t.integer "blocked_id"
-    t.integer "blocking_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "useralbums", force: :cascade do |t|

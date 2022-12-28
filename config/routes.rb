@@ -113,7 +113,7 @@ Rails.application.routes.draw do
 
   get '/oldermessages/:id', to: 'messages#oldermessages'
 
-  post '/blockuser', to: 'userblocks#create'
+  post '/block_account', to: 'userblocks#create'
   get '/blockedaccounts', to: 'userblocks#blockedaccounts'
   delete '/unblockuser/:id', to: 'userblocks#unblockuser'
 
