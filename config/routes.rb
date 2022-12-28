@@ -62,8 +62,10 @@ Rails.application.routes.draw do
   post '/artistfollow', to: 'artists#artistfollow'
   get '/artistinfluences/:id', to: 'artists#influences'
   post  '/deleteuserartist', to: 'userartists#delete'
-  post '/userfiltersearch', to: 'users#filtersearch'
-  post '/bandfiltersearch', to: 'bands#filtersearch'
+  post '/usersfiltersearch', to: 'users#filter_search'
+  post '/bandsfiltersearch', to: 'bands#filter_search'
+  post '/postsfiltersearch', to: 'posts#filter_search'
+
   post '/deleteusersong', to: 'usersongs#delete'
 
   get '/albumfollowers/:id', to: 'albums#albumfollowers'

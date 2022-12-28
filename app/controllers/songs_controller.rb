@@ -3,7 +3,8 @@ class SongsController < ApplicationController
         song = Song.find_by(spotify_id: params[:id])
         if song
             follows = logged_in_user.songfollows.find_by(song_id: song.id) ? true : false
-            render json: {song: SongSerializer.new(song), follows: follows}
+            posts = song.posts.select {|post| !blocked_user_list.include?(post.user_id)}.select{|post| !blocked_band_list.include?(post.band_id)}
+            render json: {song: SongSerializer.new(song), follows: follows, posts: ActiveModel::Serializer::CollectionSerializer.new(posts, serializer: ShortPostSerializer)}
         else
             render json: {message: 'song not found'}
         end
@@ -24,7 +25,7 @@ class SongsController < ApplicationController
 
     def songposts
         song = Song.find(params[:id])
-        @posts = song.posts
+        @posts = song.posts.select {|post| !blocked_user_list.include?(post.user_id)}.select{|post| !blocked_band_list.include?(post.band_id)}
         render json: @posts, each_serializer: PostSerializer
     end
 

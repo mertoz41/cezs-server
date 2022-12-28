@@ -26,14 +26,17 @@ class ApplicationController < ActionController::API
         end
     end
 
-    def blokes
-      blocked_ids = logged_in_user.blocked_users.map {|user| user.id}
-      blocking_ids = logged_in_user.blocking_users.map {|user| user.id}
-      blokes = blocked_ids.concat(blocking_ids)
-      return blokes
+    def blocked_user_list
+      blocked_user_ids = logged_in_user.blocked_users.map {|user| user.id}
+      return blocked_user_ids
     end
 
-    def band_blokes
+    def logged_in_user_blocked_by
+      blocker_ids = logged_in_user.blocking_users.map {|user| user.id}
+      return blocker_ids
+    end
+
+    def blocked_band_list 
       blocked_ids = logged_in_user.blocked_bands.map {|band| band.id}
       return blocked_ids
     end

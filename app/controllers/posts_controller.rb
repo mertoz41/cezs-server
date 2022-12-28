@@ -42,9 +42,9 @@ class PostsController < ApplicationController
         render json: @post, serializer: PostSerializer
     end
     
-    def filter
-        instruments = params[:selected_instruments]
-        genres = params[:selected_genres]
+    def filter_search
+        instruments = params[:instruments]
+        genres = params[:genres]
         all_posts = []
 
         if instruments.length > 0
@@ -70,7 +70,7 @@ class PostsController < ApplicationController
                 
             end
         end
-        @posts = all_posts.select {|post| !blokes.include?(post.user_id)}.select{|post| !band_blokes.include?(post.band_id)}
+        @posts = all_posts.select {|post| !blocked_user_list.include?(post.user_id)}.select{|post| !blocked_band_list.include?(post.band_id)}
         render json: @posts, each_serializer: ShortPostSerializer
     end
     def musicposts

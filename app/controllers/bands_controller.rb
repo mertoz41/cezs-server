@@ -65,7 +65,7 @@ class BandsController < ApplicationController
         render json: {band: BandSerializer.new(@band)}
     end
 
-    def filtersearch
+    def filter_search
         instrument_users = User.joins(:instruments).merge(Instrument.where(id: params[:instruments]))
         bands = []
         instrument_bands = instrument_users.each do |user|

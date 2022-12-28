@@ -6,22 +6,14 @@ class User < ApplicationRecord
     has_many :messages, dependent: :destroy
     has_many :userchatrooms, dependent: :destroy
     has_many :chatrooms, through: :userchatrooms
-
-    # has_many :blocked_users, class_name: "BlockedAccount", foreign_key: "blocked_user_id",  dependent: :destroy
-    # has_many :blocked_bands, class_name: "BlockedAccount", foreign_key: "blocked_band_id",  dependent: :destroy
-
-    # has_many :band_blocks, dependent: :destroy
-    # has_many :blocked_bands, through: :band_blocks
-
-
-    # has_many :blocked_by, class_name: 'UserBlock', foreign_key: :blocked_id, dependent: :destroy
-    # has_many :blocking_users, through: :blocked_by, source: :blockinguser
-    # has_many :blocked, class_name: 'BlockedAccount', foreign_key: :blocked_user_id, dependent: :destroy
-    # has_many :blocked_users, through: :blocked, source: :blocked_user
-    # has_many :block_users, class_name: "BlockedAccount", foreign_key: :blocked_user_id, dependent: :destroy
+    
+    # users that blocked logged_in_user
+    has_many :blocked_by, class_name: 'BlockedAccount', foreign_key: :blocked_user_id, dependent: :destroy
+    has_many :blocking_users, through: :blocked_by, source: :blocking_user
+    # users logged_in_user blocked
     has_many :userblock, class_name: "BlockedAccount", foreign_key: :blocking_user_id, dependent: :destroy
     has_many :blocked_users, through: :userblock, source: :blocked_user
-
+    # bands logged_in_user blocked
     has_many :bandblock, class_name: "BlockedAccount", foreign_key: :blocking_user_id, dependent: :destroy
     has_many :blocked_bands, through: :bandblock, source: :blocked_band
     
