@@ -2,7 +2,7 @@ class BandsController < ApplicationController
 
     def searching
         all_bands = Band.where("name like?", "%#{params[:searching]}%")
-        @bands = all_bands.select {|band| !band_blokes.include?(band.id)}
+        @bands = filter_blocked_bands(all_bands)
         render json: {bands: ActiveModel::Serializer::CollectionSerializer.new(@bands, each_serializer: BandSerializer)}
     end
     def picture
@@ -72,7 +72,7 @@ class BandsController < ApplicationController
             bands = bands + user.bands
         end
         genre_bands = Band.joins(:genres).merge(Genre.where(id: params[:genres]))
-        @bands = bands + genre_bands
+        @bands = filter_blocked_bands(bands + genre_bands)
         
         render json: @bands.uniq, each_serializer: ShortBandSerializer
     end

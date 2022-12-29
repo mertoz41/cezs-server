@@ -9,7 +9,7 @@ class ArtistsController < ApplicationController
         artist = Artist.find_by(spotify_id: params[:id])
         if artist
             follows = logged_in_user.artistfollows.find_by(artist_id: artist.id) ? true : false
-            posts = artist.posts.select {|post| !blocked_user_list.include?(post.user_id)}.select{|post| !blocked_band_list.include?(post.band_id)}
+            posts = filter_blocked_posts(artist.posts)
             render json: {artist: ArtistSerializer.new(artist), follows: follows, posts: ActiveModel::Serializer::CollectionSerializer.new(posts, serializer: ShortPostSerializer)}
         else
             render json: {message: 'Artist not found'}

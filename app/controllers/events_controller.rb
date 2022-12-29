@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
     def index
         all_events = Event.where('event_date >= ?', Date.today)
-        @events = all_events.select{|gig| !blokes.include?(gig.user_id)}.select{|gig| !band_blokes.include?(gig.band_id)}
+        @events = filter_blocked_posts(all_events)
         render json: {events: ActiveModel::Serializer::CollectionSerializer.new(@events, each_serializer: EventSerializer)}
     end
     

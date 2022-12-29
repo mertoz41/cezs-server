@@ -26,6 +26,24 @@ class ApplicationController < ActionController::API
         end
     end
 
+    # take whatever needs to be filtered by blocks
+    # posts
+
+    def filter_blocked_users(list)
+      filtered = list.select {|item| !blocked_user_list.include?(item.id)}.select {|item| !logged_in_user_blocked_by.include?(item.id)}
+      return filtered
+    end
+
+    def filter_blocked_bands(list)
+      filtered = list.select {|item| !blocked_band_list.include?(item.id)}
+      return filtered
+    end
+
+    def filter_blocked_posts(list)
+      filtered = list.select {|post| !blocked_user_list.include?(post.user_id)}.select{|post| !blocked_band_list.include?(post.band_id)}.select{|post| !logged_in_user_blocked_by.include?(post.user_id)}
+      return filtered
+    end
+
     def blocked_user_list
       blocked_user_ids = logged_in_user.blocked_users.map {|user| user.id}
       return blocked_user_ids

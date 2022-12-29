@@ -70,7 +70,7 @@ class PostsController < ApplicationController
                 
             end
         end
-        @posts = all_posts.select {|post| !blocked_user_list.include?(post.user_id)}.select{|post| !blocked_band_list.include?(post.band_id)}
+        @posts = filter_blocked_posts(all_posts)
         render json: @posts, each_serializer: ShortPostSerializer
     end
     def musicposts

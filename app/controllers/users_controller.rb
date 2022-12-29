@@ -113,7 +113,7 @@ class UsersController < ApplicationController
 
     def searching
         searched_users= User.where("username like?", "%#{params[:searching]}%")
-        @users = searched_users.select {|user| !blocked_user_list.include?(user.id)}
+        @users = filter_blocked_users(searched_users)
         # partial string matching on a database object. not a very good solution
         render json: @users, each_serializer: ShortUserSerializer
         # serializer isnt very smart for this situation
@@ -134,7 +134,7 @@ class UsersController < ApplicationController
         instrument_users = User.joins(:instruments).merge(Instrument.where(id: params[:instruments]))
         genre_users = User.joins(:genres).merge(Genre.where(id: params[:genres]))
         all_users = instrument_users + genre_users
-        @users = all_users.select {|user| !blocked_user_list.include?(user.id)}
+        @users = filter_blocked_users(all_users)
         render json: @users.uniq, each_serializer: ShortUserSerializer
     end
 
