@@ -2,8 +2,13 @@ class BandsController < ApplicationController
 
     def searching
         all_bands = Band.where("name like?", "%#{params[:searching]}%")
-        @bands = filter_blocked_bands(all_bands)
-        render json: {bands: ActiveModel::Serializer::CollectionSerializer.new(@bands, each_serializer: BandSerializer)}
+        bands = []
+        if logged_in_user.blocked_bands.size
+            bands = filter_blocked_bands(all_bands)
+        else
+            bands = all_bands
+        end
+        render json: {bands: ActiveModel::Serializer::CollectionSerializer.new(bands, each_serializer: BandSerializer)}
     end
     def picture
         @band = Band.find(params[:band_id])
@@ -73,7 +78,13 @@ class BandsController < ApplicationController
         end
         genre_bands = Band.joins(:genres).merge(Genre.where(id: params[:genres]))
         @bands = filter_blocked_bands(bands + genre_bands)
+        filtered_bands = []
+        if logged_in_user.blocked_bands.size
+            filtered_bands = filter_blocked_bands(bands + genre_bands)
+        else
+            filtered_bands = bands + genre_bands
+        end
         
-        render json: @bands.uniq, each_serializer: ShortBandSerializer
+        render json: filtered_bands.uniq, each_serializer: ShortBandSerializer
     end
 end

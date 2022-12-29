@@ -8,8 +8,13 @@ class LocationsController < ApplicationController
     def show
         all_users = Location.find(params[:id]).users
         all_bands = Location.find(params[:id]).bands
-        @users = filter_blocked_users(all_users)
-        @bands = filter_blocked_bands(all_bands)
+        if logged_in_user.blocked_users.size || logged_in_user.blocked_bands.size || logged_in_user.blocking_users.size
+            users = filter_blocked_users(all_users)
+            bands = filter_blocked_bands(all_bands)
+        else 
+            users = all_users
+            bands = all_bands
+        end
         render json: {users: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: ShortUserSerializer), bands: ActiveModel::Serializer::CollectionSerializer.new(@bands, each_serializer: BandSerializer)}
     end
     def create

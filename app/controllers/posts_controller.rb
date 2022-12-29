@@ -70,8 +70,13 @@ class PostsController < ApplicationController
                 
             end
         end
-        @posts = filter_blocked_posts(all_posts)
-        render json: @posts, each_serializer: ShortPostSerializer
+        posts = []
+        if logged_in_user.blocked_users.size || logged_in_user.blocked_bands.size || logged_in_user.blocking_users.size
+            posts = filter_blocked_posts(all_posts)
+        else 
+            posts = all_posts
+        end
+        render json: posts, each_serializer: ShortPostSerializer
     end
     def musicposts
         @posts = Post.where(id: params[:posts])

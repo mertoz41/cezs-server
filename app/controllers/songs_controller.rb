@@ -25,8 +25,13 @@ class SongsController < ApplicationController
 
     def songposts
         song = Song.find(params[:id])
-        @posts = filter_blocked_posts(song.posts)
-        render json: @posts, each_serializer: PostSerializer
+        posts = []
+        if logged_in_user.blocked_users.size || logged_in_user.blocked_bands.size || logged_in_user.blocking_users.size
+            posts = filter_blocked_posts(song.posts)
+        else 
+            posts = song.posts
+        end
+        render json: posts, each_serializer: PostSerializer
     end
 
     def songfollowers

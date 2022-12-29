@@ -1,8 +1,13 @@
 class EventsController < ApplicationController
     def index
         all_events = Event.where('event_date >= ?', Date.today)
-        @events = filter_blocked_posts(all_events)
-        render json: {events: ActiveModel::Serializer::CollectionSerializer.new(@events, each_serializer: EventSerializer)}
+        events = []
+        if logged_in_user.blocked_users.size || logged_in_user.blocked_bands.size || logged_in_user.blocking_users.size
+            events = filter_blocked_posts(all_events)
+        else
+            events = all_events
+        end
+        render json: {events: ActiveModel::Serializer::CollectionSerializer.new(events, each_serializer: EventSerializer)}
     end
     
     def show
