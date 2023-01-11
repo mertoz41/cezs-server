@@ -12,7 +12,7 @@ class AuthController < ApplicationController
             render json: {
                 user: UserSerializer.new(@user), 
                 token: token, 
-                timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer),
+                timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer, scope: logged_in_user),
                 chatrooms: ActiveModel::Serializer::CollectionSerializer.new(@chatrooms, each_serializer: ChatroomSerializer),
         
                 }
@@ -30,7 +30,7 @@ class AuthController < ApplicationController
      
         render json: {
             user: UserSerializer.new(@user), 
-            timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer),
+            timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer, scope: logged_in_user),
             chatrooms: ActiveModel::Serializer::CollectionSerializer.new(@chatrooms, each_serializer: ChatroomSerializer),
 
         }

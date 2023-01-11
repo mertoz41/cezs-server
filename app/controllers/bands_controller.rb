@@ -1,5 +1,4 @@
 class BandsController < ApplicationController
-
     def searching
         all_bands = Band.where("name like?", "%#{params[:searching]}%")
         bands = []
@@ -19,7 +18,7 @@ class BandsController < ApplicationController
     def bandposts
         band = Band.find(params[:id])
         @posts = band.posts
-        render json: @posts, each_serializer: PostSerializer
+        render json: @posts, each_serializer: PostSerializer, scope: logged_in_user
     end
 
     def show

@@ -1,6 +1,6 @@
 class PostSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :user_id, :clip, :created_at, :comment_count, :genre_id, :genre, :instruments, :view_count, :description, :applaud_count
+  attributes :id, :user_id, :clip, :created_at, :comment_count, :genre_id, :genre, :instruments, :view_count, :description, :applaud_count, :applauded
   attribute :user_id, if: -> {object.user.present?}
   attribute :username, if: -> {object.user.present?}
   attribute :useravatar, if: -> {object.user.present?}
@@ -15,9 +15,11 @@ class PostSerializer < ActiveModel::Serializer
   attribute :songSpotifyId, if: -> {object.song.present?}
   attribute :artistSpotifyId, if: -> {object.artist.present?}
   attribute :albumSpotifyId, if: -> {object.song.present?}
+
   def clip
     url_for(object.clip)
   end
+
   def albumSpotifyId
     return object.song.album.spotify_id
   end
@@ -32,6 +34,13 @@ class PostSerializer < ActiveModel::Serializer
     object.postviews.size
   end
 
+  def applauded
+    found = Applaud.find_by(user_id: logged_in_user.id, post_id: object.id)
+    if found
+      return true 
+    end
+    return false
+  end
   
   def genre
     return object.genre.name
@@ -78,6 +87,10 @@ class PostSerializer < ActiveModel::Serializer
     return object.artist.spotify_id
   end
 
+
+  def logged_in_user
+    scope
+  end
 
 
   

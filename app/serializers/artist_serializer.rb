@@ -1,5 +1,5 @@
 class ArtistSerializer < ActiveModel::Serializer
-  attributes :id, :name, :spotify_id, :song_count, :favoriteusers_count, :followingusers_count, :post_count
+  attributes :id, :name, :spotify_id, :song_count, :favoriteusers_count, :followingusers_count, :post_count, :view_count
   # has_many :posts, serializer: ShortPostSerializer
   has_many :albums
   
@@ -16,5 +16,11 @@ class ArtistSerializer < ActiveModel::Serializer
     return object.followingusers.size
   end
 
-  
+  def view_count
+    count = 0
+    object.posts.each do |post|
+      count += post.postviews.length
+    end
+    return count
+  end
 end

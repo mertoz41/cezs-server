@@ -17,6 +17,6 @@ class VideoConverter
         movie.transcode(path, { video_codec: 'libx264', audio_codec: 'aac' }) { |progress| ActionCable.server.broadcast "video_conversion_channel_#{@user.id}", progress}
         @post.clip.attach(io: File.open(path), filename: "video-#{SecureRandom.alphanumeric(12)}.mp4", content_type: 'video/mp4')
     end
-    ActionCable.server.broadcast "video_conversion_channel_#{@user.id}", PostSerializer.new(@post)
+    ActionCable.server.broadcast "video_conversion_channel_#{@user.id}", PostSerializer.new(@post, :scope => @user)
     end
   end

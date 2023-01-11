@@ -19,10 +19,6 @@ class SongsController < ApplicationController
         # serializer isnt very smart for this situation
     end
 
-    # def check
-        
-    # end
-
     def songposts
         song = Song.find(params[:id])
         posts = []
@@ -31,7 +27,7 @@ class SongsController < ApplicationController
         else 
             posts = song.posts
         end
-        render json: posts, each_serializer: PostSerializer
+        render json: posts, each_serializer: PostSerializer, scope: logged_in_user
     end
 
     def songfollowers

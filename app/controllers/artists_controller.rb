@@ -34,7 +34,7 @@ class ArtistsController < ApplicationController
     def artistposts
         artist = Artist.find(params[:id])
         @posts = artist.posts
-        render json: @posts, each_serializer: PostSerializer
+        render json: @posts, each_serializer: PostSerializer, scope: logged_in_user
 
     end
 

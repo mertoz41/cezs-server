@@ -6,3 +6,5 @@ class Notification < ApplicationRecord
     belongs_to :event, optional: true
     belongs_to :applaud, optional: true
 end
+# if applaud is deleted notification object must get deleted too
+# what is applaud and notifications relationship??

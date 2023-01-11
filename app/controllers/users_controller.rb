@@ -43,7 +43,7 @@ class UsersController < ApplicationController
             bandposts = bandposts + band.posts
         end
         @posts = user.posts + bandposts
-        render json: @posts, each_serializer: PostSerializer
+        render json: @posts, each_serializer: PostSerializer, scope: logged_in_user
     end
 
     def update
@@ -115,9 +115,9 @@ class UsersController < ApplicationController
         searched_users= User.where("username like?", "%#{params[:searching]}%")
         users = []
         if logged_in_user.blocked_users.size
-            users = filter_blocked_users(all_users)
+            users = filter_blocked_users(searched_users)
         else
-            users = all_users
+            users = searched_users
         end
         # partial string matching on a database object. not a very good solution
         render json: users, each_serializer: ShortUserSerializer

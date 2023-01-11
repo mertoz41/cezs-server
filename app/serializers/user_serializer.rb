@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :instruments, :follows_count, :blocked_account_count, :followers_count, :name, :email, :notification_token, :applauds
+  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :instruments, :follows_count, :blocked_account_count, :followers_count, :name, :email, :notification_token
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :notification_token, if: -> {object.notification_token}
   has_many :notifications
@@ -14,35 +14,26 @@ class UserSerializer < ActiveModel::Serializer
   
   def notification_token
     return object.notification_token.token
-    
   end
   
   def upcoming_event
       events = object.events.where("event_date >= ?", Time.now)
       return events.last
   end
-  def applauds
-    object.applauds.map do |appl|
-      appl.post_id
-    end
-    
-  end
-  
+
+
   def created_at
     object.created_at.to_date
-    
   end
 
   def instruments
     object.instruments.map do |inst|
       {id: inst.id, name: inst.name}
     end
-    
   end
 
   def followers_count
     object.followers.size
-    
   end
 
   def follows_count

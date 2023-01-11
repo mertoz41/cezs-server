@@ -32,9 +32,8 @@ class PostsController < ApplicationController
         ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
 
         @post.thumbnail.attach(params[:thumbnail])
-        # render json: {message: 'uploading'}
 
-        render json: @post, serializer: PostSerializer
+        render json: @post, serializer: PostSerializer, scope: logged_in_user
     end
 
     def show
