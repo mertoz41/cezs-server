@@ -1,3 +1,4 @@
+
 class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
@@ -120,8 +121,7 @@ class User < ApplicationRecord
         end
         # filtered = arr.select {|post| post.post_reports.size == 0}
         unique_arr = arr.uniq
-         
-        return unique_arr.sort_by(&:created_at).reverse
+        return unique_arr.sort_by(&:created_at).reverse.first(8)
     end
 
  
@@ -151,5 +151,42 @@ class User < ApplicationRecord
         end
         # filtered = arr.select {|post| post.post_reports.size == 0}
         return arr.sort_by(&:created_at).reverse.take(10)
+    end
+
+    def get_older_posts(date)
+        arr = []
+        arr = arr + self.posts.select {|post| post.created_at <= date}
+        if self.bands.size > 0
+            arr = arr +  self.bands.map(&:posts).flatten!.select {|post| post.created_at <= date}
+        end
+        if self.followeds.size > 0
+            arr = arr +  self.followeds.map(&:posts).flatten!.select {|post| post.created_at <= date}.last(5)
+        end
+        
+        # followed bands posts
+        if self.followedbands.size > 0
+            arr = arr +  self.followedbands.map(&:posts).flatten!.select {|post| post.created_at <= date}.last(5)  
+            # bandpostids = bandsposts.map {|post| post.id}
+        end
+
+        # followed artists posts
+        if self.followedartists.size > 0
+            arr = arr +  self.followedartists.map(&:posts).flatten!.select {|post| post.created_at <= date}.last(5)    
+            # artistpostids = artistsposts.map {|post| post.id}
+        end
+
+        # followed songs posts
+        if self.followedsongs.size > 0
+            arr = arr +  self.followedsongs.map(&:posts).flatten!.select {|post| post.created_at <= date}.last(5)
+
+        end
+
+        # followed albums posts
+        if self.followedalbums.size > 0
+            arr = arr + self.followedalbums.map(&:posts).flatten!.select {|post| post.created_at <= date}.last(5)
+    
+        end
+        unique_arr = arr.uniq
+        return unique_arr.sort_by(&:created_at).reverse.first(6)
     end
 end

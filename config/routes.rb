@@ -98,6 +98,7 @@ Rails.application.routes.draw do
   post '/instrumentsearch', to: 'instruments#instrumentsearch'
   post '/genresearch', to: 'genres#genresearch'
   post '/timeline', to: 'timeline#user_timeline'
+  post '/olderposts', to: 'timeline#older_posts'
   post '/usertoken', to: 'users#usertoken'
   get '/experimentnotification', to: 'notifications#experiment'
   post '/marknotifications', to: 'notifications#marknotifications'

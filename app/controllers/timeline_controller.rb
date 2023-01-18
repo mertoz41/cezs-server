@@ -13,4 +13,9 @@ class TimelineController < ApplicationController
         @timeline = mixed_timeline.uniq
         render json: {timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer)}
     end
+
+    def older_posts
+        posts = logged_in_user.get_older_posts(params[:last_created_at])
+        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(posts, each_serializer: PostSerializer, scope: logged_in_user)}
+    end
 end
