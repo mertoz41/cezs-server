@@ -25,9 +25,7 @@ class AuthController < ApplicationController
         token = request.headers["Authorization"].split(' ')[1]
         @user = User.find(decode(token)["user_id"])
         @timeline = @user.timeline
-        
         @chatrooms = @user.chatrooms
-     
         render json: {
             user: UserSerializer.new(@user), 
             timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer, scope: logged_in_user),

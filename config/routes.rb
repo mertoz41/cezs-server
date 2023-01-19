@@ -91,7 +91,7 @@ Rails.application.routes.draw do
   delete '/songunfollow/:id', to: 'songs#songunfollow'
 
   get '/exploredata', to: 'search#exploredata'
-
+  get '/instrumentsgenres', to: 'search#get_instruments_genres'
   post '/applaudpost', to: 'applauds#applaudpost'
   delete '/unapplaudpost/:id', to: 'applauds#unapplaudpost'
 
