@@ -11,6 +11,11 @@ class SongsController < ApplicationController
         # @song = Song.find(params[:id])
         # render json: {song: SongSerializer.new(@song)}
     end
+    def song_older_posts
+        posts = Song.find(params[:id]).posts.select {|post| post.created_at <= params[:last_created_at]}
+        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
+        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(unique_array, each_serializer: PostSerializer, scope: logged_in_user)}
+    end
     
     def searching
         @songs = Song.where(Song.arel_table[:name].lower.matches("%#{params[:searching].downcase}%"))

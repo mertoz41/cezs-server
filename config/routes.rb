@@ -68,6 +68,12 @@ Rails.application.routes.draw do
 
   post '/deleteusersong', to: 'usersongs#delete'
 
+  post '/locationolderposts', to: 'locations#location_older_posts'
+  post '/artistolderposts', to: 'artists#artist_older_posts'
+  post '/songolderposts', to: 'songs#song_older_posts'
+  post '/bandolderposts', to: 'bands#band_older_posts'
+  post '/userolderposts', to: 'users#user_older_posts'
+  
   get '/albumfollowers/:id', to: 'albums#albumfollowers'
   post '/deleteuseralbum', to: 'useralbums#delete'
   get '/albumsongs/:id', to: 'albums#albumsongs'

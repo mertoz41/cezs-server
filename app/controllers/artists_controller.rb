@@ -26,6 +26,12 @@ class ArtistsController < ApplicationController
         render json: @influences, each_serializer: ShortUserSerializer
     end 
 
+    def artist_older_posts
+        posts = Artist.find(params[:id]).posts.select {|post| post.created_at <= params[:last_created_at]}
+        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
+        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(unique_array, each_serializer: PostSerializer, scope: logged_in_user)}
+    end
+
     def artistfollowers
         artist = Artist.find(params[:id])
         @users = artist.followingusers

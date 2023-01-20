@@ -17,6 +17,11 @@ class UsersController < ApplicationController
         follows = logged_in_user.follows.find_by(followed_id: user.id) ? true : false
         render json: {user: UserSerializer.new(user), follows: follows }
     end 
+    def user_older_posts
+        posts = User.find(params[:id]).posts.select {|post| post.created_at <= params[:last_created_at]}
+        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
+        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(unique_array, each_serializer: PostSerializer, scope: logged_in_user)}
+    end
 
     def passwordcheck
         if logged_in_user.authenticate(params[:password])

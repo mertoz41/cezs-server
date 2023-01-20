@@ -9,6 +9,11 @@ class BandsController < ApplicationController
         end
         render json: {bands: ActiveModel::Serializer::CollectionSerializer.new(bands, each_serializer: BandSerializer)}
     end
+    def band_older_posts
+        posts = Band.find(params[:id]).posts.select {|post| post.created_at <= params[:last_created_at]}
+        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
+        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(unique_array, each_serializer: PostSerializer, scope: logged_in_user)}
+    end
     def picture
         @band = Band.find(params[:band_id])
         @band.picture.attach(params[:picture])
