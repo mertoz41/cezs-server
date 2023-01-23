@@ -42,10 +42,9 @@ class UsersController < ApplicationController
     end
 
     def userposts
-        post = Post.find(params[:id])
-        posts = Post.where(["created_at <= ? AND user_id = ?", post.created_at, post.user_id]).first(5)
-        byebug
-        
+        selected_post = Post.find(params[:id])
+        posts = User.find(selected_post.user_id).posts.select {|post| post.created_at <= selected_post.created_at}
+        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
         render json: posts, each_serializer: PostSerializer, scope: logged_in_user
     end
 

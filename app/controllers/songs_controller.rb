@@ -21,18 +21,17 @@ class SongsController < ApplicationController
     end
 
     def songposts
-        post = Post.find(params[:id])
-        song = Song.find(post.song_id)
-        posts = Post.where(["created_at <= ? AND song_id = ?", post.created_at, post.song_id]).first(5)
-        # posts = []
+        selected_post = Post.find(params[:id])
+        posts = Song.find(selected_post.song_id).posts.select {|post| post.created_at <= selected_post.created_at}
+        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
         # if logged_in_user.blocked_users.size || logged_in_user.blocked_bands.size || logged_in_user.blocking_users.size
         #     posts = filter_blocked_posts(first_five_posts)
         # else 
         #     posts = first_five_posts
         # end
-        render json: posts, each_serializer: PostSerializer, scope: logged_in_user
+        render json: unique_array, each_serializer: PostSerializer, scope: logged_in_user
     end
-    
+
     def song_older_posts
         posts = Song.find(params[:id]).posts.select {|post| post.created_at <= params[:last_created_at]}
         unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)

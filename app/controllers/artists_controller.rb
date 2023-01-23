@@ -42,9 +42,10 @@ class ArtistsController < ApplicationController
         render json: @users, each_serializer: ShortUserSerializer
     end
     def artistposts
-        post = Post.find(params[:id])
-        @posts = Post.where(["created_at <= ? AND artist_id = ?", post.created_at, post.artist_id]).first(5)
-        render json: @posts, each_serializer: PostSerializer, scope: logged_in_user
+        selected_post = Post.find(params[:id])
+        posts = Artist.find(selected_post.artist_id).posts.select {|post| post.created_at <= selected_post.created_at}
+        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
+        render json: unique_array, each_serializer: PostSerializer, scope: logged_in_user
     end
 
     def artistfavorites
