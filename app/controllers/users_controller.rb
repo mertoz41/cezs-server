@@ -42,13 +42,11 @@ class UsersController < ApplicationController
     end
 
     def userposts
-        user = User.find(params[:id])
-        bandposts = []
-        user.bands.each do |band|
-            bandposts = bandposts + band.posts
-        end
-        @posts = user.posts + bandposts
-        render json: @posts, each_serializer: PostSerializer, scope: logged_in_user
+        post = Post.find(params[:id])
+        posts = Post.where(["created_at <= ? AND user_id = ?", post.created_at, post.user_id]).first(5)
+        byebug
+        
+        render json: posts, each_serializer: PostSerializer, scope: logged_in_user
     end
 
     def update

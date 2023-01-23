@@ -1,6 +1,8 @@
 class ShortUserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :avatar, :location, :instruments, :genres, :name
+  attributes :id, :username, :location, :instruments, :genres, :name
+  attribute :avatar, if: -> {object.avatar.present?}
+
   def instruments
     object.instruments.map do |inst|
       {id: inst.id, name: inst.name}

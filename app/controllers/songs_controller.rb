@@ -11,11 +11,7 @@ class SongsController < ApplicationController
         # @song = Song.find(params[:id])
         # render json: {song: SongSerializer.new(@song)}
     end
-    def song_older_posts
-        posts = Song.find(params[:id]).posts.select {|post| post.created_at <= params[:last_created_at]}
-        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
-        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(unique_array, each_serializer: PostSerializer, scope: logged_in_user)}
-    end
+  
     
     def searching
         @songs = Song.where(Song.arel_table[:name].lower.matches("%#{params[:searching].downcase}%"))
@@ -25,14 +21,26 @@ class SongsController < ApplicationController
     end
 
     def songposts
-        song = Song.find(params[:id])
-        posts = []
-        if logged_in_user.blocked_users.size || logged_in_user.blocked_bands.size || logged_in_user.blocking_users.size
-            posts = filter_blocked_posts(song.posts)
-        else 
-            posts = song.posts
-        end
+        post = Post.find(params[:id])
+        song = Song.find(post.song_id)
+        posts = Post.where(["created_at <= ? AND song_id = ?", post.created_at, post.song_id]).first(5)
+        # posts = []
+        # if logged_in_user.blocked_users.size || logged_in_user.blocked_bands.size || logged_in_user.blocking_users.size
+        #     posts = filter_blocked_posts(first_five_posts)
+        # else 
+        #     posts = first_five_posts
+        # end
         render json: posts, each_serializer: PostSerializer, scope: logged_in_user
+    end
+    
+    def song_older_posts
+        posts = Song.find(params[:id]).posts.select {|post| post.created_at <= params[:last_created_at]}
+        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
+        if unique_array.size === 0
+            render json: {message: "no post left to show"}
+        else
+        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(unique_array, each_serializer: PostSerializer, scope: logged_in_user)}
+        end
     end
 
     def songfollowers

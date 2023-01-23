@@ -16,6 +16,10 @@ class TimelineController < ApplicationController
 
     def older_posts
         posts = logged_in_user.get_older_posts(params[:last_created_at])
-        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(posts, each_serializer: PostSerializer, scope: logged_in_user)}
+        if posts.size === 0
+            render json: {message: "No post left to display"}
+        else
+            render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(posts, each_serializer: PostSerializer, scope: logged_in_user)}
+        end
     end
 end
