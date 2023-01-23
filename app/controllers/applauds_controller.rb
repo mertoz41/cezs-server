@@ -3,6 +3,7 @@ class ApplaudsController < ApplicationController
         applaud = Applaud.create(post_id: params[:post_id], user_id: logged_in_user.id)
         if applaud.post.user
             @new_notification = Notification.create(applaud_id: applaud.id, user_id: applaud.post.user.id, action_user_id: logged_in_user.id, seen: false)
+            ActionCable.server.broadcast "notifications_channel_#{ applaud.post.user.id}", NotificationSerializer.new(@new_notification)
             # if applaud.post.user.notification_token
             #     SendNotificationJob.perform_later(
             #         applaud.post.user.notification_token.token,
@@ -14,6 +15,8 @@ class ApplaudsController < ApplicationController
         else
             applaud.post.band.members.each do |member|
                 @new_notification = Notification.create(applaud_id: applaud.id, user_id: member.id, action_user_id: logged_in_user.id, seen: false)
+                ActionCable.server.broadcast "notifications_channel_#{ member.id}", NotificationSerializer.new(@new_notification)
+
                 # if member.notification_token
                 #     SendNotificationJob.perform_later(
                 #         member.notification_token.token,
@@ -25,6 +28,7 @@ class ApplaudsController < ApplicationController
             # post is a band post, check all members of band
 
         end
+        
 
         render json: {message: 'post applauded.'}
     end

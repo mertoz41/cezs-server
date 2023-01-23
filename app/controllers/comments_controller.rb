@@ -14,6 +14,8 @@ class CommentsController < ApplicationController
         @comment = Comment.create(comment: params[:comment], user_id: logged_in_user.id, post_id: post.id)
         if post.user
             @new_notification = Notification.create(action_user_id: logged_in_user.id, user_id: post.user.id, comment_id: @comment.id, seen: false)
+            ActionCable.server.broadcast "notifications_channel_#{post.user.id}", NotificationSerializer.new(@new_notification)
+
             # @new_notification = CommentNotification.create(user_id: post.user.id, post_id: post.id, action_user_id: user.id, seen: false)
             # if post.user.notification_token
             #     SendNotificationJob.perform_later(
@@ -27,6 +29,8 @@ class CommentsController < ApplicationController
             # notifications for band members if post is a band post
             post.band.members.each do |member|
                 @new_notification = Notification.create(user_id: member.id, post_id: post.id, action_user_id: logged_in_user.id, seen: false, comment_id: @comment_id)
+                ActionCable.server.broadcast "notifications_channel_#{ member.id}", NotificationSerializer.new(@new_notification)
+
                 # if member.notification_token
                 #     SendNotificationJob.perform_later(
                 #     member.notification_token.token,

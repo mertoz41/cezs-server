@@ -5,6 +5,8 @@ class FollowsController < ApplicationController
         followed_user = User.find(params[:id])
         new_follow = Follow.create(follower_id: following_user.id, followed_id: followed_user.id)
         @new_notification = Notification.create(user_id: followed_user.id, action_user_id: logged_in_user.id, seen: false)
+        ActionCable.server.broadcast "notifications_channel_#{ followed_user.id}", NotificationSerializer.new(@new_notification)
+
         # if followed_user.notification_token
         #     SendNotificationJob.perform_later(
         #         followed_user.notification_token.token,

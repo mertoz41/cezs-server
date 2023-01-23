@@ -15,7 +15,7 @@ class NotificationSerializer < ActiveModel::Serializer
     elsif object.event_id
       message = " has an upcoming event near you"
     else 
-      message = " followed you"
+      message = " follows you"
     end
     return username + message
   end
