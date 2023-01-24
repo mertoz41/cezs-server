@@ -4,7 +4,7 @@ class NotificationSerializer < ActiveModel::Serializer
   attributes :id, :user_id, :action_user_id, :seen, :created_at, :message
   attribute :avatar, if: -> {object.action_user.avatar.attached?}
   attribute :post_id, if: -> {object.comment_id || object.applaud_id}
-  attribute :clip, if: -> {object.comment_id || object.applaud_id}
+  attribute :thumbnail, if: -> {object.comment_id || object.applaud_id}
 
   def message 
     username = object.action_user.username
@@ -34,11 +34,11 @@ class NotificationSerializer < ActiveModel::Serializer
     end
   end
 
-  def clip
+  def thumbnail
     if object.comment_id
-      return url_for(object.comment.post.clip)
+      return url_for(object.comment.post.thumbnail)
     else
-      return url_for(object.applaud.post.clip)
+      return url_for(object.applaud.post.thumbnail)
     end
   end
   

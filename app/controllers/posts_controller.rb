@@ -38,7 +38,7 @@ class PostsController < ApplicationController
 
     def show
         @post = Post.find(params[:id])
-        render json: @post, serializer: PostSerializer
+        render json: @post, serializer: PostSerializer, scope: logged_in_user
     end
     
     def filter_search
