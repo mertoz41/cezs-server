@@ -7,14 +7,15 @@ class MessagesController < ApplicationController
       usr.id != user.id
     end
     
-    if other_user[0].notification_token
-      SendNotificationJob.perform_later(
-        other_user[0].notification_token.token,
-        "#{user.username} sent you a message!",
-        ChatroomSerializer.new(@chatroom).as_json
-      )
-    end
+    # if other_user[0].notification_token
+    #   SendNotificationJob.perform_later(
+    #     other_user[0].notification_token.token,
+    #     "#{user.username} sent you a message!",
+    #     ChatroomSerializer.new(@chatroom).as_json
+    #   )
+    # end
     ActionCable.server.broadcast "chatrooms_channel_#{params[:chatroom_id]}", message
+    ActionCable.server.broadcast "notifications_channel_#{params[:other_user.id]}", message
 
     head :ok
   end

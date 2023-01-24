@@ -4,10 +4,15 @@ class ChatroomSerializer < ActiveModel::Serializer
 
   def users
     object.users.map do |user|
-      {id: user.id,
-      avatar: url_for(user.avatar),
-      username: user.username
-    }
+      obj = {id: user.id, username: user.username}
+      if user.avatar.attached?
+        obj["avatar"] = url_for(user.avatar)
+      end
+      obj
+    #   {id: user.id,
+    #   avatar: url_for(user.avatar),
+    #   username: user.username
+    # }
     end
   end
 
