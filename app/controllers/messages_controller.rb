@@ -1,12 +1,11 @@
 class MessagesController < ApplicationController
   def create
     @chatroom = Chatroom.find(params[:chatroom_id])
-    user = User.find(params[:user_id])
-    message = Message.create(chatroom_id: @chatroom.id, user_id: user.id, content: params[:content], seen: false)
-    other_user = @chatroom.users.select do |usr|
-      usr.id != user.id
-    end
-    
+    user = User.find(params[:other_user_id])
+    message = Message.create(chatroom_id: @chatroom.id, user_id: logged_in_user.id, content: params[:content], seen: false)
+    # other_user = @chatroom.users.select do |usr|
+    #   usr.id != logged_in_user.id
+    # end
     # if other_user[0].notification_token
     #   SendNotificationJob.perform_later(
     #     other_user[0].notification_token.token,
@@ -15,7 +14,7 @@ class MessagesController < ApplicationController
     #   )
     # end
     ActionCable.server.broadcast "chatrooms_channel_#{params[:chatroom_id]}", message
-    ActionCable.server.broadcast "notifications_channel_#{params[:other_user.id]}", message
+    ActionCable.server.broadcast "notifications_channel_#{user.id}", MessageSerializer.new(message)
 
     head :ok
   end
