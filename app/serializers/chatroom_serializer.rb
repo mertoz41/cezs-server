@@ -9,10 +9,6 @@ class ChatroomSerializer < ActiveModel::Serializer
         obj["avatar"] = url_for(user.avatar)
       end
       obj
-    #   {id: user.id,
-    #   avatar: url_for(user.avatar),
-    #   username: user.username
-    # }
     end
   end
 
