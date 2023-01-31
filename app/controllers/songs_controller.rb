@@ -20,27 +20,9 @@ class SongsController < ApplicationController
         # serializer isnt very smart for this situation
     end
 
-    def songposts
-        selected_post = Post.find(params[:id])
-        posts = Song.find(selected_post.song_id).posts.select {|post| post.created_at <= selected_post.created_at}
-        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
-        # if logged_in_user.blocked_users.size || logged_in_user.blocked_bands.size || logged_in_user.blocking_users.size
-        #     posts = filter_blocked_posts(first_five_posts)
-        # else 
-        #     posts = first_five_posts
-        # end
-        render json: unique_array, each_serializer: PostSerializer, scope: logged_in_user
-    end
 
-    def song_older_posts
-        posts = Song.find(params[:id]).posts.select {|post| post.created_at <= params[:last_created_at]}
-        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
-        if unique_array.size === 0
-            render json: {message: "no post left to show"}
-        else
-        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(unique_array, each_serializer: PostSerializer, scope: logged_in_user)}
-        end
-    end
+
+
 
     def songfollowers
         song = Song.find(params[:id])

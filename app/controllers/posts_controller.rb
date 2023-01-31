@@ -79,7 +79,11 @@ class PostsController < ApplicationController
     end
     def musicposts
         @posts = Post.where(id: params[:posts])
-        render json: @posts, each_serializer: PostSerializer, scope: logged_in_user
+        if !@posts.size
+            render json: {message: "no more videos left to show"}
+        else
+            render json: @posts, each_serializer: PostSerializer, scope: logged_in_user
+        end
     end
 
     def createview

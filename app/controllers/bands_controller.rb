@@ -9,28 +9,14 @@ class BandsController < ApplicationController
         end
         render json: {bands: ActiveModel::Serializer::CollectionSerializer.new(bands, each_serializer: BandSerializer)}
     end
-    def band_older_posts
-        posts = Band.find(params[:id]).posts.select {|post| post.created_at <= params[:last_created_at]}
-        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
-        if unique_array.size === 0
-            render json: {message: "no post left to show"}
-        else
-        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(unique_array, each_serializer: PostSerializer, scope: logged_in_user)}
-        end
-    end
+
     def picture
         @band = Band.find(params[:band_id])
         @band.picture.attach(params[:picture])
         render json: {band: BandSerializer.new(@band)}
     end
 
-    def bandposts
-        selected_post = Post.find(params[:id])
-        posts = Band.find(selected_post.band_id).posts.select {|post| post.created_at <= selected_post.created_at}
-        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
-        # posts = Post.where(["created_at <= ? AND band_id = ?", post.created_at, post.band_id]).first(5)
-        render json: unique_array, each_serializer: PostSerializer, scope: logged_in_user
-    end
+
 
     def show
         band = Band.find(params[:id])

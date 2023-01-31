@@ -28,8 +28,13 @@ class BandfollowsController < ApplicationController
     def bandfollowers
         band = Band.find(params[:id])
         followers = band.followers.map do |user|
-            {username: user.username, avatar: url_for(user.avatar), id: user.id}
+            obj = {id: user.id, username: user.username}
+            if user.avatar.attached?
+                obj["avatar"] = url_for(user.avatar)
+            end
+            obj
         end
+        # {username: user.username, avatar: url_for(user.avatar), id: user.id}
         render json: {followers: followers}
     end
 end

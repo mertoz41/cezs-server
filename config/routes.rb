@@ -41,11 +41,6 @@ Rails.application.routes.draw do
   post '/createbandgenre', to: 'genres#createbandgenre'
   post '/deletebandgenre', to: 'genres#deletebandgenre'
 
-  get '/userposts/:id', to: 'users#userposts'
-  get '/bandposts/:id', to: 'bands#bandposts'
-  get '/songposts/:id', to: 'songs#songposts'
-  get '/artistposts/:id', to: 'artists#artistposts'
-
   get '/artistfollowers/:id', to: 'artists#artistfollowers'
   get '/artistfavorites/:id', to: 'artists#artistfavorites'
 
@@ -67,12 +62,6 @@ Rails.application.routes.draw do
   post '/postsfiltersearch', to: 'posts#filter_search'
 
   post '/deleteusersong', to: 'usersongs#delete'
-
-  post '/locationolderposts', to: 'locations#location_older_posts'
-  post '/artistolderposts', to: 'artists#artist_older_posts'
-  post '/songolderposts', to: 'songs#song_older_posts'
-  post '/bandolderposts', to: 'bands#band_older_posts'
-  post '/userolderposts', to: 'users#user_older_posts'
   
   get '/albumfollowers/:id', to: 'albums#albumfollowers'
   post '/deleteuseralbum', to: 'useralbums#delete'

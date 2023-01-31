@@ -23,14 +23,6 @@ class LocationsController < ApplicationController
             bands: ActiveModelSerializers::SerializableResource.new(@all_bands, each_serializer: ShortBandSerializer)
         }
     end
-
-    def location_older_posts
-        user_posts = Location.find(params[:id]).users.map(&:posts).flatten!.select {|post| post.created_at <= params[:last_created_at]}
-        band_posts = Location.find(params[:id]).bands.map(&:posts).flatten!.select {|post| post.created_at <= params[:last_created_at]}
-        posts = user_posts + band_posts
-        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
-        render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(unique_array, each_serializer: PostSerializer, scope: logged_in_user)}
-    end
     def create
         # incoming location to be checked whether it exists
         # if it exists, create Userlocation model with that locations id and users id

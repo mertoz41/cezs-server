@@ -26,26 +26,10 @@ class ArtistsController < ApplicationController
         render json: @influences, each_serializer: ShortUserSerializer
     end 
 
-    def artist_older_posts
-        posts = Artist.find(params[:id]).posts.select {|post| post.created_at <= params[:last_created_at]}
-        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
-        if unique_array.size === 0
-            render json: {message: "no post left to show"}
-        else
-            render json: {older_posts: ActiveModel::Serializer::CollectionSerializer.new(unique_array, each_serializer: PostSerializer, scope: logged_in_user)}
-        end
-    end
-
     def artistfollowers
         artist = Artist.find(params[:id])
         @users = artist.followingusers
         render json: @users, each_serializer: ShortUserSerializer
-    end
-    def artistposts
-        selected_post = Post.find(params[:id])
-        posts = Artist.find(selected_post.artist_id).posts.select {|post| post.created_at <= selected_post.created_at}
-        unique_array = posts.uniq.sort_by(&:created_at).reverse.first(6)
-        render json: unique_array, each_serializer: PostSerializer, scope: logged_in_user
     end
 
     def artistfavorites
