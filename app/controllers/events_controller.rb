@@ -38,27 +38,7 @@ class EventsController < ApplicationController
                 EventGenre.create(genre_id: genre.id, event_id: @event.id)
             end
         end
-        all_state_users = User.joins(:location).where('city like?', "%#{params[:address].split().last}%")
 
-        users_by_state = all_state_users.select do |user|
-            user.id != params[:user_id]
-        end
-       
-        users_by_state.each do |user|
-            @new_noti = Notification.create(event_id: @event.id, action_user_id: logged_in_user.id, user_id: user.id, seen: false)
-            # if user.notification_token
-            #     SendNotificationJob.perform_later(
-            #         user.notification_token.token,
-            #         "#{@event.user.username} has an upcoming gig!",
-            #         EventNotificationSerializer.new(@new_noti).as_json
-            #     )
-              
-            # end
-        end
-
-        # find location from the end of params[:address]
-        # get users that are in that location
-        # send notis to those users
         render json: {event: EventSerializer.new(@event)}
     end
 

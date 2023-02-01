@@ -3,7 +3,7 @@ class PostSerializer < ActiveModel::Serializer
   attributes :id, :user_id, :clip, :created_at, :comment_count, :genre_id, :genre, :instruments, :view_count, :description, :applaud_count, :applauded
   attribute :user_id, if: -> {object.user.present?}
   attribute :username, if: -> {object.user.present?}
-  attribute :useravatar, if: -> {object.user.present?}
+  attribute :useravatar, if: -> {object.user.avatar.attached?}
   attribute :band_id, if: -> {object.band.present?}
   attribute :bandname, if: -> {object.band.present?}
   attribute :bandpicture, if: -> {object.band.present?}

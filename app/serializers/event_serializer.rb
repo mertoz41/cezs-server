@@ -1,14 +1,21 @@
 class EventSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :address, :description, :latitude, :longitude, :event_date, :event_time, :user_id, :user, :band, :is_audition
+  attributes :id, :address, :description, :latitude, :longitude, :event_date, :event_time, :is_audition
   has_many :instruments
   has_many :genres
+  attribute :band, if: -> {object.band}
+  attribute :user, if: -> {object.user}
+  attribute :band_id, if: -> {object.band}
+  attribute :user_id, if: -> {object.user}
+
   def user
     if object.user
       user = {}
       user[:username] = object.user.username
-      user[:avatar] = url_for(object.user.avatar)
+      if object.user.avatar.attached?
+        user[:avatar] = url_for(object.user.avatar)
+      end
       user[:id] = object.user.id
       return user
     end

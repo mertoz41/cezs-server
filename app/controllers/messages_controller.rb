@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
     #     ChatroomSerializer.new(@chatroom).as_json
     #   )
     # end
-    ActionCable.server.broadcast "chatrooms_channel_#{params[:chatroom_id]}", message
+    ActionCable.server.broadcast "chatrooms_channel_#{params[:chatroom_id]}", JSON.parse(message)
     ActionCable.server.broadcast "notifications_channel_#{user.id}", MessageSerializer.new(message)
 
     head :ok
