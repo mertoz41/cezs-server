@@ -43,21 +43,6 @@ ActiveRecord::Schema.define(version: 2022_12_28_040049) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "albumfollows", force: :cascade do |t|
-    t.integer "album_id"
-    t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "albums", force: :cascade do |t|
-    t.string "name"
-    t.integer "artist_id"
-    t.string "spotify_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "applauds", force: :cascade do |t|
     t.integer "post_id"
     t.integer "user_id"
@@ -76,7 +61,6 @@ ActiveRecord::Schema.define(version: 2022_12_28_040049) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "spotify_id"
   end
 
   create_table "bandfollows", force: :cascade do |t|
@@ -265,15 +249,6 @@ ActiveRecord::Schema.define(version: 2022_12_28_040049) do
   create_table "songs", force: :cascade do |t|
     t.string "name"
     t.integer "artist_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "spotify_id"
-    t.integer "album_id"
-  end
-
-  create_table "useralbums", force: :cascade do |t|
-    t.integer "album_id"
-    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

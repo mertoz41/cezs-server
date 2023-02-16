@@ -10,7 +10,6 @@ class UserSerializer < ActiveModel::Serializer
   has_many :posts, serializer: ShortPostSerializer
   has_many :favoritesongs
   has_many :favoriteartists
-  has_many :favoritealbums
   
   def notification_token
     return object.notification_token.token
@@ -37,7 +36,7 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def follows_count
-    object.follows.size + object.followedbands.size + object.followedartists.size + object.followedsongs.size + object.followedalbums.size
+    object.follows.size + object.followedbands.size + object.followedartists.size + object.followedsongs.size
   end
 
   def blocked_account_count

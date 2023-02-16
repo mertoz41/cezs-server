@@ -73,7 +73,6 @@ class User < ApplicationRecord
         bandpostids = []
         artistpostids = []
         songpostids = []
-        albumpostids = []
         userpostids = []
         arr = []
         
@@ -113,12 +112,6 @@ class User < ApplicationRecord
             songpostids = songsposts.map {|post| post.id}
         end
 
-        # followed albums posts
-        if self.followedalbums.size > 0
-            albumsposts = self.followedalbums.map(&:posts).flatten!.last(5)
-            arr = arr + albumsposts
-            # albumpostids = albumsposts.map {|post| post.id}
-        end
         # filtered = arr.select {|post| post.post_reports.size == 0}
         unique_arr = arr.uniq
         return unique_arr.sort_by(&:created_at).reverse.first(8)
@@ -145,11 +138,7 @@ class User < ApplicationRecord
         if (self.followedsongs.size > 0)
             arr = arr + self.followedsongs.map(&:posts).flatten!.select {|post| post.created_at > date}
         end
-        # # followed albums posts
-        if (self.followedalbums.size > 0)
-            arr = arr + self.followedalbums.map(&:posts).flatten!.select {|post| post.created_at > date}
-        end
-        # filtered = arr.select {|post| post.post_reports.size == 0}
+     
         return arr.sort_by(&:created_at).reverse.take(10)
     end
 
