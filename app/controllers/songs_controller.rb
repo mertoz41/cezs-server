@@ -1,6 +1,6 @@
 class SongsController < ApplicationController
     def show
-        song = Song.find_by(spotify_id: params[:id])
+        song = Song.find(params[:id])
         if song
             follows = logged_in_user.songfollows.find_by(song_id: song.id) ? true : false
             posts = filter_blocked_posts(song.posts)
@@ -8,8 +8,6 @@ class SongsController < ApplicationController
         else
             render json: {message: 'song not found'}
         end
-        # @song = Song.find(params[:id])
-        # render json: {song: SongSerializer.new(@song)}
     end
   
     
@@ -35,9 +33,8 @@ class SongsController < ApplicationController
         render json: @users, each_serializer: ShortUserSerializer
     end
     def songfollow
-        artist = Artist.find_or_create_by(name: params[:artist_name], spotify_id: params[:artist_spotify_id])
-        album = Album.find_or_create_by(name: params[:album_name], artist_id: artist.id, spotify_id: params[:album_spotify_id])
-        @song = Song.find_or_create_by(name: params[:name], artist_id: artist.id, album_id: album.id, spotify_id: params[:spotify_id])
+        artist = Artist.find_or_create_by(name: params[:artist_name])
+        @song = Song.find_or_create_by(name: params[:name], artist_id: artist.id)
         followed_song = Songfollow.create(song_id: @song.id, user_id: logged_in_user.id)
         render json: {song: SongSerializer.new(@song)}
     end

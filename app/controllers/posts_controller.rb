@@ -11,14 +11,9 @@ class PostsController < ApplicationController
 
         if params[:artist_name]
             artist_name = params[:artist_name]
-            artist_spotify_id = params[:artist_spotify_id]
-            song_spotify_id = params[:song_spotify_id]
             song_name = params[:song_name]
-            album_name = params[:album_name]
-            album_spotify_id = params[:album_spotify_id]
-            artist = Artist.find_or_create_by(name: artist_name, spotify_id: artist_spotify_id)
-            album = Album.find_or_create_by(name: album_name, spotify_id: album_spotify_id, artist_id: artist.id)
-            song = Song.find_or_create_by(name: song_name, artist_id: artist.id, spotify_id: song_spotify_id, album_id: album.id)
+            artist = Artist.find_or_create_by(name: artist_name)
+            song = Song.find_or_create_by(name: song_name, artist_id: artist.id)
             @post.update_column "artist_id", artist.id
             @post.update_column "song_id", song.id
         end

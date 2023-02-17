@@ -6,7 +6,7 @@ class ArtistsController < ApplicationController
         # serializer isnt very smart for this situation
     end
     def show
-        artist = Artist.find_by(spotify_id: params[:id])
+        artist = Artist.find(params[:id])
         if artist
             follows = logged_in_user.artistfollows.find_by(artist_id: artist.id) ? true : false
             posts = []
@@ -39,7 +39,7 @@ class ArtistsController < ApplicationController
     end
 
     def artistfollow
-        @artist = Artist.find_or_create_by(name: params[:artist_name], spotify_id: params[:spotify_id])
+        @artist = Artist.find_or_create_by(name: params[:artist_name])
         new_follow = Artistfollow.create(user_id: logged_in_user.id, artist_id: @artist.id) 
         render json: {artist: ArtistSerializer.new(@artist)}
     end
