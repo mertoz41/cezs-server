@@ -2,11 +2,11 @@ class SearchController < ApplicationController
     def exploredata
         genres = Genre.all
         instruments = Instrument.all
-        artist_views = Artist.left_joins(:postviews).group(:id).order('COUNT(postviews.id) DESC').first(5).map { |artis| {id: artis.id, name: artis.name, spotify_id: artis.spotify_id, view_count: artis.postviews.size}}
-        song_views = Song.left_joins(:postviews).group(:id).order('COUNT(postviews.id) DESC').first(5).map { |song| {id: song.id, name: song.name, artist_name: song.artist.name, spotify_id: song.spotify_id, view_count: song.postviews.size, artistSpotifyId: song.artist.spotify_id}}
+        artist_views = Artist.left_joins(:postviews).group(:id).order('COUNT(postviews.id) DESC').first(5).map { |artis| {id: artis.id, name: artis.name, view_count: artis.postviews.size}}
+        song_views = Song.left_joins(:postviews).group(:id).order('COUNT(postviews.id) DESC').first(5).map { |song| {id: song.id, name: song.name, artist_name: song.artist.name, view_count: song.postviews.size}}
 
-        artist_posts = Artist.left_joins(:posts).group(:id).order('COUNT(posts.id) DESC').first(5).map { |artis| {id: artis.id, name: artis.name, spotify_id: artis.spotify_id, post_count: artis.posts.size}}
-        song_posts = Song.left_joins(:posts).group(:id).order('COUNT(posts.id) DESC').first(5).map { |song| {id: song.id, name: song.name, artist_name: song.artist.name, spotify_id: song.spotify_id, post_count: song.posts.size, artistSpotifyId: song.artist.spotify_id}}
+        artist_posts = Artist.left_joins(:posts).group(:id).order('COUNT(posts.id) DESC').first(5).map { |artis| {id: artis.id, name: artis.name, post_count: artis.posts.size}}
+        song_posts = Song.left_joins(:posts).group(:id).order('COUNT(posts.id) DESC').first(5).map { |song| {id: song.id, name: song.name, artist_name: song.artist.name, post_count: song.posts.size}}
         # artist need to have id, name, spotify_id
         # song needs to have id, name, artist_name, spotify_id
         # album needs to have id, name, artist_name, spotify_id

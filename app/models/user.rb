@@ -169,12 +169,6 @@ class User < ApplicationRecord
             arr = arr +  self.followedsongs.map(&:posts).flatten!.select {|post| post.created_at <= date}.last(5)
 
         end
-
-        # followed albums posts
-        if self.followedalbums.size > 0
-            arr = arr + self.followedalbums.map(&:posts).flatten!.select {|post| post.created_at <= date}.last(5)
-    
-        end
         unique_arr = arr.uniq
         return unique_arr.sort_by(&:created_at).reverse.first(6)
     end
