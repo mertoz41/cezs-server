@@ -47,6 +47,10 @@ class BandsController < ApplicationController
         if params[:bio]
             @band.update_column 'bio', params[:bio]
         end
+        if params[:picture]
+            @band.picture.purge
+            @band.picture.attach(params[:picture])
+        end
         if params[:location]
             location = Location.find_or_create_by(city: params[:location]["city"], latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
             band_location = Bandlocation.find_by(band_id: @band.id, location_id: @band.location.id)
@@ -54,12 +58,12 @@ class BandsController < ApplicationController
         end
         if params[:members]
             params[:members].each do |member|
-                Bandmember.create({user_id: member, band_id: @band.id})
+                Bandmember.create({user_id: member.to_i, band_id: @band.id})
             end
         end
         if params[:removedMembers]
             params[:removedMembers].each do |member|
-            instance = Bandmember.find_by(user_id: member, band_id: @band.id)
+            instance = Bandmember.find_by(user_id: member.to_i, band_id: @band.id)
             instance.destroy
             end
         end
