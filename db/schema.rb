@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 2022_12_28_040049) do
   create_table "comments", force: :cascade do |t|
     t.string "comment"
     t.string "user_id"
+    t.string "integer"
     t.integer "post_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -169,6 +170,7 @@ ActiveRecord::Schema.define(version: 2022_12_28_040049) do
   create_table "locations", force: :cascade do |t|
     t.float "latitude"
     t.float "longitude"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "city"

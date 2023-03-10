@@ -1,4 +1,6 @@
 class BandsController < ApplicationController
+    include Rails.application.routes.url_helpers
+
     def searching
         all_bands = Band.where("name like?", "%#{params[:searching]}%")
         bands = []
@@ -13,7 +15,7 @@ class BandsController < ApplicationController
     def picture
         @band = Band.find(params[:band_id])
         @band.picture.attach(params[:picture])
-        render json: {band: BandSerializer.new(@band)}
+        render json: {picture: url_for(@band.picture)}
     end
 
 
@@ -67,7 +69,8 @@ class BandsController < ApplicationController
             instance.destroy
             end
         end
-        render json: {band: BandSerializer.new(@band)}
+        render json: {message: "band updated"}
+        # render json: {band: BandSerializer.new(@band)}
     end
 
     def filter_search
