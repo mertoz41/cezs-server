@@ -29,15 +29,20 @@ class BandsController < ApplicationController
     def create
         @band = Band.create(name: params[:name], bio: params[:bio])
         @band.picture.attach(params[:picture])
-    
         members = JSON.parse params[:members]
         members.each do |id|
             Bandmember.create(user_id: id, band_id: @band.id)
+           
+        end
+        filtered_members = members.select {|id| id != params[:user_id].to_i}
+        filtered_members.each do |id|
+            @notification = Notification.create(band_id: @band.id, action_user_id: params[:user_id], seen: false, user_id: id)
+            ActionCable.server.broadcast "notifications_channel_#{id}", NotificationSerializer.new(@notification)
         end
 
         location = Location.find(params[:location_id])
         Bandlocation.create(band_id: @band.id, location_id: location.id)
-
+        
         render json: @band, serializer: BandSerializer
     end
     
@@ -71,6 +76,12 @@ class BandsController < ApplicationController
         end
         render json: {message: "band updated"}
         # render json: {band: BandSerializer.new(@band)}
+    end
+
+    def destroy
+        band = Band.find(params[:id])
+        band.destroy
+        render json: {message: 'band deleted.'}
     end
 
     def filter_search

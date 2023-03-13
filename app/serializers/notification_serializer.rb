@@ -4,7 +4,9 @@ class NotificationSerializer < ActiveModel::Serializer
   attributes :id, :user_id, :action_user_id, :seen, :created_at, :message
   attribute :avatar, if: -> {object.action_user.avatar.attached?}
   attribute :post_id, if: -> {object.comment_id || object.applaud_id}
-  attribute :thumbnail, if: -> {object.comment_id || object.applaud_id}
+  attribute :thumbnail, if: -> {object.comment_id || object.applaud_id || object.band_id}
+  attribute :band_id, if: -> {object.band_id}
+  attribute :bandname, if: -> {object.band_id}
 
   def message 
     username = object.action_user.username
@@ -14,7 +16,9 @@ class NotificationSerializer < ActiveModel::Serializer
       message = " commented on your post"
     elsif object.event_id
       message = " has an upcoming event near you"
-    else 
+    elsif object.band_id
+      message = " added you to " + object.band.name
+    else
       message = " follows you"
     end
     return username + message
@@ -37,9 +41,14 @@ class NotificationSerializer < ActiveModel::Serializer
   def thumbnail
     if object.comment_id
       return url_for(object.comment.post.thumbnail)
-    else
+    elsif object.post_id
       return url_for(object.applaud.post.thumbnail)
-    end
+    elsif object.band_id
+      return url_for(object.band.picture)
+    end 
+  end
+  def bandname
+    return object.band.name
   end
   
 end

@@ -86,6 +86,22 @@ class UsersController < ApplicationController
                 user_genre = Usergenre.create(user_id: @user.id, genre_id: genre.id)
             end
         end
+
+        if params[:favoriteartists]
+            params[:favoriteartists].each do |fav_artist|
+                artist = Artist.find_or_create_by(name: fav_artist)
+                user_artist = Userartist.create(user_id: logged_in_user.id, artist_id: artist.id)
+            end
+        end
+        if params[:favoritesongs]
+            params[:favoritesongs].each do |fav_song|
+                artist = Artist.find_or_create_by(name: fav_song["artist_name"])
+                song = Song.find_or_create_by(name: fav_song["name"], artist_id: artist.id)
+                user_song = Usersong.create(user_id: logged_in_user.id, song_id: song.id)
+            end
+        end
+
+
     
         # validations are keeping me from updating only the username
         
