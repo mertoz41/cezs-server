@@ -43,5 +43,14 @@ class FollowsController < ApplicationController
         render json: {followers: ActiveModel::Serializer::CollectionSerializer.new(@followed_by_users, each_serializer: ShortUserSerializer)}
     end
 
+    def search_followed_users
+        # out of logged_in_user.follows users pick the ones that match their usernames
+        # params[:searching]
+        users = logged_in_user.followeds.select{|user| user.username.include? params[:searching]}
+        render json: {
+            users: ActiveModel::Serializer::CollectionSerializer.new(users, each_serializer: ShortUserSerializer), 
+    }
+    end
+
     
 end

@@ -5,7 +5,5 @@ class Notification < ApplicationRecord
     belongs_to :comment, optional: true
     belongs_to :event, optional: true
     belongs_to :applaud, optional: true
-    belongs_to :band, optional: true
+    belongs_to :bandfollow, optional: true
 end
-# if applaud is deleted notification object must get deleted too
-# what is applaud and notifications relationship??

@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   post '/avatar', to: 'users#avatar'
   post '/picture', to: 'bands#picture'
   post '/usersearch', to: 'users#searching'
+  post '/followedusers', to: 'follows#search_followed_users'
   post '/songsearch', to: 'songs#searching'
   post '/artistsearch', to: 'artists#searching'
   post '/bandsearch', to: 'bands#searching'

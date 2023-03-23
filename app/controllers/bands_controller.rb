@@ -32,7 +32,11 @@ class BandsController < ApplicationController
         members = JSON.parse params[:members]
         members.each do |id|
             Bandmember.create(user_id: id, band_id: @band.id)
-           
+        end
+        genres = JSON.parse params[:genres]
+        genres.each do |genre|
+            found_genre = Genre.find_or_create_by(name: genre)
+            Bandgenre.create(band_id: @band.id, genre_id: found_genre.id)
         end
         filtered_members = members.select {|id| id != params[:user_id].to_i}
         filtered_members.each do |id|
@@ -63,6 +67,12 @@ class BandsController < ApplicationController
             band_location = Bandlocation.find_by(band_id: @band.id, location_id: @band.location.id)
             band_location.update(location_id: location.id)
         end
+        if params[:genres]
+            params[:genres].each do |genre|
+                found_genre = Genre.find_or_create_by(name: genre)
+                Bandgenre.create(genre_id: found_genre.id, band_id: @band.id)
+            end
+        end
         if params[:members]
             params[:members].each do |member|
                 Bandmember.create({user_id: member.to_i, band_id: @band.id})
@@ -74,8 +84,13 @@ class BandsController < ApplicationController
             instance.destroy
             end
         end
-        render json: {message: "band updated"}
-        # render json: {band: BandSerializer.new(@band)}
+        if params[:removedGenres]
+            params[:removedGenres].each do |genre|
+                instance = Bandgenre.find_by(genre_id: genre.to_i, band_id: @band.id)
+                instance.destroy
+            end
+        end
+        render json: {band: BandSerializer.new(@band)}
     end
 
     def destroy

@@ -16,6 +16,8 @@ class NotificationSerializer < ActiveModel::Serializer
       message = " commented on your post"
     elsif object.event_id
       message = " has an upcoming event near you"
+    elsif object.bandfollow_id
+      message = " follows" + " " + object.band.name
     elsif object.band_id
       message = " added you to " + object.band.name
     else

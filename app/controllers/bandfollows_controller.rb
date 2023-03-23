@@ -5,7 +5,7 @@ class BandfollowsController < ApplicationController
         band = Band.find(params[:id])
         new_follow = Bandfollow.create(user_id: logged_in_user.id, band_id: band.id)
         band.members.each do |member|
-            @new_notification = Notification.create(user_id: member.id, action_user_id: logged_in_user.id, seen: false)
+            @new_notification = Notification.create(user_id: member.id, action_user_id: logged_in_user.id, seen: false, bandfollow_id: new_follow.id, band_id: band.id)
             ActionCable.server.broadcast "notifications_channel_#{member.id}", NotificationSerializer.new(@new_notification)
 
             # if member.notification_token
@@ -34,7 +34,6 @@ class BandfollowsController < ApplicationController
             end
             obj
         end
-        # {username: user.username, avatar: url_for(user.avatar), id: user.id}
         render json: {followers: followers}
     end
 end
