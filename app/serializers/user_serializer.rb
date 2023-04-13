@@ -16,7 +16,7 @@ class UserSerializer < ActiveModel::Serializer
   end
   
   def upcoming_event
-      events = object.events.where("event_date <= ?", Time.now)
+      events = object.events.where("event_date >= ?", Time.now).order('created_at ASC')
       return events.first
   end
 
