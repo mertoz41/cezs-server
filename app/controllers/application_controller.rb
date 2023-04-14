@@ -1,4 +1,6 @@
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
+  include ActionView::Layouts
+
   before_action :authorized
     def encode(payload)
         JWT.encode(payload, 'experiment', 'HS256')
@@ -73,6 +75,8 @@ class ApplicationController < ActionController::API
     end
 
     def authorized
+      if !params[:controller].include?  "admin/"
         render json: { message: 'Please log in', authorized: false }, status: :unauthorized unless logged_in?
+      end
     end
 end

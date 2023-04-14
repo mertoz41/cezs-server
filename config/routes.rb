@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   resources :chatrooms
   resources :messages
   resources :bios
@@ -18,7 +20,6 @@ Rails.application.routes.draw do
   resources :bandmembers
   resources :usersongs
   resources :userartists
-  resources :useralbums
   resources :events
   resources :albums
 
@@ -64,11 +65,8 @@ Rails.application.routes.draw do
 
   post '/deleteusersong', to: 'usersongs#delete'
   
-  get '/albumfollowers/:id', to: 'albums#albumfollowers'
-  post '/deleteuseralbum', to: 'useralbums#delete'
   get '/albumsongs/:id', to: 'albums#albumsongs'
   get '/albumfavorites/:id', to: 'albums#albumfavorites'
-  post '/albumfollow', to: 'albums#albumfollow'
   delete '/albumunfollow/:id', to: 'albums#albumunfollow'
 
   post '/countview/:id', to: 'posts#createview'

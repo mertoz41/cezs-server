@@ -29,13 +29,6 @@ class User < ApplicationRecord
     has_many :songfollows, dependent: :destroy
     has_many :followedsongs, through: :songfollows
 
-    has_many :albumfollows, dependent: :destroy
-    has_many :followedalbums, through: :albumfollows
-   
-
-    has_many :useralbums, dependent: :destroy
-    has_many :favoritealbums, through: :useralbums
-
     has_many :userartists, dependent: :destroy
     has_many :favoriteartists, through: :userartists
 
