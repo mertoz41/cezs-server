@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-    skip_before_action :authorized, only: [:create]
+    skip_before_action :authorized, only: [:create, :requestpasswordreset, :resetpassword]
 
     def create
         @user = User.find_by(username: params[:username])
@@ -33,5 +33,31 @@ class AuthController < ApplicationController
 
         }
     end
+
+    def requestpasswordreset
+        user = User.find_by(email: params[:email])
+        if user
+            user.generate_password_token!
+            # SEND EMAIL HERE
+            UserMailer.password_reset_email(user).deliver_now
+            render json: { found: true, username: user.username}
+        else
+            render json: { found: false }
+        end
+    end
+
+
+    def resetpassword
+        token = params[:token].to_s
+        user = User.find_by(reset_token: token)
+        if user.present? && user.password_token_valid?
+            if user.reset_password!(params[:password])
+                render json: {message: 'password changed', valid: true}
+            end
+        else
+            render json: {message: "Link not valid or expired.", valid: false}
+        end
+    end
+
 
 end

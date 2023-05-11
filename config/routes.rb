@@ -69,6 +69,8 @@ Rails.application.routes.draw do
   get '/albumfavorites/:id', to: 'albums#albumfavorites'
   delete '/albumunfollow/:id', to: 'albums#albumunfollow'
 
+  post '/requestpasswordreset', to: "auth#requestpasswordreset"
+  post '/resetpassword', to: "auth#resetpassword"
   post '/countview/:id', to: 'posts#createview'
   post '/musicposts', to: 'posts#musicposts'
   get '/filterlocations', to: 'locations#filterlocations'

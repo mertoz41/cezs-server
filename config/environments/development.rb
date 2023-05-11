@@ -34,7 +34,18 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  address:              'smtpout.secureserver.net',
+  port:                 587,
+  domain:               'cezsmusic.com',
+  user_name:            'support@cezsmusic.com',
+  password:             'Goz_Wizards4',
+  authentication:       'plain',
+  enable_starttls_auto: false  }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
 
   config.action_mailer.perform_caching = false
 
@@ -52,8 +63,9 @@ Rails.application.configure do
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
+  config.action_mailer.default_options = {from: 'support@cezsmusic.com'}
 
-  config.action_mailer.default_url_options = { :host => "10.0.0.206:3000" }
+  config.action_mailer.default_url_options = { :host => "cezsmusic.com" }
 
   Rails.application.routes.default_url_options[:host] = "10.0.0.206:3000"
 

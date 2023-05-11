@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include ActionView::Layouts
+  skip_before_action :verify_authenticity_token
 
   before_action :authorized
     def encode(payload)
