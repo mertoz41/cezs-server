@@ -29,11 +29,16 @@ class UsersController < ApplicationController
 
     def changepassword
         user = logged_in_user
-        user.update(password: params[:password]) 
-        if user.valid?
-            render json: {message: 'password changed'}
+        if user.authenticate(params[:old])
+            user.update(password: params[:newPassword]) 
+            if user.valid?
+                render json: {message: 'password changed'}
+            else
+                render json: {errors: user.errors.full_messages}
+            end
         else
-            render json: {errors: user.errors.full_messages}
+
+
         end
     end
 
