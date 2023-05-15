@@ -32,12 +32,12 @@ class UsersController < ApplicationController
         if user.authenticate(params[:old])
             user.update(password: params[:newPassword]) 
             if user.valid?
-                render json: {message: 'password changed'}
+                render json: {message: 'Password changed.', valid: true}
             else
-                render json: {errors: user.errors.full_messages}
+                render json: {errors: user.errors.full_messages, valid: false}
             end
         else
-
+            render json: {message: "Wrong password.", valid: false}
 
         end
     end
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
         if params[:username]
             found = User.find_by(username: params[:username])
             if found
-                render json: {error: 'this name is taken.'}
+                render json: {error: 'This name is taken.'}
             else
                 @user.update_column 'username', params[:username]
             end
