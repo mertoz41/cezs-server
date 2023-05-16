@@ -5,9 +5,17 @@ ActiveAdmin.register User do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :username, :password_digest, :name, :email, :bio
-  #
-  # or
-  #
-  
+  index do
+    selectable_column
+    column :username
+    column :email
+    column "Location" do |user|
+      link_to user.location.city, admin_location_path(user.location)
+    end
+    column :bio
+    column "Posts" do |user|
+      user.posts.size
+    end
+  end
+
 end
