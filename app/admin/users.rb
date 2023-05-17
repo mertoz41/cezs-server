@@ -7,10 +7,14 @@ ActiveAdmin.register User do
   #
   index do
     selectable_column
-    column :username
+    column "Username" do |user|
+      link_to user.username, admin_user_path(user)
+    end
     column :email
     column "Location" do |user|
-      link_to user.location.city, admin_location_path(user.location)
+      if user.location
+        link_to user.location.city, admin_location_path(user.location)
+      end
     end
     column :bio
     column "Posts" do |user|

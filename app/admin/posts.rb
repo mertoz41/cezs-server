@@ -8,7 +8,8 @@ ActiveAdmin.register Post do
   # permit_params :user_id, :artist_id, :song_id, :genre_id, :band_id, :description
   #
 index do
-  column :id
+  id_column
+
   column "User" do |post|
     if post.user
     link_to post.user.username, admin_user_path(post.user)
@@ -16,9 +17,10 @@ index do
   end
   column "Band" do |post|
     if post.band
-      post.band.name
+      link_to post.band.name, admin_band_path(post.band)
     end
   end
+  column :genre
   column :artist
   column :song
   column :description
@@ -30,6 +32,10 @@ index do
   end
   column "Comment Count" do |post|
     post.comments.size
+  end
+
+  column "Report Count" do |post|
+    post.reports.size
   end
 
 end

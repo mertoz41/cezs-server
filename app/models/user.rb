@@ -19,6 +19,7 @@ class User < ApplicationRecord
     has_many :blocked_bands, through: :bandblock, source: :blocked_band
     
     has_many :events, dependent: :destroy
+    
     has_many :reports, dependent: :destroy
     has_many :bandfollows, dependent: :destroy
     has_many :followedbands, through: :bandfollows
