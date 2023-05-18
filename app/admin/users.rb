@@ -13,12 +13,13 @@ ActiveAdmin.register User do
         link_to user.location.city, admin_location_path(user.location)
       end
     end
-
+   
     column :bio
-
     column "Posts" do |user|
       user.posts.size
     end
+    column :favoriteartists
+    column :favoritesongs
 
   end
 
@@ -35,15 +36,18 @@ ActiveAdmin.register User do
         link_to user.location.city, admin_location_path(user.location)
       end 
       row :email
+      row :instruments
+      row :genres
+      row :favoriteartists
+      row :favoritesongs
+  
       row :report_count do |user|
         user.reports.size
       end
       row :post_count do |user|
         user.posts.size
       end
-      row :istruments do |user|
-        user.instruments
-      end
+   
     end
 
   end
