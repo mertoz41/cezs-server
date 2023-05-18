@@ -18,6 +18,10 @@ index do
     link_to band.location.city, admin_location_path(band.location)
   end
   column :bio
+  column :genres
+  column "Members" do |band|
+    band.members.map(&:username).join(', ')
+  end
   column "Member Count" do |band|
     band.members.size
   end
