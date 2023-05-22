@@ -83,6 +83,7 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
   config.action_mailer.default_options = {from: 'support@cezsmusic.com'}
   config.action_mailer.default_url_options = { :host => "cezsmusic.com" }
+  Rails.application.routes.default_url_options[:host] = "agile-hollows-87633.herokuapp.com"
 
   # Use a different logger for distributed setups.
   # require "syslog/logger"
