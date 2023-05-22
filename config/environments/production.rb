@@ -54,7 +54,18 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "server_production"
-
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  address:              'smtpout.secureserver.net',
+  port:                 587,
+  domain:               'cezsmusic.com',
+  user_name:            'support@cezsmusic.com',
+  password:             Rails.application.credentials.dig(:mailer, :password),
+  authentication:       'plain',
+  enable_starttls_auto: false  }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
