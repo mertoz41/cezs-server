@@ -31,7 +31,7 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
 
   # Don't care if the mailer can't send.
   config.action_mailer.delivery_method = :sendmail
@@ -41,7 +41,7 @@ Rails.application.configure do
   port:                 587,
   domain:               'cezsmusic.com',
   user_name:            'support@cezsmusic.com',
-  password:             'Goz_Wizards4',
+  password:             'Goz_wizards4',
   authentication:       'plain',
   enable_starttls_auto: false  }
   config.action_mailer.raise_delivery_errors = true

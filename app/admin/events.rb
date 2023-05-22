@@ -1,10 +1,5 @@
 ActiveAdmin.register Event do
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
 index do 
   id_column
   column :address
@@ -29,14 +24,4 @@ index do
     event.reports.size
   end
 end
-  # permit_params :address, :description, :user_id, :band_id, :latitude, :longitude, :event_time, :event_date, :is_audition
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:address, :description, :user_id, :band_id, :latitude, :longitude, :event_time, :event_date, :is_audition]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  
 end

@@ -12,6 +12,7 @@ gem 'puma', '~> 5.0'
 
 gem "sprockets-rails"
 
+gem "aws-sdk-s3", require: false
 
 gem "activeadmin"
 gem 'devise'
