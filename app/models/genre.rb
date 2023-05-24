@@ -8,5 +8,6 @@ class Genre < ApplicationRecord
 
     has_many :bandgenres, dependent: :destroy
     has_many :bands, through: :bandgenres
+    # BUSINESS LOGIC MUST BE MOVED TO MODELS
 
 end
