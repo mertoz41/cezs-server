@@ -43,7 +43,7 @@ class NotificationSerializer < ActiveModel::Serializer
   def thumbnail
     if object.comment_id
       return url_for(object.comment.post.thumbnail)
-    elsif object.post_id
+    elsif object.applaud_id
       return url_for(object.applaud.post.thumbnail)
     elsif object.band_id
       return url_for(object.band.picture)
