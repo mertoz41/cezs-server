@@ -3,6 +3,7 @@ class ShortPostSerializer < ActiveModel::Serializer
 
   attributes :id, :user_id, :created_at, :thumbnail, :instruments, :genre, :view_count, :band_id
   attribute :song_name, if: -> {object.song.present?}
+  attribute :song_id, if: -> {object.song.present?}
   attribute :artist_name, if: -> {object.artist.present?}
 
   def thumbnail

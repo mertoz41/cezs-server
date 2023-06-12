@@ -13,7 +13,7 @@ class ArtistsController < ApplicationController
         else 
             posts = artist.posts
         end
-        render json: {artist: ArtistSerializer.new(artist), follows: follows, posts: ActiveModel::Serializer::CollectionSerializer.new(posts, serializer: ShortPostSerializer)}
+        render json: {artist: ArtistSerializer.new(artist), follows: follows, posts: ActiveModel::Serializer::CollectionSerializer.new(posts, serializer: ShortPostSerializer), songs: ActiveModel::Serializer::CollectionSerializer.new(artist.songs, serializer: ShortSongSerializer) }
     end 
 
     def influences
