@@ -7,13 +7,14 @@ class ArtistsController < ApplicationController
     def show
         artist = Artist.find(params[:id])
         follows = logged_in_user.artistfollows.find_by(artist_id: artist.id) ? true : false
+        user_favorites = logged_in_user.userartists.find_by(artist_id: artist.id) ? true : false
         posts = []
         if logged_in_user.blocked_users.size
             posts = filter_blocked_posts(artist.posts)
         else 
             posts = artist.posts
         end
-        render json: {artist: ArtistSerializer.new(artist), follows: follows, posts: ActiveModel::Serializer::CollectionSerializer.new(posts, serializer: ShortPostSerializer), songs: ActiveModel::Serializer::CollectionSerializer.new(artist.songs, serializer: ShortSongSerializer) }
+        render json: {artist: ArtistSerializer.new(artist), user_favorites: user_favorites, follows: follows, posts: ActiveModel::Serializer::CollectionSerializer.new(posts, serializer: ShortPostSerializer), songs: ActiveModel::Serializer::CollectionSerializer.new(artist.songs, serializer: ShortSongSerializer) }
     end 
 
     def influences

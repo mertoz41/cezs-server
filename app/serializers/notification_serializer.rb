@@ -8,7 +8,7 @@ class NotificationSerializer < ActiveModel::Serializer
   attribute :band_id, if: -> {object.band_id}
   attribute :bandname, if: -> {object.band_id}
 
-  def message 
+  def message
     username = object.action_user.username
    if object.applaud_id
       message = " applauded your post"

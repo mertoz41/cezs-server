@@ -3,20 +3,25 @@ class UsersController < ApplicationController
     include Rails.application.routes.url_helpers
 
     def create
-        user = User.new(username: params[:username], password: params[:password], email: params[:email])
-        if user.valid?
-            user.save
-            UserMailer.welcome_email(user).deliver_now
-            render json: {message: "Success!"}
+        existing_user = User.find_by(username: params[:username])
+        if existing_user 
+            render json: {message: "#{params[:username]} is taken.", valid: false}
         else
-            render json: {errors: user.errors.full_messages}
+            user = User.new(username: params[:username], password: params[:password], email: params[:email])
+            if user.valid?
+                user.save
+                UserMailer.welcome_email(user).deliver_now
+                render json: {message: "Success!", valid: true}
+            else
+                render json: {message: user.errors.full_messages[0], valid: false}
+            end
         end
     end
 
     def show
         user = User.find(params[:id])
         follows = logged_in_user.follows.find_by(followed_id: user.id) ? true : false
-        render json: {user: UserSerializer.new(user), follows: follows }
+        render json: {user: UserViewSerializer.new(user), follows: follows }
     end 
 
     def passwordcheck
