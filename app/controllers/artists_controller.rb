@@ -1,6 +1,6 @@
 class ArtistsController < ApplicationController
     def searching
-        artists = Artist.where("lower(name) like?", "%#{params[:searching].downcase}%")
+        artists = Artist.where("lower(name) like?", "%#{params[:searching]}%")
         render json: {artists: ActiveModel::Serializer::CollectionSerializer.new(artists, serializer: ArtistSerializer)}
     end
 

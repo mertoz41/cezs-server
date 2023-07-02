@@ -11,15 +11,10 @@ class SongsController < ApplicationController
         end
     end
   
-    
     def searching
-        songs = Song.where("lower(name) like?", "%#{params[:searching].downcase}%")
+        songs = Song.where("lower(name) like?", "%#{params[:searching]}%")
         render json: {songs: ActiveModel::Serializer::CollectionSerializer.new(songs, each_serializer: SongSerializer)}
     end
-
-
-
-
 
     def songfollowers
         song = Song.find(params[:id])
