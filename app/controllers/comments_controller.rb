@@ -13,9 +13,10 @@ class CommentsController < ApplicationController
         post = Post.find(params[:post_id])
         @comment = Comment.create(comment: params[:comment], user_id: logged_in_user.id, post_id: post.id)
         if post.user
+            if post.user.id != logged_in_user.id
             @new_notification = Notification.create(action_user_id: logged_in_user.id, user_id: post.user.id, comment_id: @comment.id, seen: false)
             ActionCable.server.broadcast "notifications_channel_#{post.user.id}", NotificationSerializer.new(@new_notification)
-
+            end
             # @new_notification = CommentNotification.create(user_id: post.user.id, post_id: post.id, action_user_id: user.id, seen: false)
             # if post.user.notification_token
             #     SendNotificationJob.perform_later(

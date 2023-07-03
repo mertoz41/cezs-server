@@ -1,11 +1,10 @@
 class UserViewSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :instruments, :follows_count, :followers_count, :name
+  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :instruments, :follows_count, :followers_count, :name, :posts
   attribute :avatar, if: -> {object.avatar.present?}
   has_many :bands
   has_many :genres
   has_one :location
-  has_many :posts, serializer: ShortPostSerializer
   has_many :favoritesongs
   has_many :favoriteartists
   
@@ -13,6 +12,11 @@ class UserViewSerializer < ActiveModel::Serializer
   def upcoming_event
       events = object.events.where("event_date >= ?", Time.now).order('created_at ASC')
       return events.first
+  end
+  def posts
+    filtered_posts = object.posts.select {|post| post.reports.size < 1}
+    filtered_posts.map do |post| ShortPostSerializer.new(post)
+    end
   end
 
 

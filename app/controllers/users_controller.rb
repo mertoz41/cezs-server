@@ -136,8 +136,9 @@ class UsersController < ApplicationController
         else
             users = searched_users
         end
+        filtered_users = users.select {|user| user.reports.size < 1}
         # partial string matching on a database object. not a very good solution
-        render json: users, each_serializer: ShortUserSerializer
+        render json: filtered_users, each_serializer: ShortUserSerializer
         # serializer isnt very smart for this situation
     end
     def usertoken
@@ -161,7 +162,8 @@ class UsersController < ApplicationController
         else
             users = all_users
         end
-        render json: users.uniq, each_serializer: ShortUserSerializer
+        filtered_users = users.select {|user| user.reports.size < 1}
+        render json: filtered_users.uniq, each_serializer: ShortUserSerializer
     end
 
 end

@@ -9,6 +9,7 @@ class BandsController < ApplicationController
         else
             bands = all_bands
         end
+        bands = bands.select {|band| band.reports.size < 1}
         render json: {bands: ActiveModel::Serializer::CollectionSerializer.new(bands, each_serializer: BandSerializer)}
     end
 
@@ -113,6 +114,7 @@ class BandsController < ApplicationController
         else
             filtered_bands = bands + genre_bands
         end
+        filtered_bands = filtered_bands.select{|band| band.reports.size < 1}
         
         render json: filtered_bands.uniq, each_serializer: ShortBandSerializer
     end

@@ -7,6 +7,7 @@ class EventsController < ApplicationController
         else
             events = all_events
         end
+        events = events.select{|event| event.reports.size < 1}
         render json: {events: ActiveModel::Serializer::CollectionSerializer.new(events, each_serializer: EventSerializer)}
     end
     

@@ -21,6 +21,7 @@ class User < ApplicationRecord
     has_many :events, dependent: :destroy
     
     has_many :reports, dependent: :destroy
+    has_many :reports_given, class_name: "Report", foreign_key: :reporting_user_id, dependent: :destroy
     has_many :bandfollows, dependent: :destroy
     has_many :followedbands, through: :bandfollows
 

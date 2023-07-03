@@ -14,8 +14,8 @@ class LocationsController < ApplicationController
         }
     end
     def show
-        @all_users = Location.find(params[:id]).users
-        @all_bands = Location.find(params[:id]).bands
+        @all_users = Location.find(params[:id]).users.select {|user| user.reports.size < 1}
+        @all_bands = Location.find(params[:id]).bands.select {|band| band.reports.size < 1}
         if logged_in_user.blocked_users.size || logged_in_user.blocked_bands.size || logged_in_user.blocking_users.size
             @all_users = filter_blocked_users(@all_users)
             @all_bands = filter_blocked_bands(@all_bands)

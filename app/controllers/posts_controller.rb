@@ -70,7 +70,8 @@ class PostsController < ApplicationController
         else 
             posts = all_posts
         end
-        render json: posts, each_serializer: ShortPostSerializer
+        filtered = posts.select {|post| post.reports.size < 1}
+        render json: filtered, each_serializer: ShortPostSerializer
     end
     def musicposts
         @posts = Post.where(id: params[:posts])
