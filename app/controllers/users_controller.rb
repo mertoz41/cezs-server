@@ -4,8 +4,11 @@ class UsersController < ApplicationController
 
     def create
         existing_user = User.find_by(username: params[:username])
-        if existing_user 
+        existing_email = User.find_by(email: params[:email])
+        if existing_user
             render json: {message: "#{params[:username]} is taken.", valid: false}
+        elsif existing_email
+            render json: {message: "#{params[:email]} is taken.", valid: false}
         else
             user = User.new(username: params[:username], password: params[:password], email: params[:email])
             if user.valid?

@@ -3,7 +3,7 @@ class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
     
-    has_many :notifications
+    has_many :notifications, dependent: :destroy
     has_many :messages, dependent: :destroy
     has_many :userchatrooms, dependent: :destroy
     has_many :chatrooms, through: :userchatrooms

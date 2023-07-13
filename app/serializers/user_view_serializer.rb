@@ -14,9 +14,12 @@ class UserViewSerializer < ActiveModel::Serializer
       return events.first
   end
   def posts
-    filtered_posts = object.posts.select {|post| post.reports.size < 1}
-    filtered_posts.map do |post| ShortPostSerializer.new(post)
+    all_posts = object.posts
+    if object.bands.size > 0
+      all_posts = all_posts + object.bands.map(&:posts).flatten!
     end
+    filtered_posts = all_posts.select {|post| post.reports.size < 1}
+    filtered_posts.map {|post| ShortPostSerializer.new(post)}
   end
 
 

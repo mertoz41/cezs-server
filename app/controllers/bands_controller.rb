@@ -63,8 +63,8 @@ class BandsController < ApplicationController
             @band.picture.purge
             @band.picture.attach(params[:picture])
         end
-        if params[:location]
-            location = Location.find_or_create_by(city: params[:location]["city"], latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
+        if params[:locationLatitude]
+            location = Location.find_or_create_by(city: params[:city], latitude: params[:locationLatitude], longitude: params[:locationLongitude])
             band_location = Bandlocation.find_by(band_id: @band.id, location_id: @band.location.id)
             band_location.update(location_id: location.id)
         end

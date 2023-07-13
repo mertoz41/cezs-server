@@ -7,12 +7,20 @@ class UserSerializer < ActiveModel::Serializer
   has_many :bands
   has_many :genres
   has_one :location
-  has_many :posts, serializer: ShortPostSerializer
   has_many :favoritesongs
   has_many :favoriteartists
   
   def notification_token
     return object.notification_token.token
+  end
+
+  def posts
+    all_posts = object.posts
+    if object.bands.size > 0
+      all_posts = all_posts + object.bands.map(&:posts).flatten!
+    end
+    all_posts.map do |post| ShortPostSerializer.new(post)
+    end
   end
   
   def upcoming_event
