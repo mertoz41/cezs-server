@@ -169,4 +169,11 @@ class UsersController < ApplicationController
         render json: filtered_users.uniq, each_serializer: ShortUserSerializer
     end
 
+    def destroy
+        user = User.find(params[:id])
+        user.chatrooms.destroy_all
+        user.destroy
+        render json: {deleted: true}
+    end
+
 end

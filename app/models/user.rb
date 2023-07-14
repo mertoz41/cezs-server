@@ -5,8 +5,8 @@ class User < ApplicationRecord
     
     has_many :notifications, dependent: :destroy
     has_many :messages, dependent: :destroy
-    has_many :userchatrooms, dependent: :destroy
-    has_many :chatrooms, through: :userchatrooms
+    has_many :userchatrooms
+    has_many :chatrooms, through: :userchatrooms, dependent: :destroy
     
     # users that blocked logged_in_user
     has_many :blocked_by, class_name: 'BlockedAccount', foreign_key: :blocked_user_id, dependent: :destroy
