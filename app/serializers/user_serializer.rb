@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :instruments, :follows_count, :blocked_account_count, :followers_count, :name, :email, :notification_token, :posts
+  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :instruments, :follows_count, :blocked_account_count, :followers_count, :name, :email, :notification_token, :posts, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :notification_token, if: -> {object.notification_token}
   has_many :notifications
@@ -20,6 +20,12 @@ class UserSerializer < ActiveModel::Serializer
       all_posts = all_posts + object.bands.map(&:posts).flatten!
     end
     all_posts.map do |post| ShortPostSerializer.new(post)
+    end
+  end
+
+  def applauds
+    applauds = object.applauds.map(&:post)
+    return applauds.map do |post| ShortPostSerializer.new(post)
     end
   end
   

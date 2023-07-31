@@ -30,17 +30,16 @@ class FollowsController < ApplicationController
         @followed_artists = user.followedartists
         @followed_songs = user.followedsongs
         render json: {
-            users: ActiveModel::Serializer::CollectionSerializer.new(@followed_users, each_serializer: UserSerializer), 
-            bands: ActiveModel::Serializer::CollectionSerializer.new(@followed_bands, each_serializer: BandSerializer), 
-            artists: ActiveModel::Serializer::CollectionSerializer.new(@followed_artists, each_serializer: ArtistSerializer), 
-            songs: ActiveModel::Serializer::CollectionSerializer.new(@followed_songs, each_serializer: SongSerializer), 
+            users: ActiveModel::Serializer::CollectionSerializer.new(@followed_users, serializer: ShortUserSerializer), 
+            bands: ActiveModel::Serializer::CollectionSerializer.new(@followed_bands, serializer: ShortBandSerializer), 
+            artists: ActiveModel::Serializer::CollectionSerializer.new(@followed_artists, serializer: ArtistSerializer), 
+            songs: ActiveModel::Serializer::CollectionSerializer.new(@followed_songs, serializer: SongSerializer), 
         }
-        # render json: {follows: ActiveModel::Serializer::CollectionSerializer.new(@follows, each_serializer: FollowSerializer)}
     end 
     def followers
         user = User.find(params[:id])
         @followed_by_users = user.followers
-        render json: {followers: ActiveModel::Serializer::CollectionSerializer.new(@followed_by_users, each_serializer: ShortUserSerializer)}
+        render json: {followers: ActiveModel::Serializer::CollectionSerializer.new(@followed_by_users, serializer: ShortUserSerializer)}
     end
 
     def search_followed_users
@@ -48,7 +47,7 @@ class FollowsController < ApplicationController
         # params[:searching]
         users = logged_in_user.followeds.select{|user| user.username.include? params[:searching]}
         render json: {
-            users: ActiveModel::Serializer::CollectionSerializer.new(users, each_serializer: ShortUserSerializer), 
+            users: ActiveModel::Serializer::CollectionSerializer.new(users, serializer: ShortUserSerializer), 
     }
     end
 

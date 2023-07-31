@@ -1,6 +1,6 @@
 class UserViewSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :instruments, :follows_count, :followers_count, :name, :posts
+  attributes :id, :username, :created_at, :avatar, :bio, :upcoming_event, :instruments, :follows_count, :followers_count, :name, :posts, :applauds
   attribute :avatar, if: -> {object.avatar.present?}
   has_many :bands
   has_many :genres
@@ -25,6 +25,12 @@ class UserViewSerializer < ActiveModel::Serializer
 
   def created_at
     object.created_at.to_date
+  end
+
+  def applauds
+    applauds = object.applauds.map(&:post)
+    return applauds.map do |post| ShortPostSerializer.new(post)
+    end
   end
 
   def instruments
