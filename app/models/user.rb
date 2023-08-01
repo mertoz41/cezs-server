@@ -4,6 +4,7 @@ class User < ApplicationRecord
     has_one_attached :avatar
     
     has_many :notifications, dependent: :destroy
+    has_many :action_notifications, class_name: "Notification", foreign_key: :action_user_id, dependent: :destroy
     has_many :messages, dependent: :destroy
     has_many :userchatrooms
     has_many :chatrooms, through: :userchatrooms, dependent: :destroy
