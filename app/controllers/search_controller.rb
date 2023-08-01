@@ -1,6 +1,9 @@
 class SearchController < ApplicationController
     def exploredata
 
+        genres = Genre.all
+        instruments = Instrument.all
+
         post_instrument_filters = Instrument.where.associated(:posts).uniq
         account_instrument_filters = Instrument.where.associated(:users).uniq
         post_genre_filters = Genre.where.associated(:posts).uniq
@@ -27,18 +30,20 @@ class SearchController < ApplicationController
 
 
         render json: {
-            last_posts:  ActiveModel::Serializer::CollectionSerializer.new(last_posts.sort_by(&:created_at).reverse, serializer: ShortPostSerializer),
-            last_bands:  ActiveModel::Serializer::CollectionSerializer.new(last_bands.sort_by(&:created_at).reverse, serializer: ShortBandSerializer),
-            last_users:  ActiveModel::Serializer::CollectionSerializer.new(last_users.sort_by(&:created_at).reverse, serializer: ShortUserSerializer),
-            post_count: Post.all.size,
-            user_count: User.all.size,
-            band_count: Band.all.size,
-            song_count: Song.all.size,
-            artist_count: Artist.all.size,
-            post_instrument_filters: post_instrument_filters,
-            account_instrument_filters: account_instrument_filters,
-            post_genre_filters: post_genre_filters,
-            account_genre_filters: account_genre_filters,
+            genres: genres,
+            instruments: instruments,
+            # last_posts:  ActiveModel::Serializer::CollectionSerializer.new(last_posts.sort_by(&:created_at).reverse, serializer: ShortPostSerializer),
+            # last_bands:  ActiveModel::Serializer::CollectionSerializer.new(last_bands.sort_by(&:created_at).reverse, serializer: ShortBandSerializer),
+            # last_users:  ActiveModel::Serializer::CollectionSerializer.new(last_users.sort_by(&:created_at).reverse, serializer: ShortUserSerializer),
+            # post_count: Post.all.size,
+            # user_count: User.all.size,
+            # band_count: Band.all.size,
+            # song_count: Song.all.size,
+            # artist_count: Artist.all.size,
+            # post_instrument_filters: post_instrument_filters,
+            # account_instrument_filters: account_instrument_filters,
+            # post_genre_filters: post_genre_filters,
+            # account_genre_filters: account_genre_filters,
 
 
 
