@@ -1,7 +1,5 @@
 ActiveAdmin.register Post do
-  def self.ransackable_attributes(auth_object = nil)
-    ["user", "song", "band_id", "created_at", "description", "genre_id", "id", "song_id", "updated_at", "user_id"]
-  end
+ 
 index do
   id_column
 

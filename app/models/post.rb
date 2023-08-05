@@ -1,4 +1,7 @@
 class Post < ApplicationRecord
+    def self.ransackable_attributes(auth_object = nil)
+        ["artist_id", "band_id", "created_at", "description", "genre_id", "id", "song_id", "updated_at", "user_id"]
+      end
     has_one_attached :clip
     has_one_attached :thumbnail
     has_many :comments, dependent: :destroy
