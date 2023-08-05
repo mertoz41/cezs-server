@@ -16,7 +16,9 @@ gem "aws-sdk-s3", require: false
 
 gem "activeadmin"
 gem 'devise'
-
+gem 'cancancan'
+gem 'draper'
+gem 'pundit'
 gem "sassc-rails"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

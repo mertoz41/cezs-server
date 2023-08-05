@@ -82,19 +82,19 @@ class User < ApplicationRecord
         
         # followed users posts
         if self.followeds.size > 0
-            usersposts = self.followeds.map(&:posts).flatten!.select {|post| post.reports.size < 1 }.last(5)
+            usersposts = self.followeds.map(&:posts).flatten!.select {|post| post.reports.size < 1 }
             arr = arr + usersposts
         end
        
         # followed bands posts
         if self.followedbands.size > 0
-            bandsposts = self.followedbands.map(&:posts).flatten!.select {|post| post.reports.size < 1}.last(5)  
+            bandsposts = self.followedbands.map(&:posts).flatten!.select {|post| post.reports.size < 1}
             arr = arr + bandsposts
         end
 
         # followed artists posts
         if self.followedartists.size > 0
-            artistsposts = self.followedartists.map(&:posts).flatten!.select {|post| post.reports.size < 1}.last(5)        
+            artistsposts = self.followedartists.map(&:posts).flatten!.select {|post| post.reports.size < 1}      
             arr = arr + artistsposts
         end
 

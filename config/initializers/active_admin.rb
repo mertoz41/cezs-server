@@ -4,6 +4,8 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
+  config.use_webpacker = true
+
   config.site_title = "Server"
 
   # Set the link url for the title. For example, to take

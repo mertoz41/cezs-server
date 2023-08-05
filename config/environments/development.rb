@@ -65,7 +65,7 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
   config.action_mailer.default_options = {from: 'support@cezsmusic.com'}
 
-  config.action_mailer.default_url_options = { :host => "cezsmusic.com" }
+  config.action_mailer.default_url_options = { :host => "10.0.0.206:3000" }
 
   Rails.application.routes.default_url_options[:host] = "10.0.0.206:3000"
 
