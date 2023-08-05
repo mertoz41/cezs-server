@@ -32,9 +32,11 @@ ActiveAdmin.register User do
         end
       end
       row :bio
-      row :location do |user|
-        link_to user.location.city, admin_location_path(user.location)
-      end 
+      if user.location
+        row :location do |user|
+          link_to user.location.city, admin_location_path(user.location)
+        end 
+      end
       row :email
       row :instruments
       row :genres
