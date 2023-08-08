@@ -7,14 +7,21 @@ module ActiveStorage
   module Attached::Model
     extend ActiveSupport::Concern
 
-    def self.ransackable_attributes(auth_object = nil)
-      column_names + _ransackers.keys
-    end
-  
-    def self.ransackable_associations(auth_object = nil)
-      reflect_on_all_associations.map { |a| a.name.to_s } + _ransackers.keys
-    end
     class_methods do
+      def self.ransackable_attributes(auth_object = nil)
+        column_names + _ransackers.keys
+      end
+    
+      def self.ransackable_associations(auth_object = nil)
+        reflect_on_all_associations.map { |a| a.name.to_s } + _ransackers.keys
+      end
+      def ransackable_attributes(auth_object = nil)
+        column_names + _ransackers.keys
+      end
+    
+      def ransackable_associations(auth_object = nil)
+        reflect_on_all_associations.map { |a| a.name.to_s } + _ransackers.keys
+      end
       # Specifies the relation between a single attachment and the model.
       #
       #   class User < ApplicationRecord
