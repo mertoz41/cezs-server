@@ -8,6 +8,9 @@ module ActiveStorage
     extend ActiveSupport::Concern
 
     class_methods do
+      def self.ransackable_attributes(auth_object = nil)
+        ["blob_id", "created_at", "id", "name", "record_id", "record_type"]
+    end
       # Specifies the relation between a single attachment and the model.
       #
       #   class User < ApplicationRecord

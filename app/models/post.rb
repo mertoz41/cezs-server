@@ -1,7 +1,5 @@
 class Post < ApplicationRecord
-    def self.ransackable_attributes(auth_object = nil)
-        ["artist_id", "band_id", "created_at", "description", "genre_id", "id", "song_id", "updated_at", "user_id"]
-      end
+    
     has_one_attached :clip
     has_one_attached :thumbnail
     has_many :comments, dependent: :destroy
@@ -22,11 +20,4 @@ class Post < ApplicationRecord
     has_many :notifications, dependent: :destroy
 
     has_many :reports, dependent: :destroy
-    def self.ransackable_attributes(auth_object = nil)
-        column_names + _ransackers.keys
-      end
-    
-      def self.ransackable_associations(auth_object = nil)
-        reflect_on_all_associations.map { |a| a.name.to_s } + _ransackers.keys
-      end
 end
