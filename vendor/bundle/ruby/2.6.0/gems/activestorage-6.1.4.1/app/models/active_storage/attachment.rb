@@ -18,7 +18,9 @@ class ActiveStorage::Attachment < ActiveStorage::Record
 
   after_create_commit :mirror_blob_later, :analyze_blob_later
   after_destroy_commit :purge_dependent_blob_later
-
+  def self.ransackable_attributes(auth_object = nil)
+    ["blob_id", "created_at", "id", "name", "record_id", "record_type"]
+end
   # Synchronously deletes the attachment and {purges the blob}[rdoc-ref:ActiveStorage::Blob#purge].
   def purge
     transaction do
