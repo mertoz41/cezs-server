@@ -1,4 +1,4 @@
-class ActiveStorageAttachment < ApplicationRecord
+class ActiveStorage::Attachment < ApplicationRecord
     def self.ransackable_attributes(auth_object = nil)
         column_names + _ransackers.keys
       end
