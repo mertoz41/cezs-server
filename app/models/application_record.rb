@@ -7,9 +7,9 @@ class ApplicationRecord < ActiveRecord::Base
     column_names + _ransackers.keys
   end
 
-  # def self.ransackable_associations(auth_object = nil)
-  #   reflect_on_all_associations.map { |a| a.name.to_s } + _ransackers.keys
-  # end
+  def self.ransackable_associations(auth_object = nil)
+    reflect_on_all_associations.map { |a| a.name.to_s } + _ransackers.keys
+  end
   
 end
 
