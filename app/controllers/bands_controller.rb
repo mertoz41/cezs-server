@@ -16,7 +16,7 @@ class BandsController < ApplicationController
     def picture
         @band = Band.find(params[:band_id])
         @band.picture.attach(params[:picture])
-        render json: {picture: "#{ENV['CLOUDFRONT_API']}#{@band.picture.key}"}
+        render json: {picture: "#{ENV['CLOUDFRONT_API']}/#{@band.picture.key}"}
     end
 
 

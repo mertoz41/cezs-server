@@ -128,7 +128,7 @@ class UsersController < ApplicationController
         # user.avatar = params[:avatar]
         # byebug
         # @posts = @user.posts
-        render json: {message: 'picture changed.', avatar: "#{ENV['CLOUDFRONT_API']}#{user.avatar.key}"}
+        render json: {message: 'picture changed.', avatar: "#{ENV['CLOUDFRONT_API']}/#{user.avatar.key}"}
     end
 
     def searching

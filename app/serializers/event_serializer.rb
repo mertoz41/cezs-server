@@ -14,7 +14,7 @@ class EventSerializer < ActiveModel::Serializer
       user = {}
       user[:username] = object.user.username
       if object.user.avatar.attached?
-        user[:avatar] = "#{ENV['CLOUDFRONT_API']}#{object.user.avatar.key}"
+        user[:avatar] = "#{ENV['CLOUDFRONT_API']}/#{object.user.avatar.key}"
       end
       user[:id] = object.user.id
       return user
@@ -24,7 +24,7 @@ class EventSerializer < ActiveModel::Serializer
     if object.band
       band = {}
       band[:name] = object.band.name
-      band[:picture] = "#{ENV['CLOUDFRONT_API']}#{object.band.picture.key}"
+      band[:picture] = "#{ENV['CLOUDFRONT_API']}/#{object.band.picture.key}"
       band[:id] = object.band.id
       return band
     end

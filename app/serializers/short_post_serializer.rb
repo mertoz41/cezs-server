@@ -7,7 +7,7 @@ class ShortPostSerializer < ActiveModel::Serializer
   attribute :artist_name, if: -> {object.artist.present?}
 
   def thumbnail
-    return "#{ENV['CLOUDFRONT_API']}#{object.thumbnail.key}"
+    return "#{ENV['CLOUDFRONT_API']}/#{object.thumbnail.key}"
   end
   def instruments
     object.instruments.map do |inst|

@@ -6,9 +6,9 @@ class EventNotificationSerializer < ActiveModel::Serializer
   def performer_avatar
 
     if object.performing_user
-      return "#{ENV['CLOUDFRONT_API']}#{object.performing_user.avatar.key}" 
+      return "#{ENV['CLOUDFRONT_API']}/#{object.performing_user.avatar.key}" 
     else
-      return "#{ENV['CLOUDFRONT_API']}#{object.performing_band.picture.key}" 
+      return "#{ENV['CLOUDFRONT_API']}/#{object.performing_band.picture.key}" 
     end
   end
   def performer_name

@@ -9,6 +9,6 @@ class CommentSerializer < ActiveModel::Serializer
   end
 
   def avatar
-    return "#{ENV['CLOUDFRONT_API']}#{object.user.avatar.key}"
+    return "#{ENV['CLOUDFRONT_API']}/#{object.user.avatar.key}"
   end
 end
