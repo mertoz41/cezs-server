@@ -48,7 +48,7 @@ class UserViewSerializer < ActiveModel::Serializer
   end
 
   def avatar
-    return url_for(object.avatar)
+    return "#{ENV['CLOUDFRONT_API']}#{object.avatar.key}"
   end
   
 end

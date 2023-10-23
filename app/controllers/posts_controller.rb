@@ -24,7 +24,7 @@ class PostsController < ApplicationController
             Postinstrument.create(instrument_id: inst.id, post_id: @post.id)
         end
         @post.clip.attach(params[:clip])        
-        ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
+        # ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
 
         @post.thumbnail.attach(params[:thumbnail])
 

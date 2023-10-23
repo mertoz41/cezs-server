@@ -7,7 +7,7 @@ class BandSerializer < ActiveModel::Serializer
   has_many :members, serializer: ShortUserSerializer
   
   def picture
-    url_for(object.picture)
+    "#{ENV['CLOUDFRONT_API']}#{object.picture.key}"
   end
 
   def bio

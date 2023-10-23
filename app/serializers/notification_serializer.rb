@@ -28,7 +28,7 @@ class NotificationSerializer < ActiveModel::Serializer
 
   def avatar
     if object.action_user.avatar.attached?
-    return url_for(object.action_user.avatar)
+    return "#{ENV['CLOUDFRONT_API']}#{object.action_user.avatar.key}"
     end
   end
 
@@ -42,11 +42,11 @@ class NotificationSerializer < ActiveModel::Serializer
 
   def thumbnail
     if object.comment_id
-      return url_for(object.comment.post.thumbnail)
+      return "#{ENV['CLOUDFRONT_API']}#{object.comment.post.thumbnail.key}"
     elsif object.applaud_id
-      return url_for(object.applaud.post.thumbnail)
+      return "#{ENV['CLOUDFRONT_API']}#{object.applaud.post.thumbnail.key}"
     elsif object.band_id
-      return url_for(object.band.picture)
+      return "#{ENV['CLOUDFRONT_API']}#{object.band.picture.key}"
     end 
   end
   def bandname

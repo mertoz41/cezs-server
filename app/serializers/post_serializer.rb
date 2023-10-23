@@ -14,7 +14,7 @@ class PostSerializer < ActiveModel::Serializer
   attribute :song_name, if: -> {object.song.present?}
 
   def clip
-    url_for(object.clip)
+    return "#{ENV['CLOUDFRONT_API']}#{object.clip.key}"
   end
 
   def instruments
@@ -57,7 +57,7 @@ class PostSerializer < ActiveModel::Serializer
   end
 
   def bandpicture
-    return url_for(object.band.picture)
+    return "#{ENV['CLOUDFRONT_API']}#{object.band.picture.key}"
   end
 
   def username
@@ -65,7 +65,7 @@ class PostSerializer < ActiveModel::Serializer
   end
 
   def useravatar
-    return url_for(object.user.avatar)
+      return "#{ENV['CLOUDFRONT_API']}#{object.user.avatar.key}"
   end
 
   def artist_name
@@ -79,5 +79,4 @@ class PostSerializer < ActiveModel::Serializer
   def logged_in_user
     scope
   end
-
 end

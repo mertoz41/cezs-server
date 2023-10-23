@@ -30,7 +30,7 @@ class BandfollowsController < ApplicationController
         followers = band.followers.map do |user|
             obj = {id: user.id, username: user.username}
             if user.avatar.attached?
-                obj["avatar"] = url_for(user.avatar)
+                obj["avatar"] = "#{ENV['CLOUDFRONT_API']}#{user.avatar.key}"
             end
             obj
         end

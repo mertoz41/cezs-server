@@ -4,7 +4,7 @@ class ShortBandSerializer < ActiveModel::Serializer
   has_many :posts, serializer: ShortPostSerializer
 
   def picture
-    url_for(object.picture)
+    return "#{ENV['CLOUDFRONT_API']}#{object.picture.key}"
   end
   
   def genres

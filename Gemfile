@@ -20,7 +20,6 @@ gem 'cancancan'
 gem 'draper'
 gem 'pundit'
 gem "sassc-rails"
-
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
@@ -36,7 +35,6 @@ gem 'dotenv-rails'
 gem 'exponent-server-sdk'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'net-ssh', '>= 6.0.2'

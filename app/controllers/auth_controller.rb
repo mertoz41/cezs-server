@@ -23,6 +23,7 @@ class AuthController < ApplicationController
 
     def check
         token = request.headers["Authorization"].split(' ')[1]
+        
         @user = User.find(decode(token)["user_id"])
         @timeline = @user.timeline
         @chatrooms = @user.chatrooms
