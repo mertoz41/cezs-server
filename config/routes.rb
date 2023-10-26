@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :chatrooms
+  resources :applauds
   resources :messages
   resources :bios
   resources :locations
@@ -43,8 +44,8 @@ Rails.application.routes.draw do
   post '/createbandgenre', to: 'genres#createbandgenre'
   post '/deletebandgenre', to: 'genres#deletebandgenre'
 
-  get '/artistfollowers/:id', to: 'artists#artistfollowers'
-  get '/artistfavorites/:id', to: 'artists#artistfavorites'
+  get '/artistfollowers/:id', to: 'artists#followers'
+  get '/artistfavorites/:id', to: 'artists#favorites'
 
   get '/getfollows/:id', to: 'follows#follows'
   get '/getfollowers/:id', to: 'follows#followers'
@@ -55,8 +56,8 @@ Rails.application.routes.draw do
   post '/passwordcheck', to: 'users#passwordcheck'
   post '/changepassword', to: 'users#changepassword'
   
-  delete '/artistunfollow/:id', to: 'artists#artistunfollow'
-  post '/artistfollow', to: 'artists#artistfollow'
+  delete '/artistunfollow/:id', to: 'artists#unfollow'
+  post '/artistfollow', to: 'artists#follow'
   get '/artistinfluences/:id', to: 'artists#influences'
   post  '/deleteuserartist', to: 'userartists#delete'
   post '/usersfiltersearch', to: 'users#filter_search'
@@ -88,8 +89,6 @@ Rails.application.routes.draw do
 
   get '/exploredata', to: 'search#exploredata'
   get '/instrumentsgenres', to: 'search#get_instruments_genres'
-  post '/applaudpost', to: 'applauds#applaudpost'
-  delete '/unapplaudpost/:id', to: 'applauds#unapplaudpost'
 
   post '/instrumentsearch', to: 'instruments#instrumentsearch'
   post '/genresearch', to: 'genres#genresearch'

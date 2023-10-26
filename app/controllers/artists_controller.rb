@@ -22,25 +22,25 @@ class ArtistsController < ApplicationController
         render json: @influences, each_serializer: ShortUserSerializer
     end 
 
-    def artistfollowers
+    def followers
         artist = Artist.find(params[:id])
         @users = artist.followingusers
         render json: @users, each_serializer: ShortUserSerializer
     end
 
-    def artistfavorites
+    def favorites
         artist = Artist.find(params[:id])
         @users = artist.favoriteusers
         render json: @users, each_serializer: ShortUserSerializer
     end
 
-    def artistfollow
+    def follow
         @artist = Artist.find_or_create_by(name: params[:artist_name])
         new_follow = Artistfollow.create(user_id: logged_in_user.id, artist_id: @artist.id) 
         render json: {artist: ArtistSerializer.new(@artist)}
     end
 
-    def artistunfollow
+    def unfollow
         artis_follow = Artistfollow.find_by(user_id: logged_in_user.id, artist_id: params[:id])
         artis_follow.destroy
         render json: {message: 'succezs'}

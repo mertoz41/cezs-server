@@ -43,7 +43,7 @@ class User < ApplicationRecord
     has_one :notification_token, dependent: :destroy
 
     has_many :bandmembers, dependent: :destroy
-    has_many :bands, through: :bandmembers
+    has_many :bands, through: :bandmembers, dependent: :destroy
 
     has_many :posts, dependent: :destroy
     has_many :songs, through: :posts
