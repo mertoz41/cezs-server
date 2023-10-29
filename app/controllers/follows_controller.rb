@@ -1,6 +1,6 @@
 class FollowsController < ApplicationController
 
-    def follow
+    def create
         following_user = User.find(logged_in_user.id)
         followed_user = User.find(params[:id])
         new_follow = Follow.create(follower_id: following_user.id, followed_id: followed_user.id)
@@ -17,7 +17,7 @@ class FollowsController < ApplicationController
         render json: {message: 'is followed.'}
     end
 
-    def unfollow
+    def destroy 
         follow = Follow.find_by(follower_id: logged_in_user.id, followed_id: params[:id])
         follow.destroy
         render json: {message: "is unfollowed."}

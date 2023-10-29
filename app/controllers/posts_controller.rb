@@ -24,7 +24,7 @@ class PostsController < ApplicationController
             Postinstrument.create(instrument_id: inst.id, post_id: @post.id)
         end
         @post.clip.attach(params[:clip])        
-        # ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
+        ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
 
         @post.thumbnail.attach(params[:thumbnail])
 
@@ -36,43 +36,6 @@ class PostsController < ApplicationController
         render json: @post, serializer: PostSerializer, scope: logged_in_user
     end
     
-    def filter_search
-        instruments = params[:instruments]
-        genres = params[:genres]
-        all_posts = []
-
-        if instruments.length > 0
-            instruments.each do |inst|
-                instrument = Instrument.find(inst)
-                instrument.posts.each do |post|
-                    if !all_posts.include?(post)
-                        all_posts.push(post)
-                    end
-                end
-                
-            end
-        end
-
-        if genres.length > 0
-            genres.each do |genr|
-                genre = Genre.find(genr)
-                genre.posts.each do |post|
-                    if !all_posts.include?(post)
-                        all_posts.push(post)
-                    end
-                end
-                
-            end
-        end
-        posts = []
-        if logged_in_user.blocked_users.size || logged_in_user.blocked_bands.size || logged_in_user.blocking_users.size
-            posts = filter_blocked_posts(all_posts)
-        else 
-            posts = all_posts
-        end
-        filtered = posts.select {|post| post.reports.size < 1}
-        render json: filtered, each_serializer: ShortPostSerializer
-    end
     def musicposts
         @posts = Post.where(id: params[:posts])
         if !@posts.size

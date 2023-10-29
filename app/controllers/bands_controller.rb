@@ -100,22 +100,4 @@ class BandsController < ApplicationController
         render json: {message: 'band deleted.'}
     end
 
-    def filter_search
-        instrument_users = User.joins(:instruments).merge(Instrument.where(id: params[:instruments]))
-        bands = []
-        instrument_bands = instrument_users.each do |user|
-            bands = bands + user.bands
-        end
-        genre_bands = Band.joins(:genres).merge(Genre.where(id: params[:genres]))
-        @bands = filter_blocked_bands(bands + genre_bands)
-        filtered_bands = []
-        if logged_in_user.blocked_bands.size
-            filtered_bands = filter_blocked_bands(bands + genre_bands)
-        else
-            filtered_bands = bands + genre_bands
-        end
-        filtered_bands = filtered_bands.select{|band| band.reports.size < 1}
-        
-        render json: filtered_bands.uniq, each_serializer: ShortBandSerializer
-    end
 end

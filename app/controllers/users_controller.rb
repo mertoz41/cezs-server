@@ -125,14 +125,11 @@ class UsersController < ApplicationController
     def avatar
         user = User.find(logged_in_user.id)
         user.avatar.attach(params[:avatar])
-        # user.avatar = params[:avatar]
-        # byebug
-        # @posts = @user.posts
         render json: {message: 'picture changed.', avatar: "#{ENV['CLOUDFRONT_API']}/#{user.avatar.key}"}
     end
 
     def searching
-        searched_users= User.where("username like?", "%#{params[:searching]}%")
+        searched_users = User.where("username like?", "%#{params[:searching]}%")
         users = []
         if logged_in_user.blocked_users.size
             users = filter_blocked_users(searched_users)
@@ -155,19 +152,6 @@ class UsersController < ApplicationController
         render json: {message: 'token added.'}
     end
     
-    def filter_search
-        instrument_users = User.joins(:instruments).merge(Instrument.where(id: params[:instruments]))
-        genre_users = User.joins(:genres).merge(Genre.where(id: params[:genres]))
-        all_users = instrument_users + genre_users
-        users = []
-        if logged_in_user.blocked_users.size
-            users = filter_blocked_users(all_users)
-        else
-            users = all_users
-        end
-        filtered_users = users.select {|user| user.reports.size < 1}
-        render json: filtered_users.uniq, each_serializer: ShortUserSerializer
-    end
 
     def destroy
         user = User.find(params[:id])

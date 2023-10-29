@@ -17,12 +17,15 @@ Rails.application.routes.draw do
   resources :users
   resources :bands
   resources :bandbios
-  resources :bandlocations
   resources :bandmembers
   resources :usersongs
   resources :userartists
   resources :events
   resources :albums
+  resources :bandfollows
+  resources :follows
+  resources :bandgenres
+  resources :userblocks
 
   mount ActionCable.server => '/cable'
 
@@ -36,34 +39,23 @@ Rails.application.routes.draw do
   post '/artistsearch', to: 'artists#searching'
   post '/bandsearch', to: 'bands#searching'
   post '/filter', to: 'posts#filter'
-  post '/instrumentfilter', to: 'instruments#filter'
   post '/instrumentsearch', to: 'instruments#searching'
   post '/deleteuserinstrument', to: 'userinstruments#delete'
   post '/createusergenre', to: 'genres#createusergenre'
   post '/deleteusergenre', to: 'genres#deleteusergenre'
-  post '/createbandgenre', to: 'genres#createbandgenre'
-  post '/deletebandgenre', to: 'genres#deletebandgenre'
-
+ 
   get '/artistfollowers/:id', to: 'artists#followers'
   get '/artistfavorites/:id', to: 'artists#favorites'
 
   get '/getfollows/:id', to: 'follows#follows'
   get '/getfollowers/:id', to: 'follows#followers'
-  delete '/unfollow/:id', to: 'follows#unfollow'
-  get '/follow/:id', to: 'follows#follow'
-
 
   post '/passwordcheck', to: 'users#passwordcheck'
   post '/changepassword', to: 'users#changepassword'
   
   delete '/artistunfollow/:id', to: 'artists#unfollow'
   post '/artistfollow', to: 'artists#follow'
-  get '/artistinfluences/:id', to: 'artists#influences'
-  post  '/deleteuserartist', to: 'userartists#delete'
-  post '/usersfiltersearch', to: 'users#filter_search'
-  post '/bandsfiltersearch', to: 'bands#filter_search'
-  post '/postsfiltersearch', to: 'posts#filter_search'
-
+  
   post '/deleteusersong', to: 'usersongs#delete'
   
   get '/albumsongs/:id', to: 'albums#albumsongs'
@@ -82,8 +74,6 @@ Rails.application.routes.draw do
   post '/reportcomment/:id', to: 'reports#comment_report'
   post '/reportevent/:id', to: 'reports#event_report'
 
-  get '/songfollowers/:id', to: 'songs#songfollowers'
-  get '/songfavorites/:id', to: 'songs#songfavorites'
   post '/songfollow', to: 'songs#songfollow'
   delete '/songunfollow/:id', to: 'songs#songunfollow'
 
@@ -91,7 +81,7 @@ Rails.application.routes.draw do
   get '/instrumentsgenres', to: 'search#get_instruments_genres'
 
   post '/instrumentsearch', to: 'instruments#instrumentsearch'
-  post '/genresearch', to: 'genres#genresearch'
+  post '/genresearch', to: 'genres#search'
   post '/timeline', to: 'timeline#user_timeline'
   post '/olderposts', to: 'timeline#older_posts'
   post '/usertoken', to: 'users#usertoken'
@@ -105,17 +95,14 @@ Rails.application.routes.draw do
   get '/seeapplaudnoti/:id', to: 'notifications#seeapplaudnoti'
   get '/seecommentnoti/:id', to: 'notifications#seecommentnoti'
 
-  delete '/bandunfollow/:id', to: 'bandfollows#unfollow'
-  get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
-  get '/bandfollow/:id', to: 'bandfollows#follow'
+  # delete '/bandunfollow/:id', to: 'bandfollows#unfollow'
+  # get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
+  # get '/bandfollow/:id', to: 'bandfollows#follow'
 
   get '/oldermessages/:id', to: 'messages#oldermessages'
 
   post '/block_account', to: 'userblocks#create'
-  get '/blockedaccounts', to: 'userblocks#blockedaccounts'
-  delete '/unblockuser/:id', to: 'userblocks#unblockuser'
 
-  post '/blockband', to: 'userblocks#blockband'
   delete '/unblockband/:id', to: 'userblocks#unblockband'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -7,7 +7,6 @@ class BiosController < ApplicationController
 
     def update
         @user = User.find(params[:user_id])
-        # byebug
         bio = @user.bio
         bio.update(description: params[:description])
         render json: {bio: bio.description}

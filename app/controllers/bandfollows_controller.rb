@@ -1,7 +1,7 @@
 class BandfollowsController < ApplicationController
     include Rails.application.routes.url_helpers
 
-    def follow
+    def create
         band = Band.find(params[:id])
         new_follow = Bandfollow.create(user_id: logged_in_user.id, band_id: band.id)
         band.members.each do |member|
@@ -19,13 +19,13 @@ class BandfollowsController < ApplicationController
         render json: {message: 'is followed.'}
     end 
     
-    def unfollow
+    def destroy
         bandfollow = Bandfollow.find_by(user_id: logged_in_user.id, band_id: params[:id])
         bandfollow.destroy
         render json: {message: 'unfollowed.'}
     end
 
-    def bandfollowers
+    def show
         band = Band.find(params[:id])
         followers = band.followers.map do |user|
             obj = {id: user.id, username: user.username}

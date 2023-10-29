@@ -4,7 +4,6 @@ class LocationsController < ApplicationController
         events_number = Event.where('event_date >= ?', Date.today).size
         instruments = Instrument.all
         genres = Genre.all
-        
         render json: {
             locations: ActiveModel::Serializer::CollectionSerializer.new(@locations, each_serializer: LocationSerializer), 
             users_number: User.all.size, 
@@ -23,7 +22,6 @@ class LocationsController < ApplicationController
             @all_users = @all_users
             @all_bands = @all_bands
         end
-
         render json:
         {
             users: ActiveModelSerializers::SerializableResource.new(@all_users, each_serializer: ShortUserSerializer), 
@@ -31,7 +29,6 @@ class LocationsController < ApplicationController
         }
     end
     def create
-      
         location = Location.find_by(city: params[:city])
         if location
             # if location exists
@@ -45,9 +42,7 @@ class LocationsController < ApplicationController
         @locations = Location.all
         render json: {locations: ActiveModel::Serializer::CollectionSerializer.new(@locations, each_serializer: LocationSerializer), user: UserSerializer.new(@user)}
     end 
-
     def update
-
         @user = User.find(params[:user_id])
         old_location = @user.location
         user_location = Userlocation.find_by(user_id: @user.id, location_id: old_location.id)
