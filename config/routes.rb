@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :bandmembers
   resources :usersongs
   resources :userartists
+  resources :reports
   resources :events
   resources :albums
   resources :bandfollows
@@ -68,12 +69,6 @@ Rails.application.routes.draw do
   post '/musicposts', to: 'posts#musicposts'
   get '/filterlocations', to: 'locations#filterlocations'
   
-  post '/reportpost/:id', to: 'reports#post_report'
-  post '/reportuser/:id', to: 'reports#user_report'
-  post '/reportband/:id', to: 'reports#band_report'
-  post '/reportcomment/:id', to: 'reports#comment_report'
-  post '/reportevent/:id', to: 'reports#event_report'
-
   post '/songfollow', to: 'songs#songfollow'
   delete '/songunfollow/:id', to: 'songs#songunfollow'
 
