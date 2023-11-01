@@ -34,13 +34,15 @@ Rails.application.routes.draw do
   get '/check', to: 'auth#check'
   post '/avatar', to: 'users#avatar'
   post '/picture', to: 'bands#picture'
+
   post '/usersearch', to: 'users#searching'
   post '/followedusers', to: 'follows#search_followed_users'
   post '/songsearch', to: 'songs#searching'
   post '/artistsearch', to: 'artists#searching'
   post '/bandsearch', to: 'bands#searching'
-  post '/filter', to: 'posts#filter'
   post '/instrumentsearch', to: 'instruments#searching'
+
+  post '/filter', to: 'posts#filter'
   post '/deleteuserinstrument', to: 'userinstruments#delete'
   post '/createusergenre', to: 'genres#createusergenre'
   post '/deleteusergenre', to: 'genres#deleteusergenre'
