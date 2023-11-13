@@ -1,6 +1,8 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
   resources :chatrooms
   resources :applauds
   resources :messages
@@ -29,7 +31,7 @@ Rails.application.routes.draw do
   resources :userblocks
 
   mount ActionCable.server => '/cable'
-
+  mount Sidekiq::Web => '/sidekiq'
   post '/login', to: 'auth#create'
   get '/check', to: 'auth#check'
   post '/avatar', to: 'users#avatar'
