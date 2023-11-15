@@ -24,11 +24,11 @@ class PostsController < ApplicationController
             Postinstrument.create(instrument_id: inst.id, post_id: @post.id)
         end
         @post.clip.attach(params[:clip])        
-        ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
+        ConvertVideoJob.perform_async(@post.id, logged_in_user.id)
 
         @post.thumbnail.attach(params[:thumbnail])
 
-        render json: @post, serializer: PostSerializer, scope: logged_in_user
+        render json: {message: "post is being processed"}
     end
 
     def show

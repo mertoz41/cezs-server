@@ -7,7 +7,6 @@ class PostSerializer < ActiveModel::Serializer
   attribute :band_id, if: -> {object.band.present?}
   attribute :bandname, if: -> {object.band.present?}
   attribute :bandpicture, if: -> {object.band.present?}
-  attribute :current_state, if: -> {object.user.present?}
   attribute :artist_id, if: -> {object.artist.present?}
   attribute :song_id, if: -> {object.song.present?}
   attribute :artist_name, if: -> {object.artist.present?}
@@ -47,9 +46,6 @@ class PostSerializer < ActiveModel::Serializer
   end
   def applaud_count
     return object.applauds.size
-  end
-  def current_state
-    return object.user.location.city.split()[1]
   end
 
   def bandname
