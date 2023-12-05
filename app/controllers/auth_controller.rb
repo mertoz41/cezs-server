@@ -6,13 +6,11 @@ class AuthController < ApplicationController
         if @user && @user.authenticate(params[:password])
             payload = {user_id: @user.id}
             token = encode(payload)
-            @timeline = @user.timeline
             @chatrooms = @user.chatrooms
 
             render json: {
                 user: UserSerializer.new(@user), 
                 token: token, 
-                timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer, scope: @user),
                 chatrooms: ActiveModel::Serializer::CollectionSerializer.new(@chatrooms, each_serializer: ChatroomSerializer),
         
                 }
@@ -23,13 +21,10 @@ class AuthController < ApplicationController
 
     def check
         token = request.headers["Authorization"].split(' ')[1]
-        
         @user = User.find(decode(token)["user_id"])
-        @timeline = @user.timeline
         @chatrooms = @user.chatrooms
         render json: {
             user: UserSerializer.new(@user), 
-            timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer, scope: logged_in_user),
             chatrooms: ActiveModel::Serializer::CollectionSerializer.new(@chatrooms, each_serializer: ChatroomSerializer),
 
         }

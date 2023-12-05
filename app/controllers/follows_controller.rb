@@ -4,7 +4,8 @@ class FollowsController < ApplicationController
         following_user = User.find(logged_in_user.id)
         followed_user = User.find(params[:id])
         new_follow = Follow.create(follower_id: following_user.id, followed_id: followed_user.id)
-        CreateNotificationJob.perform_later({user_id: followed_user.id, action_user_id: logged_in_user.id})
+        parsed = JSON.parse({user_id: followed_user.id, action_user_id: logged_in_user.id}.to_json)
+        CreateNotificationJob.perform_async(parsed)
         render json: {message: 'is followed.'}
     end
 

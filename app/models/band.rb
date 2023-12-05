@@ -32,7 +32,7 @@ class Band < ApplicationRecord
         end
         filtered_members = members.select {|id| id != creator_id}
         filtered_members.each do |id|
-            CreateNotificationJob.perform_later({band_id: self.id, action_user_id: creator_id, user_id: id})
+            CreateNotificationJob.perform_async(JSON.parse({band_id: self.id, action_user_id: creator_id, user_id: id}.to_json))
         end
 
         location = Location.find(location_id)

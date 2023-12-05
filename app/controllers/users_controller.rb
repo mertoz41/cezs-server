@@ -53,72 +53,7 @@ class UsersController < ApplicationController
     def update
         @user = User.find(params[:id])
         @user.update(params)
-        # if params[:username]
-        #     found = User.find_by(username: params[:username])
-        #     if found
-        #         render json: {error: 'This name is taken.'}
-        #     else
-        #         @user.update_column 'username', params[:username]
-        #     end
-        # end
-
-
-        # if params[:name]
-        #     @user.update_column 'name', params[:name]
-        # end
-        # if params[:email]
-        #     @user.update_column 'email', params[:email]
-        # end
-        # if params[:bio]
-        #     @user.update_column 'bio', params[:bio]
-        # end
-
-        # if params[:location]
-        #     if @user.userlocation
-        #         old_location = @user.userlocation
-        #         old_location.destroy
-        #     end
-        #     location = Location.find_by(city: params[:location]["city"])
-        #     if location
-        #         new_user_location = Userlocation.create(user_id: @user.id, location_id: location.id)
-        #     else
-        #         new_location = Location.create(city: params[:location]["city"], latitude: params[:location]["latitude"], longitude: params[:location]["longitude"])
-        #         new_user_location = Userlocation.create(user_id: @user.id, location_id: new_location.id)
-        #     end
-        # end
-
-        # if params[:instruments]
-        #     params[:instruments].each do |inst|
-        #         instrument = Instrument.find_or_create_by(name: inst)
-        #         user_instrument = Userinstrument.create(user_id: @user.id, instrument_id: instrument.id)
-        #     end
-        # end
-
-        # if params[:genres]
-        #     params[:genres].each do |genr|
-        #         genre = Genre.find_or_create_by(name: genr)
-        #         user_genre = Usergenre.create(user_id: @user.id, genre_id: genre.id)
-        #     end
-        # end
-
-        # if params[:favoriteartists]
-        #     params[:favoriteartists].each do |fav_artist|
-        #         artist = Artist.find_or_create_by(name: fav_artist)
-        #         user_artist = Userartist.create(user_id: logged_in_user.id, artist_id: artist.id)
-        #     end
-        # end
-        # if params[:favoritesongs]
-        #     params[:favoritesongs].each do |fav_song|
-        #         artist = Artist.find_or_create_by(name: fav_song["artist_name"])
-        #         song = Song.find_or_create_by(name: fav_song["name"], artist_id: artist.id)
-        #         user_song = Usersong.create(user_id: logged_in_user.id, song_id: song.id)
-        #     end
-        # end
-
-
-    
-        # validations are keeping me from updating only the username
-        
+            
         render json: {user: UserSerializer.new(@user)}
     end
 
@@ -150,6 +85,19 @@ class UsersController < ApplicationController
             token.update(token: params[:expo_token])
         end
         render json: {message: 'token added.'}
+    end
+    def filter_search
+        instrument_users = User.joins(:instruments).merge(Instrument.where(id: params[:instruments]))
+        genre_users = User.joins(:genres).merge(Genre.where(id: params[:genres]))
+        all_users = instrument_users + genre_users
+        users = []
+        if logged_in_user.blocked_users.size
+            users = filter_blocked_users(all_users)
+        else
+            users = all_users
+        end
+        filtered_users = users.select {|user| user.reports.size < 1}
+        render json: filtered_users.uniq, each_serializer: ShortUserSerializer
     end
     
 

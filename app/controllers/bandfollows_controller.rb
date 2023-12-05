@@ -5,7 +5,7 @@ class BandfollowsController < ApplicationController
         band = Band.find(params[:id])
         new_follow = Bandfollow.create(user_id: logged_in_user.id, band_id: band.id)
         band.members.each do |member|
-            CreateNotificationJob.perform_later({user_id: member.id, action_user_id: logged_in_user.id, bandfollow_id: new_follow.id, band_id: band.id})
+            CreateNotificationJob.perform_async(JSON.parse({user_id: member.id, action_user_id: logged_in_user.id, bandfollow_id: new_follow.id, band_id: band.id}.to_json))
         end
         render json: {message: 'is followed.'}
     end 

@@ -81,7 +81,8 @@ Rails.application.routes.draw do
 
   post '/instrumentsearch', to: 'instruments#instrumentsearch'
   post '/genresearch', to: 'genres#search'
-  post '/timeline', to: 'timeline#user_timeline'
+  get '/timeline', to: 'timeline#get_timeline'
+  post '/refreshtimeline', to: 'timeline#refresh_timeline'
   post '/olderposts', to: 'timeline#older_posts'
   post '/usertoken', to: 'users#usertoken'
   get '/experimentnotification', to: 'notifications#experiment'
@@ -94,10 +95,10 @@ Rails.application.routes.draw do
   get '/seeapplaudnoti/:id', to: 'notifications#seeapplaudnoti'
   get '/seecommentnoti/:id', to: 'notifications#seecommentnoti'
 
-  # delete '/bandunfollow/:id', to: 'bandfollows#unfollow'
-  # get '/bandfollowers/:id', to: 'bandfollows#bandfollowers'
-  # get '/bandfollow/:id', to: 'bandfollows#follow'
-
+  post '/usersfiltersearch', to: 'users#filter_search'
+  post '/bandsfiltersearch', to: 'bands#filter_search'
+  post '/postsfiltersearch', to: 'posts#filter_search'
+  
   get '/oldermessages/:id', to: 'messages#oldermessages'
 
   post '/block_account', to: 'userblocks#create'

@@ -14,11 +14,11 @@ class CommentsController < ApplicationController
         @comment = Comment.create(comment: params[:comment], user_id: logged_in_user.id, post_id: post.id)
         if post.user
             if post.user.id != logged_in_user.id
-                CreateNotificationJob.perform_later({action_user_id: logged_in_user.id, user_id: post.user.id, comment_id: @comment.id})
+                CreateNotificationJob.perform_async(JSON.parse({action_user_id: logged_in_user.id, user_id: post.user.id, comment_id: @comment.id}.to_json))
             end
         else
             post.band.members.each do |member|
-                CreateNotificationJob.perform_later({user_id: member.id, post_id: post.id, action_user_id: logged_in_user.id, comment_id: @comment.id})
+                CreateNotificationJob.perform_async(JSON.parse({user_id: member.id, post_id: post.id, action_user_id: logged_in_user.id, comment_id: @comment.id}.to_json))
             end
         end
         render json: {comment: CommentSerializer.new(@comment)}
