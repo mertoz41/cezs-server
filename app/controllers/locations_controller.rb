@@ -2,14 +2,11 @@ class LocationsController < ApplicationController
     def index
         @locations = Location.all
         events_number = Event.where('event_date >= ?', Date.today).size
-        instruments = Instrument.all
-        genres = Genre.all
+
         render json: {
             locations: ActiveModel::Serializer::CollectionSerializer.new(@locations, each_serializer: LocationSerializer), 
             users_number: User.all.size, 
             events_number: events_number,
-            instruments: instruments,
-            genres: genres
         }
     end
     def show

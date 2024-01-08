@@ -224,6 +224,34 @@ class User < ApplicationRecord
                 user_song = Usersong.create(user_id: self.id, song_id: song.id)
             end
         end
+
+        if params[:removedInstruments]
+            params[:removedInstruments].each do |inst|
+                old_instrument = Userinstrument.find_by(user_id: self.id, instrument_id: inst)
+                old_instrument.destroy
+            end
+        end
+
+        if params[:removedGenres]
+            params[:removedGenres].each do |genr|
+                old_genr = Usergenre.find_by(user_id: self.id, genre_id: genr)
+                old_genr.destroy
+            end
+        end
+
+        if params[:removedArtists]
+            params[:removedArtists].each do |artis|
+                old_art = Userartist.find_by(user_id: self.id, artist_id: artis)
+                old_art.destroy
+            end
+        end
+
+        if params[:removedSongs]
+            params[:removedSongs].each do |song|
+                old_song = Usersong.find_by(user_id: self.id, song_id: song)
+                old_song.destroy
+            end
+        end
     end
 
     def generate_password_token!

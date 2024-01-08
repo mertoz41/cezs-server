@@ -16,6 +16,10 @@ class PostSerializer < ActiveModel::Serializer
     return "#{ENV['CLOUDFRONT_API']}/#{object.clip.key}"
   end
 
+  # def thumbnail
+  #   return "#{ENV['CLOUDFRONT_API']}/#{object.thumbnail.key}"
+  # end
+
   def instruments
     object.instruments.map do |instrument|
       instrument.id
