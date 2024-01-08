@@ -4,7 +4,7 @@ class UserSerializer < ActiveModel::Serializer
   attribute :avatar, if: -> {object.avatar.present?}
   attribute :notification_token, if: -> {object.notification_token}
   has_many :notifications
-  has_many :bands
+  has_many :bands, serializer: ShortBandSerializer
   has_many :genres
   has_one :location
   has_many :favoritesongs
@@ -19,18 +19,20 @@ class UserSerializer < ActiveModel::Serializer
     if object.bands.size > 0
       all_posts = all_posts + object.bands.map(&:posts).flatten!
     end
-    all_posts.map do |post| ShortPostSerializer.new(post)
+    sorted = all_posts.sort_by(&:created_at).reverse
+    sorted.map do |post| ShortPostSerializer.new(post)
     end
   end
 
   def applauds
-    applauds = object.applauds.map(&:post)
+    applauds = object.applauds.map(&:post).sort_by(&:created_at).reverse
     return applauds.map do |post| ShortPostSerializer.new(post)
     end
   end
   
   def upcoming_event
       events = object.events.where("event_date >= ?", Time.now).order('created_at ASC')
+      # byebug
       return events.first
   end
 

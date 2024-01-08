@@ -7,14 +7,14 @@ class UserblocksController < ApplicationController
             )
         render json: {message: 'user blocked.'}
     end
-    def blockedaccounts
+    def index
         @users = logged_in_user.blocked_users
         @bands = logged_in_user.blocked_bands
         render json: { users: ActiveModel::Serializer::CollectionSerializer.new(@users, each_serializer: ShortUserSerializer),
         bands: ActiveModel::Serializer::CollectionSerializer.new(@bands, each_serializer: ShortBandSerializer)
         }
     end
-    def unblockuser
+    def delete
         userblock = BlockedAccount.find_by(blocked_user_id: params[:id], blocking_user_id: logged_in_user.id)
         userblock.destroy
         render json: {message: 'user unblocked.'}

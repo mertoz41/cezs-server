@@ -1,5 +1,5 @@
 class TimelineController < ApplicationController
-    def user_timeline
+    def refresh_timeline
         post = Post.find(params[:last_post])
         new_follow_posts = []
         
@@ -12,6 +12,13 @@ class TimelineController < ApplicationController
         mixed_timeline = new_follow_posts + new_posts
         @timeline = mixed_timeline.uniq
         render json: {timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer)}
+    end
+
+    def get_timeline
+        @timeline = logged_in_user.timeline
+        render json: {
+            timeline: ActiveModel::Serializer::CollectionSerializer.new(@timeline, each_serializer: PostSerializer, scope: logged_in_user),
+        }
     end
 
     def older_posts

@@ -18,7 +18,7 @@ class UserViewSerializer < ActiveModel::Serializer
     if object.bands.size > 0
       all_posts = all_posts + object.bands.map(&:posts).flatten!
     end
-    filtered_posts = all_posts.select {|post| post.reports.size < 1}
+    filtered_posts = all_posts.select {|post| post.reports.size < 1}.sort_by(&:created_at).reverse
     filtered_posts.map {|post| ShortPostSerializer.new(post)}
   end
 
@@ -28,7 +28,7 @@ class UserViewSerializer < ActiveModel::Serializer
   end
 
   def applauds
-    applauds = object.applauds.map(&:post)
+    applauds = object.applauds.map(&:post).sort_by(&:created_at).reverse
     return applauds.map do |post| ShortPostSerializer.new(post)
     end
   end

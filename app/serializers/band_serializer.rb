@@ -1,13 +1,18 @@
 class BandSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  attributes :id, :name, :picture, :created_at, :bio, :location, :followers_count, :songs, :upcoming_event, :instruments
-  has_many :posts, serializer: ShortPostSerializer
+  attributes :id, :name, :picture, :created_at, :bio, :location, :followers_count, :songs, :upcoming_event, :instruments, :posts
   has_many :genres
   has_many :members, serializer: ShortUserSerializer
   
   def picture
     "#{ENV['CLOUDFRONT_API']}/#{object.picture.key}"
+  end
+
+  def posts
+    all_posts = object.posts
+    filtered_posts = all_posts.select {|post| post.reports.size < 1}.sort_by(&:created_at).reverse
+    filtered_posts.map {|post| ShortPostSerializer.new(post)}
   end
 
   def bio

@@ -1,8 +1,9 @@
-class SendNotificationJob < ApplicationJob
-  queue_as :default
+class SendNotificationJob
+  include Sidekiq::Job
 
   def perform(token, body, data)
-    # Do something later
+    # Do something
     NotificationSender.new(token, body, data).send!
+
   end
 end

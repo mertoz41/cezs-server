@@ -6,8 +6,8 @@ class ArtistsController < ApplicationController
 
     def show
         artist = Artist.find(params[:id])
-        follows = logged_in_user.artistfollows.find_by(artist_id: artist.id) ? true : false
-        user_favorites = logged_in_user.userartists.find_by(artist_id: artist.id) ? true : false
+        follows =  artist.user_follows(logged_in_user.id) 
+        user_favorites = artist.user_favorites(logged_in_user.id)
         posts = []
         if logged_in_user.blocked_users.size
             posts = filter_blocked_posts(artist.posts)
@@ -17,30 +17,25 @@ class ArtistsController < ApplicationController
         render json: {artist: ArtistSerializer.new(artist), user_favorites: user_favorites, follows: follows, posts: ActiveModel::Serializer::CollectionSerializer.new(posts, serializer: ShortPostSerializer), songs: ActiveModel::Serializer::CollectionSerializer.new(artist.songs, serializer: ShortSongSerializer) }
     end 
 
-    def influences
-        @influences = Artist.find(params[:id]).influencedusers
-        render json: @influences, each_serializer: ShortUserSerializer
-    end 
-
-    def artistfollowers
+    def followers
         artist = Artist.find(params[:id])
         @users = artist.followingusers
         render json: @users, each_serializer: ShortUserSerializer
     end
 
-    def artistfavorites
+    def favorites
         artist = Artist.find(params[:id])
         @users = artist.favoriteusers
         render json: @users, each_serializer: ShortUserSerializer
     end
 
-    def artistfollow
+    def follow
         @artist = Artist.find_or_create_by(name: params[:artist_name])
         new_follow = Artistfollow.create(user_id: logged_in_user.id, artist_id: @artist.id) 
         render json: {artist: ArtistSerializer.new(@artist)}
     end
 
-    def artistunfollow
+    def unfollow
         artis_follow = Artistfollow.find_by(user_id: logged_in_user.id, artist_id: params[:id])
         artis_follow.destroy
         render json: {message: 'succezs'}

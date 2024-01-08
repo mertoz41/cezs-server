@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
     def exploredata
-
+        # NEEDS TO BE OPTIMIZED ASAP
         genres = Genre.all
         instruments = Instrument.all
 
@@ -27,7 +27,6 @@ class SearchController < ApplicationController
 
         artist_posts = Artist.left_joins(:posts).group(:id).order('COUNT(posts.id) DESC').first(5).map { |artis| {id: artis.id, name: artis.name, post_count: artis.posts.size}}
         song_posts = Song.left_joins(:posts).group(:id).order('COUNT(posts.id) DESC').first(5).map { |song| {id: song.id, name: song.name, artist_name: song.artist.name, post_count: song.posts.size}}
-
 
         render json: {
             genres: genres,

@@ -24,11 +24,11 @@ class PostsController < ApplicationController
             Postinstrument.create(instrument_id: inst.id, post_id: @post.id)
         end
         @post.clip.attach(params[:clip])        
-        # ConvertVideoJob.perform_later(@post.id, logged_in_user.id)
+        ConvertVideoJob.perform_async(@post.id, logged_in_user.id)
 
         @post.thumbnail.attach(params[:thumbnail])
 
-        render json: @post, serializer: PostSerializer, scope: logged_in_user
+        render json: {message: "post is being processed"}
     end
 
     def show
@@ -36,6 +36,20 @@ class PostsController < ApplicationController
         render json: @post, serializer: PostSerializer, scope: logged_in_user
     end
     
+    def musicposts
+        @posts = Post.where(id: params[:posts])
+        if !@posts.size
+            render json: {message: "no more videos left to show"}
+        else
+            render json: @posts, each_serializer: PostSerializer, scope: logged_in_user
+        end
+    end
+
+    def createview
+        Postview.create(user_id: logged_in_user.id, post_id: params[:id].to_i)
+        render json: {message: 'view counted'}
+    end
+
     def filter_search
         instruments = params[:instruments]
         genres = params[:genres]
@@ -72,19 +86,6 @@ class PostsController < ApplicationController
         end
         filtered = posts.select {|post| post.reports.size < 1}
         render json: filtered, each_serializer: ShortPostSerializer
-    end
-    def musicposts
-        @posts = Post.where(id: params[:posts])
-        if !@posts.size
-            render json: {message: "no more videos left to show"}
-        else
-            render json: @posts, each_serializer: PostSerializer, scope: logged_in_user
-        end
-    end
-
-    def createview
-        Postview.create(user_id: logged_in_user.id, post_id: params[:id].to_i)
-        render json: {message: 'view counted'}
     end
 
     def destroy

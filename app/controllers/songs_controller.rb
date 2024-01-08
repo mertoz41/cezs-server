@@ -16,16 +16,6 @@ class SongsController < ApplicationController
         render json: {songs: ActiveModel::Serializer::CollectionSerializer.new(songs, each_serializer: SongSerializer)}
     end
 
-    def songfollowers
-        song = Song.find(params[:id])
-        @users = song.followingusers
-        render json: @users, each_serializer: ShortUserSerializer
-    end
-    def songfavorites
-        song = Song.find(params[:id])
-        @users = song.favoriteusers
-        render json: @users, each_serializer: ShortUserSerializer
-    end
     def songfollow
         artist = Artist.find_or_create_by(name: params[:artist_name])
         @song = Song.find_or_create_by(name: params[:name], artist_id: artist.id)
