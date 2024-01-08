@@ -40,8 +40,8 @@ Rails.application.configure do
   address:              'smtpout.secureserver.net',
   port:                 587,
   domain:               'cezsmusic.com',
-  user_name:            'support@cezsmusic.com',
-  password:             'Goz_wizards4',
+  user_name:            Rails.application.credentials.dig(:urls, :from),
+  password:             Rails.application.credentials.dig(:mailer, :password),
   authentication:       'plain',
   enable_starttls_auto: false  }
   config.action_mailer.raise_delivery_errors = true
@@ -63,7 +63,7 @@ Rails.application.configure do
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
-  config.action_mailer.default_options = {from: 'support@cezsmusic.com'}
+  config.action_mailer.default_options = {from: Rails.application.credentials.dig(:urls, :from)}
 
   config.action_mailer.default_url_options = { :host => "10.0.0.206:3000" }
 

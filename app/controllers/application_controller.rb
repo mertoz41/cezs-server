@@ -4,11 +4,11 @@ class ApplicationController < ActionController::Base
 
   before_action :authorized
     def encode(payload)
-        JWT.encode(payload, 'experiment', 'HS256')
+        JWT.encode(payload, Rails.application.credentials.dig(:jwt, :secret), 'HS256')
     end
 
     def decode(token)
-        JWT.decode(token, 'experiment', true, {algorithm: "HS256"})[0]
+        JWT.decode(token, Rails.application.credentials.dig(:jwt, :secret), true, {algorithm: "HS256"})[0]
     end
 
     def auth_header
@@ -16,21 +16,17 @@ class ApplicationController < ActionController::Base
         request.headers['Authorization']
     end
 
-
     def decoded_token
         if auth_header
           token = auth_header.split(' ')[1]
           # header: { 'Authorization': 'Bearer <token>' }
           begin
-            JWT.decode(token, 'experiment', true, algorithm: 'HS256')
+            JWT.decode(token, Rails.application.credentials.dig(:jwt, :secret), true, algorithm: 'HS256')
           rescue JWT::DecodeError
             nil
           end
         end
     end
-
-    # take whatever needs to be filtered by blocks
-    # posts
 
     def filter_blocked_users(list)
       filtered = list.select {|item| !blocked_user_list.include?(item.id)}.select {|item| !logged_in_user_blocked_by.include?(item.id)}

@@ -25,7 +25,7 @@ Rails.application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
-  config.action_mailer.asset_host = "https://agile-hollows-87633.herokuapp.com/"
+  config.action_mailer.asset_host = "https://#{Rails.application.credentials.dig(:urls, :host)}/"
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache
   # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for NGINX
@@ -60,7 +60,7 @@ Rails.application.configure do
   address:              'smtpout.secureserver.net',
   port:                 587,
   domain:               'cezsmusic.com',
-  user_name:            'support@cezsmusic.com',
+  user_name:            Rails.application.credentials.dig(:urls, :from),
   password:             Rails.application.credentials.dig(:mailer, :password),
   authentication:       'plain',
   enable_starttls_auto: false  }
@@ -81,9 +81,9 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
-  config.action_mailer.default_options = {from: 'support@cezsmusic.com'}
+  config.action_mailer.default_options = {from: Rails.application.credentials.dig(:urls, :from)}
   config.action_mailer.default_url_options = { :host => "cezsmusic.com" }
-  Rails.application.routes.default_url_options[:host] = "agile-hollows-87633.herokuapp.com"
+  Rails.application.routes.default_url_options[:host] = Rails.application.credentials.dig(:urls, :host)
 
   # Use a different logger for distributed setups.
   # require "syslog/logger"
