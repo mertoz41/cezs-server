@@ -26,5 +26,6 @@ module Server
     config.middleware.use ActionDispatch::Flash
     config.middleware.use Rack::MethodOverride
     config.api_only = true
+
   end
 end
