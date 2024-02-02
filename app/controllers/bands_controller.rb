@@ -33,7 +33,8 @@ class BandsController < ApplicationController
             params[:picture], 
             params[:members],
             params[:genres],
-            params[:location_id])
+            params[:location_id],
+            logged_in_user.id)
         render json: @band, serializer: BandSerializer
     end
     

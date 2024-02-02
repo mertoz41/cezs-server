@@ -5,7 +5,7 @@ class SongsController < ApplicationController
             follows = logged_in_user.songfollows.find_by(song_id: song.id) ? true : false
             user_favorites = logged_in_user.usersongs.find_by(song_id: song.id) ? true : false
             posts = filter_blocked_posts(song.posts)
-            render json: {song: SongSerializer.new(song), follows: follows, user_favorites: user_favorites, posts: ActiveModel::Serializer::CollectionSerializer.new(posts, serializer: ShortPostSerializer)}
+            render json: {song: SongSerializer.new(song, scope: {follows: logged_in_user.songfollows.find_by(song_id: song.id) ? true : false, user_favorite:  logged_in_user.usersongs.find_by(song_id: song.id) ? true : false}), follows: follows, user_favorites: user_favorites, posts: ActiveModel::Serializer::CollectionSerializer.new(posts, serializer: ShortPostSerializer)}
         else
             render json: {message: 'song not found'}
         end

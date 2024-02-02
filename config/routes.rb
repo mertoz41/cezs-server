@@ -60,12 +60,10 @@ Rails.application.routes.draw do
   
   delete '/artistunfollow/:id', to: 'artists#unfollow'
   post '/artistfollow', to: 'artists#follow'
-  
-  post '/deleteusersong', to: 'usersongs#delete'
-  
-  get '/albumsongs/:id', to: 'albums#albumsongs'
-  get '/albumfavorites/:id', to: 'albums#albumfavorites'
-  delete '/albumunfollow/:id', to: 'albums#albumunfollow'
+    
+  # get '/albumsongs/:id', to: 'albums#albumsongs'
+  # get '/albumfavorites/:id', to: 'albums#albumfavorites'
+  # delete '/albumunfollow/:id', to: 'albums#albumunfollow'
 
   post '/requestpasswordreset', to: "auth#requestpasswordreset"
   post '/resetpassword', to: "auth#resetpassword"

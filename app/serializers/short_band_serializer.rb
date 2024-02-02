@@ -13,11 +13,15 @@ class ShortBandSerializer < ActiveModel::Serializer
     end
   end
   def instruments
-    uniqInsts = object.members.map(&:instruments).flatten!.uniq
-      return uniqInsts.map do |inst|
+    member_instruments = object.members.map(&:instruments)
+    if member_instruments.size > 0
+      uniq = member_instruments.flatten!.uniq
+      return uniq.map do |inst|
         {id: inst.id, name: inst.name}
       end
-      
+    else
+      return []
+    end  
   end
 
 end

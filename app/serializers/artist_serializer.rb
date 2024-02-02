@@ -1,8 +1,17 @@
 class ArtistSerializer < ActiveModel::Serializer
-  attributes :id, :name, :song_count, :favoriteusers_count, :followingusers_count, :post_count, :view_count
-  
+  attributes :id, :name, :song_count, :favoriteusers_count, :followingusers_count, :post_count, :view_count, :follows, :user_favorite
+  attribute :follows, if: -> {scope}
+  attribute :user_favorite, if: -> {scope}
   def post_count
     return object.posts.size
+  end
+
+  def follows
+    return scope[:follows]
+  end
+
+  def user_favorite
+    return scope[:user_favorite]
   end
   def song_count
     return object.songs.size

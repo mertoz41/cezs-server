@@ -1,7 +1,7 @@
 class UsersongsController < ApplicationController
     def create
-        artist = Artist.find_or_create_by(name: params[:artist_name],id: params[:artist_id])
-        @song = Song.find_or_create_by(artist_id: artist.id, name: params[:name], id: params[:id])
+        
+        @song = Song.find_or_create_by(artist_id: params[:artist_id], name: params[:name], id: params[:id])
         user_song = Usersong.create(user_id: logged_in_user.id, song_id: @song.id)
         render json: {song: SongSerializer.new(@song)}
     end
@@ -15,8 +15,8 @@ class UsersongsController < ApplicationController
         render json: {song: SongSerializer.new(@song)}
     end
 
-    def delete
-        song = Song.find(params[:song_id])
+    def destroy
+        song = Song.find(params[:id])
         usersong = Usersong.find_by(user_id: logged_in_user.id, song_id: song.id)
         usersong.destroy
         render json: {message: 'favorite song successfully deleted.'}
